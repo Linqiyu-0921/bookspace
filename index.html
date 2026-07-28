@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>书店寻书 · Bookspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+SC:wght@300;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="stage" class="stage">
+    <!-- 顶部导航 -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">书</span>
+        <span class="brand-name">BOOKSPACE<i>书店寻书</i></span>
+      </div>
+      <nav class="topnav">
+        <span class="nav-item">书架实录</span>
+        <span class="nav-item">寻书笔记</span>
+        <a class="nav-item nav-link" href="https://di4lnn07one.feishu.cn/base/PTV8bD3VqalscasqrdOc3BEin5c" target="_blank" rel="noopener">多维表格 ↗</a>
+      </nav>
+    </header>
+
+    <!-- 巨型背景字 -->
+    <div class="giant" aria-hidden="true">
+      <span class="giant-line" id="giantText"></span>
+    </div>
+
+    <!-- 侧边索引 -->
+    <aside class="side">
+      <span class="side-label">SHELF —— ARCHIVE</span>
+      <div class="counter">
+        <span id="curIdx">01</span>
+        <span class="counter-slash"></span>
+        <span id="totalIdx">52</span>
+      </div>
+    </aside>
+
+    <!-- 书籍滑道 -->
+    <main class="slider">
+      <div class="track" id="track"></div>
+    </main>
+
+    <!-- 信息面板 -->
+    <section class="meta" id="meta">
+      <p class="meta-tag"><span id="metaTag"></span></p>
+      <h1 class="meta-title" id="metaTitle"></h1>
+      <p class="meta-sub" id="metaSub"></p>
+      <div class="meta-row">
+        <div class="meta-cell">
+          <label>作者</label>
+          <span id="metaAuthor"></span>
+        </div>
+        <div class="meta-cell" id="cellTranslator">
+          <label>译者 / 编注</label>
+          <span id="metaTranslator"></span>
+        </div>
+        <div class="meta-cell">
+          <label>出版</label>
+          <span id="metaPublisher"></span>
+        </div>
+        <div class="meta-cell">
+          <label>年份</label>
+          <span id="metaYear"></span>
+        </div>
+      </div>
+      <p class="meta-desc" id="metaDesc"></p>
+    </section>
+
+    <!-- 底部控制 -->
+    <footer class="controls">
+      <div class="arrows">
+        <button class="arrow" id="prevBtn" aria-label="上一本">&#8592;</button>
+        <button class="arrow" id="nextBtn" aria-label="下一本">&#8594;</button>
+      </div>
+      <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <span class="hint">滚动 / 拖拽 / 方向键 切换</span>
+    </footer>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

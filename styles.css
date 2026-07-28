@@ -1,0 +1,455 @@
+/* ============ Bookspace · 图书滑动展示 ============ */
+:root {
+  --bg: #dfe9f2;
+  --ink: #1d3557;
+  --accent: #e63946;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; overflow: hidden; }
+
+body {
+  font-family: "Noto Serif SC", "Songti SC", serif;
+  background: var(--bg);
+  color: var(--ink);
+  transition: background-color 1s var(--ease), color 1s var(--ease);
+  -webkit-font-smoothing: antialiased;
+}
+
+.stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ---------- 顶部导航 ---------- */
+.topbar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 48px;
+}
+
+.brand { display: flex; align-items: center; gap: 14px; }
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 40px; height: 40px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.brand-name {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 15px;
+  letter-spacing: 0.32em;
+  font-weight: 600;
+}
+
+.brand-name i {
+  display: block;
+  font-family: "Noto Serif SC", serif;
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: 0.5em;
+  opacity: 0.55;
+  margin-top: 2px;
+}
+
+.topnav { display: flex; gap: 36px; align-items: center; }
+
+.nav-item {
+  font-size: 12.5px;
+  letter-spacing: 0.18em;
+  opacity: 0.72;
+  cursor: pointer;
+  transition: opacity 0.3s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav-item:hover { opacity: 1; }
+
+.nav-link {
+  border: 1px solid currentColor;
+  padding: 8px 18px;
+  border-radius: 999px;
+  opacity: 0.9;
+}
+
+/* ---------- 巨型背景字 ---------- */
+.giant {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.giant-line {
+  font-family: "Noto Serif SC", serif;
+  font-weight: 900;
+  font-size: clamp(90px, 17vw, 260px);
+  line-height: 1;
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+  opacity: 0.09;
+  transform: translateY(-8vh);
+  transition: opacity 0.6s;
+}
+
+.giant-line.switching { opacity: 0; }
+
+/* ---------- 侧边索引 ---------- */
+.side {
+  position: absolute;
+  left: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.side-label {
+  writing-mode: vertical-rl;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 11px;
+  letter-spacing: 0.42em;
+  opacity: 0.5;
+}
+
+.counter {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  font-family: "Cormorant Garamond", serif;
+}
+
+.counter #curIdx { font-size: 34px; font-weight: 600; line-height: 1; }
+
+.counter-slash {
+  width: 26px; height: 1px;
+  background: currentColor;
+  opacity: 0.4;
+  transform: rotate(-24deg);
+  margin: 2px 0 2px 8px;
+}
+
+.counter #totalIdx { font-size: 15px; opacity: 0.5; margin-left: 18px; }
+
+/* ---------- 滑道与书 ---------- */
+.slider {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+  cursor: grab;
+}
+
+.slider:active { cursor: grabbing; }
+
+.track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 7vw;
+  padding-left: 50vw;
+  will-change: transform;
+  transition: transform 0.9s var(--ease);
+}
+
+.track.dragging { transition: none; }
+
+.book {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(210px, 23vw, 330px);
+  aspect-ratio: 100 / 143;
+  transform: translateX(-50%) scale(0.78);
+  filter: saturate(0.55) brightness(0.94);
+  opacity: 0.55;
+  transition: transform 0.9s var(--ease), filter 0.9s var(--ease), opacity 0.9s var(--ease);
+  perspective: 1200px;
+}
+
+.book.active {
+  transform: translateX(-50%) scale(1);
+  filter: none;
+  opacity: 1;
+}
+
+.book-inner {
+  position: relative;
+  width: 100%; height: 100%;
+  border-radius: 3px 10px 10px 3px;
+  overflow: hidden;
+  box-shadow:
+    0 30px 60px -18px rgba(0, 0, 0, 0.42),
+    0 12px 24px -12px rgba(0, 0, 0, 0.28);
+  transform-style: preserve-3d;
+  transition: transform 0.5s var(--ease);
+}
+
+.book.active .book-inner:hover { transform: rotateY(-7deg) rotateX(2deg); }
+
+/* 书脊 */
+.book-inner::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 14px;
+  background: linear-gradient(90deg, rgba(0,0,0,0.32), rgba(0,0,0,0.06) 55%, rgba(255,255,255,0.14) 80%, rgba(0,0,0,0.1));
+  z-index: 3;
+}
+
+/* 纸纹高光 */
+.book-inner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(118deg, rgba(255,255,255,0.16) 0%, transparent 32%, transparent 70%, rgba(0,0,0,0.1) 100%);
+  z-index: 4;
+  pointer-events: none;
+}
+
+.cover {
+  position: absolute;
+  inset: 0;
+  padding: 12% 11% 10% 15%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cover-tag {
+  font-size: clamp(8px, 0.7vw, 11px);
+  letter-spacing: 0.34em;
+  opacity: 0.75;
+  text-transform: uppercase;
+  font-family: "Cormorant Garamond", serif;
+}
+
+.cover-title {
+  font-size: clamp(20px, 2.1vw, 32px);
+  font-weight: 900;
+  line-height: 1.35;
+  letter-spacing: 0.08em;
+  margin-top: 10%;
+}
+
+.cover-title.vertical {
+  writing-mode: vertical-rl;
+  align-self: flex-end;
+  margin-top: 0;
+  max-height: 68%;
+  letter-spacing: 0.22em;
+}
+
+.cover-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.cover-author {
+  font-size: clamp(10px, 0.85vw, 13px);
+  letter-spacing: 0.14em;
+  opacity: 0.85;
+}
+
+.cover-press {
+  font-size: clamp(8px, 0.68vw, 10.5px);
+  letter-spacing: 0.1em;
+  opacity: 0.55;
+}
+
+.cover-band {
+  position: absolute;
+  right: 9%;
+  top: 0;
+  width: 7px;
+  height: 38%;
+  opacity: 0.9;
+}
+
+/* 真实封面图：盖在设计款封面之上，加载失败时自动移除退回设计款 */
+.cover-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 2;
+  display: block;
+}
+
+/* ---------- 信息面板 ---------- */
+.meta {
+  position: absolute;
+  right: 48px;
+  bottom: 120px;
+  z-index: 30;
+  width: min(400px, 34vw);
+  text-align: left;
+}
+
+.meta > * {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+
+.meta.show > * { opacity: 1; transform: none; }
+
+.meta.show > *:nth-child(1) { transition-delay: 0.10s; }
+.meta.show > *:nth-child(2) { transition-delay: 0.18s; }
+.meta.show > *:nth-child(3) { transition-delay: 0.26s; }
+.meta.show > *:nth-child(4) { transition-delay: 0.34s; }
+.meta.show > *:nth-child(5) { transition-delay: 0.42s; }
+
+.meta-tag {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  margin-bottom: 14px;
+}
+
+.meta-tag span {
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 5px 14px;
+  opacity: 0.8;
+}
+
+.meta-title {
+  font-size: clamp(26px, 2.6vw, 40px);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  line-height: 1.25;
+}
+
+.meta-sub {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+  margin-top: 6px;
+  min-height: 18px;
+}
+
+.meta-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 22px;
+  margin: 20px 0 16px;
+  padding-top: 16px;
+  border-top: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+}
+
+.meta-cell label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  opacity: 0.5;
+  margin-bottom: 3px;
+}
+
+.meta-cell span { font-size: 13px; letter-spacing: 0.04em; }
+
+.meta-desc {
+  font-size: 13.5px;
+  line-height: 2;
+  opacity: 0.82;
+  text-align: justify;
+}
+
+/* ---------- 底部控制 ---------- */
+.controls {
+  position: absolute;
+  left: 48px; right: 48px;
+  bottom: 34px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.arrows { display: flex; gap: 12px; }
+
+.arrow {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font-size: 17px;
+  cursor: pointer;
+  transition: transform 0.3s var(--ease), background 0.3s, color 0.3s;
+}
+
+.arrow:hover { transform: scale(1.1); }
+
+.arrow:active { transform: scale(0.94); }
+
+.progress {
+  flex: 1;
+  height: 1.5px;
+  background: color-mix(in srgb, currentColor 18%, transparent);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: currentColor;
+  transition: width 0.9s var(--ease);
+}
+
+.hint {
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  opacity: 0.45;
+  white-space: nowrap;
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 900px) {
+  .topbar { padding: 20px 22px; }
+  .topnav .nav-item:not(.nav-link) { display: none; }
+  .side { left: 22px; top: 92px; transform: none; }
+  .side-label { display: none; }
+  .counter { flex-direction: row; align-items: baseline; gap: 4px; }
+  .counter #curIdx { font-size: 26px; }
+  .counter-slash { width: 14px; margin: 0 2px; }
+  .counter #totalIdx { margin-left: 0; }
+  .giant-line { transform: translateY(-22vh); }
+  .slider { align-items: flex-start; }
+  .track { padding-top: 17vh; }
+  .book { width: clamp(170px, 46vw, 240px); }
+  .meta {
+    right: 22px; left: 22px;
+    bottom: 108px;
+    width: auto;
+  }
+  .meta-desc { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .controls { left: 22px; right: 22px; bottom: 26px; }
+  .hint { display: none; }
+}
