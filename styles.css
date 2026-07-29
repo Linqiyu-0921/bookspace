@@ -629,3 +629,21 @@ html, body {
   .book-shadow { bottom: -18px; height: 12px; }
   .footer-hint { bottom: 16px; font-size: 8px; letter-spacing: 0.18em; }
 }
+
+/* ---------- 桌面端矮视口：压缩说明区节奏，避免文字遮挡下方书架 ---------- */
+@media (min-width: 769px) and (max-height: 920px) {
+  :root { --shelf-scale: 0.94; }
+  .header { top: 11vh; }
+  .cats { top: 26.5vh; }
+  .book-info { top: 32vh; }
+  .bi-title { font-size: clamp(18px, 2vw, 22px); }
+  .bi-sub { margin: 2px 0 7px; }
+  .bi-meta { margin-bottom: 7px; }
+  .bi-desc { -webkit-line-clamp: 2; line-height: 1.6; }  /* 矮窗口描述收为两行 */
+}
+@media (min-width: 769px) and (max-height: 760px) {
+  :root { --shelf-scale: 0.84; }
+  .bg-word span { font-size: clamp(120px, 28vh, 280px); }
+  .book-info { top: 31vh; }
+  .bi-desc { font-size: 12px; }
+}
