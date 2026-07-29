@@ -31,6 +31,41 @@
     return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${a})`;
   }
 
+  /* ---------- 真实封面主色采样：书脊设计直接取自封面 ---------- */
+  function coverPalette(img) {
+    try {
+      const c = document.createElement("canvas");
+      const w = (c.width = 32), h = (c.height = 32);
+      const ctx = c.getContext("2d", { willReadFrequently: true });
+      ctx.drawImage(img, 0, 0, w, h);
+      const d = ctx.getImageData(0, 0, w, h).data;
+      const buckets = {};
+      for (let i = 0; i < d.length; i += 4) {
+        const r = d[i], g = d[i + 1], b = d[i + 2];
+        const key = ((r >> 4) << 8) | ((g >> 4) << 4) | (b >> 4);
+        const bk = buckets[key] || (buckets[key] = { n: 0, r: 0, g: 0, b: 0 });
+        bk.n++; bk.r += r; bk.g += g; bk.b += b;
+      }
+      let best = null, bestScore = -1;
+      for (const k in buckets) {
+        const bk = buckets[k];
+        const r = bk.r / bk.n, g = bk.g / bk.n, b = bk.b / bk.n;
+        const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+        const sat = mx ? (mx - mn) / mx : 0;
+        const score = bk.n * (0.16 + sat); // 偏好有饱和度的主色，避免白底/灰底喧宾夺主
+        if (score > bestScore) { bestScore = score; best = { r, g, b }; }
+      }
+      if (!best) return null;
+      const lum = (0.2126 * best.r + 0.7152 * best.g + 0.0722 * best.b) / 255;
+      return {
+        color: `rgb(${Math.round(best.r)}, ${Math.round(best.g)}, ${Math.round(best.b)})`,
+        ink: lum > 0.62 ? "#23211c" : "#f7f5ef"
+      };
+    } catch (e) {
+      return null; // 跨域污染等异常时回退手配色板
+    }
+  }
+
   bookCountEl.textContent = `${BOOKS.length} Books`;
   totalIdxEl.textContent = String(BOOKS.length).padStart(2, "0");
 
@@ -49,9 +84,11 @@
     const wrap = document.createElement("div");
     wrap.className = "book-wrap";
     wrap.dataset.idx = i;
-    wrap.style.setProperty("--spine-w", `min(${spineW}px, ${(spineW / 10).toFixed(1)}vh)`);
-    wrap.style.setProperty("--book-h", hScale);
-    wrap.style.setProperty("--cover-w", `min(${coverW}px, ${Math.round((coverW / 314) * 40)}vh)`);
+    // 尺寸统一乘 --shelf-scale：移动端媒体查询只需下调系数即可整体缩书
+    const sc = " * var(--shelf-scale, 1))";
+    wrap.style.setProperty("--spine-w", `calc(min(${spineW}px, ${(spineW / 10).toFixed(1)}vh)` + sc);
+    wrap.style.setProperty("--book-h", `calc(${hScale}` + sc);
+    wrap.style.setProperty("--cover-w", `calc(min(${coverW}px, ${Math.round((coverW / 314) * 40)}vh)` + sc);
     wrap.style.setProperty("--book-color", spineColor);
     wrap.style.setProperty("--spine-ink", spineInk);
     wrap.style.setProperty("--tilt", tilt + "deg");
@@ -83,12 +120,31 @@
             </div>
             <span class="cover-band"></span>
           </div>
-          ${b.cover ? `<img src="${b.cover}" alt="${b.title}" loading="lazy" onerror="this.remove()">` : ""}
+          ${b.cover ? `<img src="${b.cover}" alt="${b.title}" decoding="async" onerror="this.remove()">` : ""}
         </div>
         <div class="book-shadow"></div>
       </div>`;
 
     track.appendChild(wrap);
+
+    // 真实封面加载后：封面比例随原图（不裁切变形），书脊主色/墨色取自封面主色
+    const coverImg = wrap.querySelector(".cover img");
+    if (coverImg) {
+      const applyReal = () => {
+        if (!coverImg.naturalWidth) return;
+        const ratio = Math.max(0.58, Math.min(0.8, coverImg.naturalWidth / coverImg.naturalHeight));
+        const w = Math.round(bookH * ratio);
+        wrap.style.setProperty("--cover-w", `calc(min(${w}px, ${Math.round((w / 314) * 40)}vh) * var(--shelf-scale, 1))`);
+        const pal = coverPalette(coverImg);
+        if (pal) {
+          wrap.style.setProperty("--book-color", pal.color);
+          wrap.style.setProperty("--spine-ink", pal.ink);
+        }
+        wrap.classList.add("real-cover");
+      };
+      if (coverImg.complete) applyReal();
+      else coverImg.addEventListener("load", applyReal);
+    }
   });
 
   const bookEls = [...track.children];

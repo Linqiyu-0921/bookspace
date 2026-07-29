@@ -8,6 +8,7 @@
   --ink: #141414;           /* 墨色随悬停书籍色板切换，保证深色背景下可读 */
   --ink-muted: rgba(20, 20, 20, 0.52);  /* 由 app.js 随色板同步更新 */
   --panel: rgba(255, 255, 255, 0.86);
+  --shelf-scale: 1;         /* 书籍整体缩放系数，移动端媒体查询下调 */
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -26,6 +27,7 @@ html, body {
   position: relative;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;   /* 移动端地址栏收起/展开时视口高度准确 */
   display: flex;
   flex-direction: column;
 }
@@ -304,6 +306,7 @@ html, body {
   overflow: hidden;
   cursor: grab;
   z-index: 5;
+  touch-action: none;  /* 触屏上由我们接管拖拽，防浏览器手势中断 pointer 事件 */
 }
 .shelf-scene.dragging { cursor: grabbing; }
 
@@ -531,6 +534,9 @@ html, body {
   display: block;
 }
 
+/* 真实封面就位后：封面比例已随原图重塑，底层设计款隐藏避免透色/多余绘制 */
+.book-wrap.real-cover .cover-design { visibility: hidden; }
+
 /* 地面阴影 */
 .book-shadow {
   position: absolute;
@@ -580,25 +586,46 @@ html, body {
   0%, 100% { opacity: 0.35; }
   50% { opacity: 0.8; }
 }
+.footer-hint .hint-mobile { display: none; }
+@media (hover: none) and (pointer: coarse) {
+  /* 触屏设备：提示改为点按 */
+  .footer-hint .hint-desktop { display: none; }
+  .footer-hint .hint-mobile { display: inline; }
+}
 
 /* ---------- 响应式 ---------- */
 @media (max-width: 768px) {
-  .corner { top: 20px; font-size: 8px; }
-  .corner-left { left: 20px; }
-  .corner-right { right: 20px; }
-  .search-box { top: 44px; right: 20px; }
-  .search-box input { width: 130px; }
-  .search-box input:focus { width: 170px; }
-  .header { top: 9vh; }
-  .title { font-size: clamp(34px, 10vw, 72px); }
-  .cats { top: 24vh; gap: 4px 14px; padding: 0 5vw; }
-  .chip { font-size: 10px; letter-spacing: 0.1em; }
-  .book-info { top: 31vh; }
-  .bi-desc { -webkit-line-clamp: 3; font-size: 12px; }
+  :root { --shelf-scale: 0.72; }  /* 书籍尺寸由 JS 内联变量携带，统一经此系数缩放 */
+  .corner { top: 16px; font-size: 8px; }
+  .corner-left { left: 16px; }
+  .corner-right { right: 16px; }
+  .search-box { top: 40px; right: 16px; }
+  .search-box input { width: 124px; font-size: 12px; }  /* ≥12px 防 iOS 聚焦自动缩放 */
+  .search-box input:focus { width: 160px; }
+  .bg-word { top: 10vh; bottom: 40vh; }
+  .bg-word span { font-size: clamp(88px, 22vh, 210px); }
+  .header { top: max(9vh, 88px); }  /* 避开右上角搜索框，不与眉题重叠 */
+  .title { font-size: clamp(34px, 11vw, 72px); }
+  .eyebrow { margin-bottom: 10px; letter-spacing: 0.26em; }
+  .cats { top: max(21vh, 196px); gap: 2px 14px; padding: 0 4vw; }
+  .chip { font-size: 10px; letter-spacing: 0.08em; padding: 3px 1px 5px; }
+  .book-info { top: max(32vh, 292px); width: 92vw; }
+  .bi-title { font-size: 17px; }
+  .bi-sub { font-size: 11px; margin: 2px 0 6px; }
+  .bi-meta { font-size: 10px; margin-bottom: 6px; }
+  .bi-desc { -webkit-line-clamp: 3; font-size: 11.5px; line-height: 1.65; }
   .side { display: none; }
-  .shelf-scene { height: 56vh; }
-  .shelf-track { gap: 7px; padding: 0 6vw 7vh; }
-  .book-wrap { --book-h: 175px; --spine-w: 34px; --cover-w: 118px; }
-  .spine-text { font-size: 10px; padding: 14px 0; }
+  .shelf-scene { height: 52vh; }
+  .shelf-track { gap: 7px; padding: 0 6vw 6vh; }
+  .spine-text {
+    /* 随书高同比例缩字，长书名仍完整不裁切 */
+    font-size: max(8px, calc(var(--spine-fs, 12px) * 0.82));
+    padding: 10px 0 16px;
+  }
+  .spine-dot { bottom: 10px; }
   .book-wrap.open { margin-right: calc(var(--cover-w, 118px) - var(--spine-w, 34px) + 12px); }
+  .cover-design { padding: 10px 10px 8px 14px; }
+  .cover-design .cover-title { font-size: 13px; }
+  .book-shadow { bottom: -18px; height: 12px; }
+  .footer-hint { bottom: 16px; font-size: 8px; letter-spacing: 0.18em; }
 }
