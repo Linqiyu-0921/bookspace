@@ -1,32 +1,51 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>书店寻书 · Bookspace</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+SC:wght@300;500;700;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOOK SPACE · 书店寻书</title>
+  <meta name="description" content="52 本书店寻得的书，以书脊之姿立于一排书架，悬停翻开即见封面。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+SC:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
-  <div id="stage" class="stage">
-    <!-- 顶部导航 -->
-    <header class="topbar">
-      <div class="brand">
-        <span class="brand-mark">书</span>
-        <span class="brand-name">BOOKSPACE<i>书店寻书</i></span>
-      </div>
-      <nav class="topnav">
-        <span class="nav-item">书架实录</span>
-        <span class="nav-item">寻书笔记</span>
-        <a class="nav-item nav-link" href="https://di4lnn07one.feishu.cn/base/PTV8bD3VqalscasqrdOc3BEin5c" target="_blank" rel="noopener">多维表格 ↗</a>
-      </nav>
+  <div class="stage" id="stage">
+
+    <!-- 巨型背景书名字（悬停时浮现） -->
+    <div class="bg-word" id="bgWord" aria-hidden="true"><span></span></div>
+
+    <!-- 顶部角标 -->
+    <div class="corner corner-left">
+      <div>Reading Archive</div>
+      <div class="line2">Bookstore Finds · 2026</div>
+    </div>
+    <div class="corner corner-right">
+      <div id="bookCount">52 Books</div>
+    </div>
+
+    <!-- 搜索 -->
+    <div class="search-box">
+      <input id="searchInput" type="search" placeholder="Search · 书名 / 作者" autocomplete="off" spellcheck="false">
+    </div>
+
+    <!-- 标题 -->
+    <header class="header">
+      <div class="eyebrow">Personal Collection</div>
+      <h1 class="title">BOOK SPACE</h1>
     </header>
 
-    <!-- 巨型背景字 -->
-    <div class="giant" aria-hidden="true">
-      <span class="giant-line" id="giantText"></span>
+    <!-- 种类分类筛选 -->
+    <nav class="cats" id="cats" aria-label="书籍分类"></nav>
+
+    <!-- 图书说明（位于标题与书架之间的留白带，不遮挡书籍） -->
+    <div class="book-info" id="bookInfo" aria-live="polite">
+      <div class="bi-tag" id="infoTag"></div>
+      <h2 class="bi-title" id="infoTitle"></h2>
+      <div class="bi-sub" id="infoSub"></div>
+      <div class="bi-meta" id="infoMeta"></div>
+      <p class="bi-desc" id="infoDesc"></p>
     </div>
 
     <!-- 侧边索引 -->
@@ -39,51 +58,19 @@
       </div>
     </aside>
 
-    <!-- 书籍滑道 -->
-    <main class="slider">
-      <div class="track" id="track"></div>
-    </main>
+    <!-- 书架场景（可横向拖拽 / 滚轮平移） -->
+    <div class="shelf-scene" id="scene">
+      <div class="shelf-track" id="track">
+        <!-- 书籍由 app.js 注入 -->
+      </div>
+      <div class="empty-hint" id="emptyHint">没有找到匹配的书 · No Matches</div>
+    </div>
 
-    <!-- 信息面板 -->
-    <section class="meta" id="meta">
-      <p class="meta-tag"><span id="metaTag"></span></p>
-      <h1 class="meta-title" id="metaTitle"></h1>
-      <p class="meta-sub" id="metaSub"></p>
-      <div class="meta-row">
-        <div class="meta-cell">
-          <label>作者</label>
-          <span id="metaAuthor"></span>
-        </div>
-        <div class="meta-cell" id="cellTranslator">
-          <label>译者 / 编注</label>
-          <span id="metaTranslator"></span>
-        </div>
-        <div class="meta-cell">
-          <label>出版</label>
-          <span id="metaPublisher"></span>
-        </div>
-        <div class="meta-cell">
-          <label>年份</label>
-          <span id="metaYear"></span>
-        </div>
-      </div>
-      <p class="meta-desc" id="metaDesc"></p>
-    </section>
-
-    <!-- 底部控制 -->
-    <footer class="controls">
-      <div class="arrows">
-        <button class="arrow" id="prevBtn" aria-label="上一本">&#8592;</button>
-        <button class="arrow" id="nextBtn" aria-label="下一本">&#8594;</button>
-      </div>
-      <div class="progress">
-        <div class="progress-bar" id="progressBar"></div>
-      </div>
-      <span class="hint">滚动 / 拖拽 / 方向键 切换</span>
-    </footer>
+    <!-- 底部提示 -->
+    <div class="footer-hint">Hover to open &nbsp;·&nbsp; Drag to browse</div>
   </div>
 
-  <script src="data.js"></script>
-  <script src="app.js"></script>
+  <script src="data.js?v=5"></script>
+  <script src="app.js?v=5"></script>
 </body>
 </html>
