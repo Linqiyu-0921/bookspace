@@ -125,13 +125,9 @@ html, body {
 
 /* ---------- 标题 ---------- */
 .header {
-  position: absolute;
-  top: 13vh;
-  left: 0;
-  right: 0;
   text-align: center;
-  z-index: 10;
-  pointer-events: none;
+  /* 大字标题与下方筛选小字之间的协调段落间距（版式主节奏） */
+  margin-bottom: clamp(32px, 5vh, 60px);
 }
 
 .eyebrow {
@@ -151,21 +147,21 @@ html, body {
   color: var(--ink);
 }
 
-/* ---------- 筛选与说明留白带（纵向流式排列，行数变化自然下推，互不重叠） ---------- */
-.filter-zone {
+/* ---------- 版头留白带：标题+筛选+说明同一纵向流，统一节奏、互不重叠 ---------- */
+.masthead {
   position: absolute;
-  top: 29vh;
+  top: 12vh;
   left: 0;
   right: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
   z-index: 40;
   pointer-events: none;
 }
-.filter-zone .cats,
-.filter-zone .subcats { pointer-events: auto; }
+.masthead .header { pointer-events: none; }
+.masthead .cats,
+.masthead .subcats { pointer-events: auto; }
 
 /* ---------- 种类分类筛选 ---------- */
 .cats {
@@ -217,6 +213,7 @@ html, body {
   flex-wrap: wrap;
   gap: 4px 16px;
   padding: 0 12vw;
+  margin-top: 12px;
 }
 .chip.sub {
   font-size: 10px;
@@ -229,7 +226,7 @@ html, body {
 /* ---------- 图书说明（留白带内，紧随筛选行之下，纯文字无卡片，不遮挡书籍） ---------- */
 .book-info {
   width: min(720px, 86vw);
-  margin-top: 6px;
+  margin-top: 10px;
   text-align: center;
   opacity: 0;
   transform: translateY(14px);
@@ -638,10 +635,11 @@ html, body {
   .search-box input:focus { width: 160px; }
   .bg-word { top: 10vh; bottom: 40vh; }
   .bg-word span { font-size: clamp(88px, 22vh, 210px); }
-  .header { top: max(9vh, 88px); }  /* 避开右上角搜索框，不与眉题重叠 */
+  .masthead { top: max(9vh, 88px); }  /* 避开右上角搜索框，不与眉题重叠 */
   .title { font-size: clamp(34px, 11vw, 72px); }
   .eyebrow { margin-bottom: 10px; letter-spacing: 0.26em; }
-  .filter-zone { top: max(21vh, 196px); gap: 5px; }
+  .header { margin-bottom: clamp(22px, 3.4vh, 40px); }
+  .subcats { margin-top: 9px; }
   .cats { gap: 2px 14px; padding: 0 4vw; }
   .subcats { gap: 2px 10px; padding: 0 4vw; }
   .chip { font-size: 10px; letter-spacing: 0.08em; padding: 3px 1px 5px; }
@@ -670,9 +668,10 @@ html, body {
 /* ---------- 桌面端矮视口：压缩说明区节奏，避免文字遮挡下方书架 ---------- */
 @media (min-width: 769px) and (max-height: 920px) {
   :root { --shelf-scale: 0.94; }
-  .header { top: 11vh; }
-  .filter-zone { top: 26.5vh; gap: 6px; }
-  .book-info { margin-top: 4px; }
+  .masthead { top: 9vh; }
+  .header { margin-bottom: clamp(24px, 3.2vh, 42px); }
+  .subcats { margin-top: 9px; }
+  .book-info { margin-top: 5px; }
   .bi-title { font-size: clamp(18px, 2vw, 22px); }
   .bi-sub { margin: 2px 0 7px; }
   .bi-meta { margin-bottom: 7px; }
@@ -681,6 +680,6 @@ html, body {
 @media (min-width: 769px) and (max-height: 760px) {
   :root { --shelf-scale: 0.84; }
   .bg-word span { font-size: clamp(120px, 28vh, 280px); }
-  .filter-zone { top: 25vh; }
+  .masthead { top: 7.5vh; }
   .bi-desc { font-size: 12px; }
 }
