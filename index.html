@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+SC:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=7">
+  <link rel="stylesheet" href="styles.css?v=8">
 </head>
 <body>
   <div class="stage" id="stage">
@@ -22,7 +22,8 @@
       <div class="line2">Bookstore Finds · 2026</div>
     </div>
     <div class="corner corner-right">
-      <div id="bookCount">52 Books</div>
+      <div id="bookCount">65 Books</div>
+      <div class="line2"><a class="corner-link" href="overview.html">总览 · Overview →</a></div>
     </div>
 
     <!-- 搜索 -->
@@ -36,16 +37,22 @@
       <h1 class="title">BOOK SPACE</h1>
     </header>
 
-    <!-- 种类分类筛选 -->
-    <nav class="cats" id="cats" aria-label="书籍分类"></nav>
+    <!-- 筛选与图书说明（同一留白带内纵向排列，行数变化时自然下推，互不重叠） -->
+    <div class="filter-zone" id="filterZone">
+      <!-- 种类分类筛选 -->
+      <nav class="cats" id="cats" aria-label="书籍分类"></nav>
 
-    <!-- 图书说明（位于标题与书架之间的留白带，不遮挡书籍） -->
-    <div class="book-info" id="bookInfo" aria-live="polite">
-      <div class="bi-tag" id="infoTag"></div>
-      <h2 class="bi-title" id="infoTitle"></h2>
-      <div class="bi-sub" id="infoSub"></div>
-      <div class="bi-meta" id="infoMeta"></div>
-      <p class="bi-desc" id="infoDesc"></p>
+      <!-- 细分标签筛选 -->
+      <nav class="subcats" id="subcats" aria-label="细分标签"></nav>
+
+      <!-- 图书说明（不遮挡书籍） -->
+      <div class="book-info" id="bookInfo" aria-live="polite">
+        <div class="bi-tag" id="infoTag"></div>
+        <h2 class="bi-title" id="infoTitle"></h2>
+        <div class="bi-sub" id="infoSub"></div>
+        <div class="bi-meta" id="infoMeta"></div>
+        <p class="bi-desc" id="infoDesc"></p>
+      </div>
     </div>
 
     <!-- 侧边索引 -->

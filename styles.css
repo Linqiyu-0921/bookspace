@@ -74,6 +74,14 @@ html, body {
 .corner-left { left: 48px; }
 .corner-right { right: 48px; text-align: right; }
 .corner .line2 { opacity: 0.75; }
+.corner-link {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink-muted);
+  padding-bottom: 1px;
+  transition: opacity 0.3s ease, color 0.7s ease, border-color 0.7s ease;
+}
+.corner-link:hover { opacity: 0.6; }
 
 .corner, .title, .eyebrow, .side-label,
 .counter #curIdx, .counter #totalIdx, .footer-hint {
@@ -83,7 +91,7 @@ html, body {
 /* ---------- 搜索 ---------- */
 .search-box {
   position: absolute;
-  top: 74px;
+  top: 96px;
   right: 48px;
   z-index: 40;
 }
@@ -143,18 +151,30 @@ html, body {
   color: var(--ink);
 }
 
-/* ---------- 种类分类筛选 ---------- */
-.cats {
+/* ---------- 筛选与说明留白带（纵向流式排列，行数变化自然下推，互不重叠） ---------- */
+.filter-zone {
   position: absolute;
   top: 29vh;
   left: 0;
   right: 0;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 40;
+  pointer-events: none;
+}
+.filter-zone .cats,
+.filter-zone .subcats { pointer-events: auto; }
+
+/* ---------- 种类分类筛选 ---------- */
+.cats {
+  width: 100%;
+  display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 6px 24px;
   padding: 0 10vw;
-  z-index: 40;
 }
 .chip {
   position: relative;
@@ -189,22 +209,36 @@ html, body {
 .chip.active { color: var(--ink); }
 .chip.active::after { transform: scaleX(1); }
 
-/* ---------- 图书说明（留白带内，纯文字无卡片，不遮挡书籍） ---------- */
+/* ---------- 细分标签筛选 ---------- */
+.subcats {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  padding: 0 12vw;
+}
+.chip.sub {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  padding: 2px 1px 4px;
+  opacity: 0.85;
+}
+.chip.sub sup { font-size: 7px; }
+
+/* ---------- 图书说明（留白带内，紧随筛选行之下，纯文字无卡片，不遮挡书籍） ---------- */
 .book-info {
-  position: absolute;
-  top: 34.5vh;
-  left: 50%;
-  transform: translateX(-50%) translateY(14px);
   width: min(720px, 86vw);
+  margin-top: 6px;
   text-align: center;
-  z-index: 20;
   opacity: 0;
+  transform: translateY(14px);
   transition: opacity 0.5s ease, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
 }
 .book-info.active {
   opacity: 1;
-  transform: translateX(-50%) translateY(0);
+  transform: translateY(0);
 }
 .bi-tag {
   font-size: 9px;
@@ -599,7 +633,7 @@ html, body {
   .corner { top: 16px; font-size: 8px; }
   .corner-left { left: 16px; }
   .corner-right { right: 16px; }
-  .search-box { top: 40px; right: 16px; }
+  .search-box { top: 62px; right: 16px; }
   .search-box input { width: 124px; font-size: 12px; }  /* ≥12px 防 iOS 聚焦自动缩放 */
   .search-box input:focus { width: 160px; }
   .bg-word { top: 10vh; bottom: 40vh; }
@@ -607,9 +641,12 @@ html, body {
   .header { top: max(9vh, 88px); }  /* 避开右上角搜索框，不与眉题重叠 */
   .title { font-size: clamp(34px, 11vw, 72px); }
   .eyebrow { margin-bottom: 10px; letter-spacing: 0.26em; }
-  .cats { top: max(21vh, 196px); gap: 2px 14px; padding: 0 4vw; }
+  .filter-zone { top: max(21vh, 196px); gap: 5px; }
+  .cats { gap: 2px 14px; padding: 0 4vw; }
+  .subcats { gap: 2px 10px; padding: 0 4vw; }
   .chip { font-size: 10px; letter-spacing: 0.08em; padding: 3px 1px 5px; }
-  .book-info { top: max(32vh, 292px); width: 92vw; }
+  .chip.sub { font-size: 9px; letter-spacing: 0.06em; }
+  .book-info { width: 92vw; margin-top: 4px; }
   .bi-title { font-size: 17px; }
   .bi-sub { font-size: 11px; margin: 2px 0 6px; }
   .bi-meta { font-size: 10px; margin-bottom: 6px; }
@@ -634,8 +671,8 @@ html, body {
 @media (min-width: 769px) and (max-height: 920px) {
   :root { --shelf-scale: 0.94; }
   .header { top: 11vh; }
-  .cats { top: 26.5vh; }
-  .book-info { top: 32vh; }
+  .filter-zone { top: 26.5vh; gap: 6px; }
+  .book-info { margin-top: 4px; }
   .bi-title { font-size: clamp(18px, 2vw, 22px); }
   .bi-sub { margin: 2px 0 7px; }
   .bi-meta { margin-bottom: 7px; }
@@ -644,6 +681,6 @@ html, body {
 @media (min-width: 769px) and (max-height: 760px) {
   :root { --shelf-scale: 0.84; }
   .bg-word span { font-size: clamp(120px, 28vh, 280px); }
-  .book-info { top: 31vh; }
+  .filter-zone { top: 25vh; }
   .bi-desc { font-size: 12px; }
 }

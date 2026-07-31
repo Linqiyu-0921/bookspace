@@ -155,7 +155,10 @@
   BOOKS.forEach((b) => { catCount[b.cat] = (catCount[b.cat] || 0) + 1; });
 
   let activeCat = "全部";
+  let activeTag = "";
   let query = "";
+
+  const subcatsEl = document.getElementById("subcats");
 
   CAT_ORDER.forEach((cat) => {
     if (cat !== "全部" && !catCount[cat]) return;
@@ -164,19 +167,47 @@
     btn.innerHTML = `${cat}<sup>${cat === "全部" ? BOOKS.length : catCount[cat]}</sup>`;
     btn.addEventListener("click", () => {
       activeCat = cat;
+      activeTag = "";
       [...catsEl.children].forEach((c) => c.classList.toggle("active", c === btn));
+      renderSubcats();
       applyFilter();
     });
     catsEl.appendChild(btn);
   });
 
+  /* 细分标签：根据当前大类聚合 tags，按数量降序；全部时取前 12 个 */
+  function renderSubcats() {
+    subcatsEl.innerHTML = "";
+    const pool = activeCat === "全部" ? BOOKS : BOOKS.filter((b) => b.cat === activeCat);
+    const tagCount = {};
+    pool.forEach((b) => (b.tags || []).forEach((t) => { tagCount[t] = (tagCount[t] || 0) + 1; }));
+    let entries = Object.entries(tagCount).sort((a, b) => b[1] - a[1]);
+    if (activeCat === "全部") entries = entries.slice(0, 12);
+    if (!entries.length) return;
+    const mk = (label, count, tagVal) => {
+      const btn = document.createElement("button");
+      btn.className = "chip sub" + (activeTag === tagVal ? " active" : "");
+      btn.innerHTML = count == null ? label : `${label}<sup>${count}</sup>`;
+      btn.addEventListener("click", () => {
+        activeTag = tagVal;
+        [...subcatsEl.children].forEach((c) => c.classList.toggle("active", c === btn));
+        applyFilter();
+      });
+      subcatsEl.appendChild(btn);
+    };
+    mk("全部标签", null, "");
+    entries.forEach(([t, n]) => mk(t, n, t));
+  }
+  renderSubcats();
+
   function matches(b) {
     const okCat = activeCat === "全部" || b.cat === activeCat;
+    const okTag = !activeTag || (b.tags || []).includes(activeTag);
     const q = query.trim().toLowerCase();
-    const okQ = !q || [b.title, b.sub, b.author, b.translator, b.publisher, b.tag, b.cat]
+    const okQ = !q || [b.title, b.sub, b.author, b.translator, b.publisher, b.tag, b.cat, ...(b.tags || [])]
       .filter(Boolean)
       .some((s) => String(s).toLowerCase().includes(q));
-    return okCat && okQ;
+    return okCat && okTag && okQ;
   }
 
   function applyFilter() {
@@ -217,7 +248,7 @@
     const visibleEls = bookEls.filter((el) => !el.classList.contains("hidden"));
     curIdxEl.textContent = String(visibleEls.indexOf(wrap) + 1).padStart(2, "0");
 
-    infoTag.textContent = [b.cat, b.tag].filter(Boolean).join(" · ");
+    infoTag.textContent = [...new Set([b.cat, ...(b.tags || []), b.tag].filter(Boolean))].join(" · ");
     infoTitle.textContent = b.title;
     infoSub.textContent = b.sub || "";
     const authorLine =

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOOK SPACE · 总览 Overview</title>
+  <meta name="description" content="52 本书店寻得的书，封面墙总览，一次尽收眼底。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+SC:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="overview.css?v=1">
+</head>
+<body>
+
+  <!-- 顶部角标 -->
+  <div class="corner corner-left">
+    <div>Reading Archive</div>
+    <div class="line2">Bookstore Finds · 2026</div>
+  </div>
+  <div class="corner corner-right">
+    <a class="corner-link" href="index.html">← 返回书架 · Shelf</a>
+  </div>
+
+  <!-- 搜索 -->
+  <div class="search-box">
+    <input id="searchInput" type="search" placeholder="Search · 书名 / 作者" autocomplete="off" spellcheck="false">
+  </div>
+
+  <!-- 标题 -->
+  <header class="header">
+    <div class="eyebrow">Personal Collection · At a Glance</div>
+    <h1 class="title">OVERVIEW</h1>
+    <div class="subcount" id="subCount"></div>
+  </header>
+
+  <!-- 分类筛选 -->
+  <nav class="cats" id="cats" aria-label="书籍分类"></nav>
+
+  <!-- 封面墙 -->
+  <main class="wall" id="wall"></main>
+  <div class="empty-hint" id="emptyHint">没有找到匹配的书 · No Matches</div>
+
+  <!-- 底部提示 -->
+  <div class="footer-hint">Click a cover for details &nbsp;·&nbsp; ← → to browse</div>
+
+  <!-- 详情浮层 -->
+  <div class="detail" id="detail" aria-hidden="true">
+    <div class="detail-panel">
+      <button class="d-close" id="dClose" aria-label="关闭">×</button>
+      <button class="d-nav d-prev" id="dPrev" aria-label="上一本">←</button>
+      <button class="d-nav d-next" id="dNext" aria-label="下一本">→</button>
+      <div class="d-cover" id="dCover"></div>
+      <div class="d-info">
+        <div class="d-tag" id="dTag"></div>
+        <h2 class="d-title" id="dTitle"></h2>
+        <div class="d-sub" id="dSub"></div>
+        <div class="d-meta" id="dMeta"></div>
+        <p class="d-desc" id="dDesc"></p>
+        <div class="d-idx" id="dIdx"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js?v=7"></script>
+  <script src="overview.js?v=1"></script>
+</body>
+</html>
