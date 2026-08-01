@@ -3435,6 +3435,7 @@ const BOOKS = [
     cat: "社科历史",
     isbn: "9787552043778",
     desc: "以口述历史的方式记录上海体育人的亲历往事，在时间的赛场上打捞城市体育的集体记忆。",
+    cover: "covers/shijiandesachang.jpg",
     palette: { bg: "#dfe9f2", ink: "#1d3557", accent: "#e63946", coverA: "#aecbe8", coverB: "#f4f8fb", coverInk: "#274a78" }
   },
   {
