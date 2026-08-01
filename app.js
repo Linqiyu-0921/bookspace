@@ -252,7 +252,7 @@
     const visibleEls = bookEls.filter((el) => !el.classList.contains("hidden"));
     curIdxEl.textContent = String(visibleEls.indexOf(wrap) + 1).padStart(2, "0");
 
-    infoTag.textContent = [...new Set([b.cat, ...(b.tags || []), b.tag, b.secret ? "私密" : ""].filter(Boolean))].join(" · ");
+    infoTag.textContent = [...new Set([b.cat, ...(b.tags || []), ...(b.tag3 || []), b.tag, b.secret ? "私密" : ""].filter(Boolean))].join(" · ");
     infoTitle.textContent = b.title;
     infoSub.textContent = b.sub || "";
     const authorLine =
