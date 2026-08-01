@@ -139,6 +139,10 @@
   buildCats();
   render();
 
+  // 动态同步 meta description 的书籍数量（修复静态写死 52 的过期文案）
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) metaDesc.setAttribute("content", `${BOOKS.length} 本书店寻得的书，封面墙总览，一次尽收眼底。`);
+
   // 深链：overview.html?book=N 直接打开第 N 本详情（1 起）
   const q = qs.get("book");
   if (q) {

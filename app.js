@@ -69,6 +69,10 @@
   bookCountEl.textContent = `${BOOKS.length} Books`;
   totalIdxEl.textContent = String(BOOKS.length).padStart(2, "0");
 
+  // 动态同步 meta description 的书籍数量，防止与 data.js 脱节（修复静态写死 52 的过期文案）
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) metaDesc.setAttribute("content", `${BOOKS.length} 本书店寻得的书，以书脊之姿立于一排书架，悬停翻开即见封面。`);
+
   /* ---------- 生成书脊 ---------- */
   BOOKS.forEach((b, i) => {
     const p = b.palette || {};
