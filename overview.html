@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+SC:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="overview.css?v=1">
+  <link rel="stylesheet" href="overview.css?v=2">
 </head>
 <body>
 
@@ -33,8 +33,8 @@
     <div class="subcount" id="subCount"></div>
   </header>
 
-  <!-- 分类筛选 -->
-  <nav class="cats" id="cats" aria-label="书籍分类"></nav>
+  <!-- 筛选状态条 -->
+  <div class="active-filters" id="activeFilters"></div>
 
   <!-- 封面墙 -->
   <main class="wall" id="wall"></main>
@@ -42,6 +42,35 @@
 
   <!-- 底部提示 -->
   <div class="footer-hint">Click a cover for details &nbsp;·&nbsp; ← → to browse</div>
+
+  <!-- 标签抽屉触发按钮 -->
+  <button class="drawer-toggle" id="drawerToggle" aria-label="打开标签筛选">
+    <span class="dt-icon"></span>
+    <span class="dt-label">标签</span>
+    <span class="dt-count" id="drawerCount">0</span>
+  </button>
+
+  <!-- 标签抽屉 -->
+  <aside class="drawer" id="drawer" aria-hidden="true" aria-label="标签筛选">
+    <header class="drawer-head">
+      <h3>标签筛选</h3>
+      <div class="drawer-head-actions">
+        <button class="drawer-clear" id="drawerClear">清空</button>
+        <button class="drawer-close" id="drawerClose" aria-label="关闭">×</button>
+      </div>
+    </header>
+    <div class="drawer-body">
+      <div class="drawer-section">
+        <div class="drawer-section-title">一级分类 · L1</div>
+        <div class="drawer-tags" id="drawerL1"></div>
+      </div>
+      <div class="drawer-section">
+        <div class="drawer-section-title">二级标签 · L2<span class="drawer-section-hint" id="drawerL2Hint">选一级后可选</span></div>
+        <div class="drawer-tags" id="drawerL2"></div>
+      </div>
+    </div>
+  </aside>
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
 
   <!-- 详情浮层 -->
   <div class="detail" id="detail" aria-hidden="true">
@@ -61,7 +90,7 @@
     </div>
   </div>
 
-  <script src="data.js?v=7"></script>
-  <script src="overview.js?v=2"></script>
+  <script src="data.js?v=8"></script>
+  <script src="overview.js?v=3"></script>
 </body>
 </html>

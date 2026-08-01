@@ -1,13 +1,23 @@
 /* ============================================================
    BOOK SPACE · 总览 Overview
-   封面墙一次纵览全部藏书：按分类分组 + 分类锚点导航 + 搜索 + 详情浮层
+   封面墙一次纵览全部藏书：右侧标签抽屉筛选 + 分组 + 搜索 + 详情浮层
    ============================================================ */
 (() => {
   const wall = document.getElementById("wall");
-  const catsNav = document.getElementById("cats");
   const searchInput = document.getElementById("searchInput");
   const emptyHint = document.getElementById("emptyHint");
   const subCount = document.getElementById("subCount");
+  const activeFilters = document.getElementById("activeFilters");
+
+  const drawer = document.getElementById("drawer");
+  const drawerToggle = document.getElementById("drawerToggle");
+  const drawerClose = document.getElementById("drawerClose");
+  const drawerClear = document.getElementById("drawerClear");
+  const drawerBackdrop = document.getElementById("drawerBackdrop");
+  const drawerCount = document.getElementById("drawerCount");
+  const drawerL1 = document.getElementById("drawerL1");
+  const drawerL2 = document.getElementById("drawerL2");
+  const drawerL2Hint = document.getElementById("drawerL2Hint");
 
   const detail = document.getElementById("detail");
   const dCover = document.getElementById("dCover");
@@ -19,18 +29,35 @@
   const dIdx = document.getElementById("dIdx");
 
   let keyword = "";
-  let visible = [];        // 当前筛选后的书目
-  let detailIdx = -1;      // 详情浮层中的下标（相对 visible）
+  let selL1 = null;          // 选中的一级分类（null=全部）
+  let selL2 = new Set();     // 选中的二级标签集合
+  let visible = [];
+  let detailIdx = -1;
+  const BATCH = 30;          // 分批渲染步长
+  let renderedCount = 0;
 
-  // 分类顺序与计数
+  /* ---------- 统计 ---------- */
   const catCounts = {};
-  BOOKS.forEach(b => { catCounts[b.cat] = (catCounts[b.cat] || 0) + 1; });
-  const catOrder = ["全部", ...Object.keys(catCounts)];
+  const tag2Counts = {};
+  BOOKS.forEach(b => {
+    catCounts[b.cat] = (catCounts[b.cat] || 0) + 1;
+    (b.tags || []).forEach(t => {
+      tag2Counts[t] = tag2Counts[t] || { n: 0, cats: new Set() };
+      tag2Counts[t].n++;
+      tag2Counts[t].cats.add(b.cat);
+    });
+  });
+  const catOrder = Object.keys(catCounts);  // 一级分类（按出现顺序）
+  const l2Of = {};                          // 一级 -> [二级, ...]
+  catOrder.forEach(c => {
+    l2Of[c] = [...new Set(BOOKS.filter(b => b.cat === c).flatMap(b => b.tags || []))]
+      .sort((a, b) => tag2Counts[b].n - tag2Counts[a].n);
+  });
 
-  /* ---------- 封面 HTML：真实封面优先，缺失时回退设计款 ---------- */
+  /* ---------- 封面 HTML ---------- */
   function coverHTML(b) {
     if (b.cover) {
-      return `<img src="${b.cover}" alt="${b.title}">`;
+      return `<img loading="lazy" decoding="async" src="${b.cover}" alt="${b.title}">`;
     }
     const p = b.palette || {};
     const authorLine = b.origin ? `[${b.origin}] ${b.author}` : b.author;
@@ -42,24 +69,104 @@
       </div>`;
   }
 
-  /* ---------- 分类锚点导航（sticky） ---------- */
-  function buildCatNav() {
-    catsNav.innerHTML = catOrder.map(c => {
-      const n = c === "全部" ? BOOKS.length : catCounts[c];
-      const href = c === "全部" ? "#top" : "#cat-" + encodeURIComponent(c);
-      return `<a class="chip" href="${href}" data-cat="${c}">${c}<sup>${n}</sup></a>`;
-    }).join("");
+  /* ---------- 筛选 ---------- */
+  function match(b) {
+    if (keyword && ![b.title, b.sub, b.author, b.translator, b.publisher, b.tag]
+        .some(f => f && f.toLowerCase().includes(keyword))) return false;
+    if (selL1 && b.cat !== selL1) return false;
+    if (selL2.size && !(b.tags || []).some(t => selL2.has(t))) return false;
+    return true;
   }
-  catsNav.addEventListener("click", e => {
-    const a = e.target.closest("a.chip");
-    if (!a) return;
-    e.preventDefault();
-    const c = a.dataset.cat;
-    if (c === "全部") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
-      const el = document.getElementById("cat-" + encodeURIComponent(c));
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  /* ---------- 标签抽屉 ---------- */
+  function openDrawer() {
+    drawer.classList.add("open");
+    drawer.setAttribute("aria-hidden", "false");
+    drawerBackdrop.classList.add("show");
+    document.body.style.overflow = "hidden";
+  }
+  function closeDrawer() {
+    drawer.classList.remove("open");
+    drawer.setAttribute("aria-hidden", "true");
+    drawerBackdrop.classList.remove("show");
+    document.body.style.overflow = "";
+  }
+  drawerToggle.addEventListener("click", openDrawer);
+  drawerClose.addEventListener("click", closeDrawer);
+  drawerBackdrop.addEventListener("click", closeDrawer);
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && drawer.classList.contains("open")) closeDrawer();
+  });
+
+  function buildDrawer() {
+    const l1Html = [
+      `<button class="dtag ${!selL1 ? "active" : ""}" data-l1="__all__">全部<sup>${BOOKS.length}</sup></button>`,
+      ...catOrder.map(c =>
+        `<button class="dtag ${selL1 === c ? "active" : ""}" data-l1="${c}">${c}<sup>${catCounts[c]}</sup></button>`)
+    ].join("");
+    drawerL1.innerHTML = l1Html;
+
+    // 二级：仅在选中一级后展示其下的二级；未选一级时展示全部二级
+    const pool = selL1 ? (l2Of[selL1] || []) : Object.keys(tag2Counts)
+      .sort((a, b) => tag2Counts[b].n - tag2Counts[a].n);
+    const l2Html = pool.length
+      ? pool.map(t => {
+          const n = tag2Counts[t] ? tag2Counts[t].n : BOOKS.filter(b => (b.tags || []).includes(t)).length;
+          return `<button class="dtag ${selL2.has(t) ? "active" : ""}" data-l2="${t}">${t}<sup>${n}</sup></button>`;
+        }).join("")
+      : `<span class="drawer-section-hint">该一级分类下暂无二级标签</span>`;
+    drawerL2.innerHTML = l2Html;
+    drawerL2Hint.textContent = selL1 ? `当前：${selL1}` : "选一级后只显示其二级";
+  }
+
+  drawerL1.addEventListener("click", e => {
+    const btn = e.target.closest("button[data-l1]");
+    if (!btn) return;
+    const c = btn.dataset.l1;
+    selL1 = c === "__all__" ? null : c;
+    selL2.clear();
+    buildDrawer();
+    render();
+  });
+  drawerL2.addEventListener("click", e => {
+    const btn = e.target.closest("button[data-l2]");
+    if (!btn) return;
+    const t = btn.dataset.l2;
+    if (selL2.has(t)) selL2.delete(t); else selL2.add(t);
+    buildDrawer();
+    render();
+  });
+  drawerClear.addEventListener("click", () => {
+    selL1 = null;
+    selL2.clear();
+    buildDrawer();
+    render();
+  });
+
+  /* ---------- 筛选状态条 ---------- */
+  function renderActiveFilters() {
+    const chips = [];
+    if (selL1) chips.push(`<span class="af-chip">一级：${selL1}<button data-clear="l1" aria-label="移除">×</button></span>`);
+    selL2.forEach(t => chips.push(`<span class="af-chip">二级：${t}<button data-clear="l2-${t}" aria-label="移除">×</button></span>`));
+    if (chips.length) chips.push(`<button class="af-reset" id="afReset">全部清除</button>`);
+    activeFilters.innerHTML = chips.join("");
+    drawerCount.textContent = (selL1 ? 1 : 0) + selL2.size || "";
+  }
+  activeFilters.addEventListener("click", e => {
+    const clearBtn = e.target.closest("button[data-clear]");
+    if (clearBtn) {
+      const v = clearBtn.dataset.clear;
+      if (v === "l1") { selL1 = null; selL2.clear(); }
+      else if (v.startsWith("l2-")) selL2.delete(v.slice(3));
+      buildDrawer();
+      render();
+      return;
+    }
+    if (e.target.id === "afReset") {
+      selL1 = null;
+      selL2.clear();
+      buildDrawer();
+      render();
     }
   });
 
@@ -69,39 +176,65 @@
     render();
   });
 
-  function match(b) {
-    if (!keyword) return true;
-    return [b.title, b.sub, b.author, b.translator, b.publisher, b.tag]
-      .some(f => f && f.toLowerCase().includes(keyword));
-  }
-
-  /* ---------- 封面墙：按分类分组 + 锚点区块 ---------- */
+  /* ---------- 封面墙：分组渲染 + 分批追加 ---------- */
+  let observer = null;
   function render() {
     visible = BOOKS.filter(match);
     const groups = {};
     visible.forEach(b => { (groups[b.cat] = groups[b.cat] || []).push(b); });
 
-    wall.innerHTML = catOrder
-      .filter(c => c !== "全部" && groups[c])
-      .map(cat => {
-        const items = groups[cat].map(b => {
-          const vi = visible.indexOf(b);
-          return `<div class="tile" data-i="${vi}" style="animation-delay:${Math.min(vi * 18, 500)}ms">
+    // 只渲染有书的一级分组
+    const order = catOrder.filter(c => groups[c]);
+    wall.innerHTML = order.map(cat => `
+      <section class="cat-section" data-section="${cat}">
+        <h2 class="cat-head">${cat}<span class="cat-count">${groups[cat].length}</span></h2>
+        <div class="tiles" data-tiles="${cat}"></div>
+      </section>`).join("");
+
+    if (observer) { observer.disconnect(); observer = null; }
+
+    // 分批填充 tiles（懒加载：滚动接近底部时追加）
+    const queue = [];
+    order.forEach(cat => {
+      groups[cat].forEach(b => {
+        queue.push({ cat, b, vi: visible.indexOf(b) });
+      });
+    });
+    renderedCount = 0;
+    const tilesEls = {};
+    order.forEach(cat => { tilesEls[cat] = wall.querySelector(`[data-tiles="${cat}"]`); });
+
+    function renderBatch() {
+      const chunk = queue.slice(renderedCount, renderedCount + BATCH);
+      chunk.forEach(({ cat, b, vi }) => {
+        tilesEls[cat].insertAdjacentHTML("beforeend",
+          `<div class="tile" data-i="${vi}">
             <div class="tile-cover">${coverHTML(b)}</div>
             <div class="tile-caption">
               <div class="tc-title">${b.title}</div>
               <div class="tc-author">${b.author}${b.year ? " · " + b.year : ""}</div>
             </div>
-          </div>`;
-        }).join("");
-        return `<section class="cat-section" id="cat-${encodeURIComponent(cat)}">
-          <h2 class="cat-head">${cat}<span class="cat-count">${groups[cat].length}</span></h2>
-          <div class="tiles">${items}</div>
-        </section>`;
-      }).join("");
+          </div>`);
+      });
+      renderedCount += chunk.length;
+      if (renderedCount < queue.length && !observer) {
+        observer = new IntersectionObserver(entries => {
+          entries.forEach(en => {
+            if (en.isIntersecting) renderBatch();
+          });
+        }, { rootMargin: "600px 0px" });
+      }
+      if (renderedCount < queue.length) {
+        const last = wall.querySelector(".tile:last-of-type");
+        if (last) observer.observe(last);
+      }
+    }
+
+    renderBatch();
 
     emptyHint.classList.toggle("show", visible.length === 0);
-    subCount.textContent = `${visible.length} Books · ${Object.keys(groups).length} Categories`;
+    subCount.textContent = `${visible.length} Books · ${order.length} Categories`;
+    renderActiveFilters();
   }
 
   wall.addEventListener("click", e => {
@@ -115,7 +248,7 @@
     detailIdx = i;
     const b = visible[i];
     dCover.innerHTML = coverHTML(b);
-    dTag.textContent = [b.cat, b.tag].filter(Boolean).join(" · ");
+    dTag.textContent = [b.cat, ...(b.tags || []), ...(b.tag3 || []), b.tag].filter(Boolean).join(" · ");
     dTitle.textContent = b.title;
     dSub.textContent = b.sub || "";
     dSub.style.display = b.sub ? "" : "none";
@@ -151,23 +284,25 @@
 
   /* ---------- 初始化 ---------- */
   const qs = new URLSearchParams(location.search);
-  buildCatNav();
+  buildDrawer();
   render();
 
-  // 深链：overview.html?book=N 直接打开第 N 本详情（1 起）
   const q = qs.get("book");
   if (q) {
     const n = parseInt(q, 10);
     if (n >= 1 && n <= visible.length) openDetail(n - 1);
   }
-  // 深链：overview.html?cat=分类名 平滑滚动到对应分类区块
   const catParam = qs.get("cat");
   if (catParam) {
-    const el = document.getElementById("cat-" + encodeURIComponent(catParam));
-    if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 120);
+    selL1 = catParam;
+    buildDrawer();
+    render();
+    setTimeout(() => {
+      const el = wall.querySelector(`[data-section="${catParam}"]`);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 150);
   }
 
-  // 动态同步 meta description 的书籍数量（修复静态写死 52 的过期文案）
   const metaDesc = document.querySelector('meta[name="description"]');
   if (metaDesc) metaDesc.setAttribute("content", `${BOOKS.length} 本书店寻得的书，封面墙总览，一次尽收眼底。`);
 })();
