@@ -252,17 +252,25 @@
     const visibleEls = bookEls.filter((el) => !el.classList.contains("hidden"));
     curIdxEl.textContent = String(visibleEls.indexOf(wrap) + 1).padStart(2, "0");
 
-    infoTag.textContent = [...new Set([b.cat, ...(b.tags || []), b.tag].filter(Boolean))].join(" · ");
+    infoTag.textContent = [...new Set([b.cat, ...(b.tags || []), b.tag, b.secret ? "私密" : ""].filter(Boolean))].join(" · ");
     infoTitle.textContent = b.title;
     infoSub.textContent = b.sub || "";
     const authorLine =
       (b.origin && b.origin !== "中" ? "〔" + b.origin + "〕" : "") + (b.author || "");
-    infoMeta.textContent = [
-      authorLine,
-      b.translator ? b.translator + " 译" : "",
-      b.publisher,
-      b.year
-    ].filter(Boolean).join(" · ");
+    if (b.source === "weread") {
+      infoMeta.textContent = [
+        "微信读书电子书",
+        b.readTime ? "最近阅读 " + b.readTime : "",
+        b.finished ? "已读完" : "在读"
+      ].filter(Boolean).join(" · ");
+    } else {
+      infoMeta.textContent = [
+        authorLine,
+        b.translator ? b.translator + " 译" : "",
+        b.publisher,
+        b.year
+      ].filter(Boolean).join(" · ");
+    }
     infoDesc.textContent = b.desc || "";
     bookInfo.classList.add("active");
   }
