@@ -10688,26 +10688,6 @@ const BOOKS = [
     finished: false
   },
   {
-    title: "BBC夜空探索系列（套装全8册）【浓缩BBC《仰望夜空》杂志精粹！用图片收藏世界上目前为止播出时间最长的电视节目！50年的节目精华都在这套书里... (Z-Library).epub",
-    sub: "",
-    author: "BBC仰望夜空(Sky at Night)杂志",
-    origin: "",
-    translator: "",
-    publisher: "人民邮电出版社有限公司",
-    year: "",
-    tag: "天文科普",
-    tags: ["电子书", "天文学", "科普", "天文摄影"],
-    cat: "科学技术",
-    isbn: "",
-    desc: "BBC《仰望夜空》杂志精粹合辑，共 8 册：飞越太阳系、天文摄影鉴赏与指南、阿波罗大揭秘、哈勃深空美景、宇航员传奇、旅行者号的故事、简明观星指南、月球旅行指南，用图片收藏人类仰望星空的 50 年。",
-    cover: "covers/wr_CB_0yl8u78rpD4A6wI6xRBPqBRb.jpg",
-    source: "weread",
-    wrId: "CB_0yl8u78rpD4A6wI6xRBPqBRb",
-    secret: true,
-    readTime: "2025-09-22",
-    finished: false
-  },
-  {
     title: "半小时漫画中国史1-4（独家定制版）",
     sub: "",
     author: "二混子",
