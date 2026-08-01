@@ -102,15 +102,20 @@ body { padding-bottom: 90px; }
   color: var(--ink-muted);
 }
 
-/* ---------- 分类筛选（与主页同款 chips） ---------- */
+/* ---------- 分类锚点导航（sticky） ---------- */
 .cats {
-  margin: 34px auto 0;
+  position: sticky;
+  top: 120px;
+  z-index: 25;
+  margin: 30px auto 0;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 6px 24px;
-  padding: 0 8vw;
+  padding: 14px 8vw;
   max-width: 1200px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
 }
 .chip {
   position: relative;
@@ -143,11 +148,37 @@ body { padding-bottom: 90px; }
 .chip.active { color: var(--ink); }
 .chip.active::after { transform: scaleX(1); }
 
-/* ---------- 封面墙 ---------- */
+/* ---------- 封面墙（分组容器） ---------- */
 .wall {
-  margin: 52px auto 0;
+  margin: 40px auto 0;
   max-width: 1560px;
   padding: 0 clamp(24px, 4vw, 64px);
+}
+/* 单个分类区块 */
+.cat-section {
+  margin-bottom: 68px;
+  scroll-margin-top: 176px;
+}
+.cat-head {
+  font-family: "Playfair Display", "Noto Serif SC", serif;
+  font-weight: 500;
+  font-size: clamp(18px, 2vw, 26px);
+  letter-spacing: 0.08em;
+  margin: 0 0 28px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.cat-count {
+  font-family: "Playfair Display", serif;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
+}
+/* 区块内的封面栅格 */
+.tiles {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
   gap: 44px 26px;
@@ -385,14 +416,14 @@ body { padding-bottom: 90px; }
   .search-box input { width: 132px; font-size: 12px; }
   .header { padding-top: 96px; }
   .title { font-size: clamp(32px, 10vw, 64px); }
-  .cats { gap: 2px 14px; padding: 0 4vw; }
+  .cats { position: sticky; top: 96px; gap: 2px 14px; padding: 10px 4vw; }
   .chip { font-size: 10px; letter-spacing: 0.08em; }
-  .wall {
-    margin-top: 34px;
+  .wall { margin-top: 26px; padding: 0 18px; }
+  .tiles {
     grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
     gap: 30px 16px;
-    padding: 0 18px;
   }
+  .cat-section { margin-bottom: 44px; scroll-margin-top: 150px; }
   .tile-caption .tc-title { font-size: 11px; }
   .footer-hint { display: none; }
   .detail-panel {

@@ -1,6 +1,6 @@
 /* ============================================================
    BOOK SPACE · 总览 Overview
-   封面墙一次纵览全部藏书：分类筛选 + 搜索 + 详情浮层
+   封面墙一次纵览全部藏书：按分类分组 + 分类锚点导航 + 搜索 + 详情浮层
    ============================================================ */
 (() => {
   const wall = document.getElementById("wall");
@@ -18,10 +18,14 @@
   const dDesc = document.getElementById("dDesc");
   const dIdx = document.getElementById("dIdx");
 
-  let activeCat = "全部";
   let keyword = "";
   let visible = [];        // 当前筛选后的书目
   let detailIdx = -1;      // 详情浮层中的下标（相对 visible）
+
+  // 分类顺序与计数
+  const catCounts = {};
+  BOOKS.forEach(b => { catCounts[b.cat] = (catCounts[b.cat] || 0) + 1; });
+  const catOrder = ["全部", ...Object.keys(catCounts)];
 
   /* ---------- 封面 HTML：真实封面优先，缺失时回退设计款 ---------- */
   function coverHTML(b) {
@@ -38,22 +42,25 @@
       </div>`;
   }
 
-  /* ---------- 分类 chips ---------- */
-  function buildCats() {
-    const counts = {};
-    BOOKS.forEach(b => { counts[b.cat] = (counts[b.cat] || 0) + 1; });
-    const cats = ["全部", ...Object.keys(counts)];
-    catsNav.innerHTML = cats.map(c => {
-      const n = c === "全部" ? BOOKS.length : counts[c];
-      return `<button class="chip${c === activeCat ? " active" : ""}" data-cat="${c}">${c}<sup>${n}</sup></button>`;
+  /* ---------- 分类锚点导航（sticky） ---------- */
+  function buildCatNav() {
+    catsNav.innerHTML = catOrder.map(c => {
+      const n = c === "全部" ? BOOKS.length : catCounts[c];
+      const href = c === "全部" ? "#top" : "#cat-" + encodeURIComponent(c);
+      return `<a class="chip" href="${href}" data-cat="${c}">${c}<sup>${n}</sup></a>`;
     }).join("");
   }
   catsNav.addEventListener("click", e => {
-    const chip = e.target.closest(".chip");
-    if (!chip) return;
-    activeCat = chip.dataset.cat;
-    catsNav.querySelectorAll(".chip").forEach(el => el.classList.toggle("active", el === chip));
-    render();
+    const a = e.target.closest("a.chip");
+    if (!a) return;
+    e.preventDefault();
+    const c = a.dataset.cat;
+    if (c === "全部") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      const el = document.getElementById("cat-" + encodeURIComponent(c));
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   });
 
   /* ---------- 搜索 ---------- */
@@ -63,26 +70,38 @@
   });
 
   function match(b) {
-    if (activeCat !== "全部" && b.cat !== activeCat) return false;
     if (!keyword) return true;
     return [b.title, b.sub, b.author, b.translator, b.publisher, b.tag]
       .some(f => f && f.toLowerCase().includes(keyword));
   }
 
-  /* ---------- 封面墙渲染 ---------- */
+  /* ---------- 封面墙：按分类分组 + 锚点区块 ---------- */
   function render() {
     visible = BOOKS.filter(match);
-    wall.innerHTML = visible.map((b, i) => `
-      <div class="tile" data-i="${i}" style="animation-delay:${Math.min(i * 18, 500)}ms">
-        <div class="tile-cover">${coverHTML(b)}</div>
-        <div class="tile-caption">
-          <div class="tc-title">${b.title}</div>
-          <div class="tc-author">${b.author}${b.year ? " · " + b.year : ""}</div>
-        </div>
-      </div>`).join("");
+    const groups = {};
+    visible.forEach(b => { (groups[b.cat] = groups[b.cat] || []).push(b); });
+
+    wall.innerHTML = catOrder
+      .filter(c => c !== "全部" && groups[c])
+      .map(cat => {
+        const items = groups[cat].map(b => {
+          const vi = visible.indexOf(b);
+          return `<div class="tile" data-i="${vi}" style="animation-delay:${Math.min(vi * 18, 500)}ms">
+            <div class="tile-cover">${coverHTML(b)}</div>
+            <div class="tile-caption">
+              <div class="tc-title">${b.title}</div>
+              <div class="tc-author">${b.author}${b.year ? " · " + b.year : ""}</div>
+            </div>
+          </div>`;
+        }).join("");
+        return `<section class="cat-section" id="cat-${encodeURIComponent(cat)}">
+          <h2 class="cat-head">${cat}<span class="cat-count">${groups[cat].length}</span></h2>
+          <div class="tiles">${items}</div>
+        </section>`;
+      }).join("");
+
     emptyHint.classList.toggle("show", visible.length === 0);
-    const catNote = activeCat === "全部" ? "" : ` · ${activeCat}`;
-    subCount.textContent = `${visible.length} Books${catNote} · 8 Categories`;
+    subCount.textContent = `${visible.length} Books · ${Object.keys(groups).length} Categories`;
   }
 
   wall.addEventListener("click", e => {
@@ -131,17 +150,9 @@
   });
 
   /* ---------- 初始化 ---------- */
-  // 深链：?cat= 指定初始分类（需在 buildCats 前读取，以便高亮对应 chip）
   const qs = new URLSearchParams(location.search);
-  const catParam = qs.get("cat");
-  if (catParam && (catParam === "全部" || BOOKS.some(b => b.cat === catParam))) activeCat = catParam;
-
-  buildCats();
+  buildCatNav();
   render();
-
-  // 动态同步 meta description 的书籍数量（修复静态写死 52 的过期文案）
-  const metaDesc = document.querySelector('meta[name="description"]');
-  if (metaDesc) metaDesc.setAttribute("content", `${BOOKS.length} 本书店寻得的书，封面墙总览，一次尽收眼底。`);
 
   // 深链：overview.html?book=N 直接打开第 N 本详情（1 起）
   const q = qs.get("book");
@@ -149,4 +160,14 @@
     const n = parseInt(q, 10);
     if (n >= 1 && n <= visible.length) openDetail(n - 1);
   }
+  // 深链：overview.html?cat=分类名 平滑滚动到对应分类区块
+  const catParam = qs.get("cat");
+  if (catParam) {
+    const el = document.getElementById("cat-" + encodeURIComponent(catParam));
+    if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 120);
+  }
+
+  // 动态同步 meta description 的书籍数量（修复静态写死 52 的过期文案）
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) metaDesc.setAttribute("content", `${BOOKS.length} 本书店寻得的书，封面墙总览，一次尽收眼底。`);
 })();
