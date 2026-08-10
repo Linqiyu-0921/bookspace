@@ -11,6 +11,7 @@ const writeCompatibleOnly = process.argv.includes("--write-compatible");
 const dryRun = process.argv.includes("--dry-run");
 const uploadCovers = process.argv.includes("--upload-covers");
 const addTravelOption = process.argv.includes("--add-travel-option");
+const verifyFields = process.argv.includes("--verify-fields");
 const shouldWrite = process.argv.includes("--write") || writeCompatibleOnly || dryRun || uploadCovers || addTravelOption;
 
 const normalizeTitle = value => String(value || "")
@@ -18,14 +19,23 @@ const normalizeTitle = value => String(value || "")
   .replace(/[\s·•:：,，。.!！?？'"“”‘’《》【】\[\]()（）—–\-_/\\]/g, "");
 
 function runLark(args) {
-  const output = execFileSync("lark-cli", args, {
-    cwd: root,
-    encoding: "utf8",
-    maxBuffer: 32 * 1024 * 1024
-  });
-  const response = JSON.parse(output);
-  if (response.ok === false) throw new Error(JSON.stringify(response.error));
-  return response.data || response;
+  for (let attempt = 1; attempt <= 3; attempt += 1) {
+    try {
+      const output = execFileSync("lark-cli", args, {
+        cwd: root,
+        encoding: "utf8",
+        maxBuffer: 32 * 1024 * 1024
+      });
+      const response = JSON.parse(output);
+      if (response.ok === false) throw new Error(JSON.stringify(response.error));
+      return response.data || response;
+    } catch (error) {
+      const detail = `${error.message || ""}\n${error.stderr || ""}`;
+      const retryable = /"type"\s*:\s*"network"|TLS handshake timeout/.test(detail);
+      if (!retryable || attempt === 3) throw error;
+      console.warn(`lark-cli network retry ${attempt}/3`);
+    }
+  }
 }
 
 function readBooks() {
@@ -74,6 +84,44 @@ function readExistingRecords() {
   }
 }
 
+function readFieldOptions(fieldId) {
+  const options = [];
+  for (let offset = 0; ; offset += 30) {
+    const page = runLark([
+      "base", "+field-search-options",
+      "--base-token", baseToken,
+      "--table-id", tableId,
+      "--field-id", fieldId,
+      "--offset", String(offset),
+      "--limit", "30",
+      "--format", "json"
+    ]);
+    options.push(...page.options);
+    if (options.length >= page.total) return options;
+  }
+}
+
+function readBusinessRecords(fields) {
+  const records = [];
+  for (let offset = 0; ; offset += 200) {
+    const args = [
+      "base", "+record-list",
+      "--base-token", baseToken,
+      "--table-id", tableId,
+      "--offset", String(offset),
+      "--limit", "200",
+      "--format", "json"
+    ];
+    fields.forEach(field => args.push("--field-id", field));
+    const page = runLark(args);
+    page.data.forEach((values, index) => records.push({
+      recordId: page.record_id_list[index],
+      values
+    }));
+    if (!page.has_more) return records;
+  }
+}
+
 function asRow(book) {
   return [
     book.title,
@@ -99,20 +147,24 @@ const imported = readImportedBooks(books);
 const existing = readExistingRecords();
 const existingIsbns = new Set(existing.map(record => record.isbn).filter(Boolean));
 const existingTitles = new Set(existing.map(record => normalizeTitle(record.title)));
+const websiteIsbns = new Set(books.map(book => book.isbn).filter(Boolean));
+const websiteTitles = new Set(books.map(book => normalizeTitle(book.title)));
+const websiteMissingInBase = books.filter(book => (
+  !(book.isbn && existingIsbns.has(book.isbn))
+  && !existingTitles.has(normalizeTitle(book.title))
+));
+const baseMissingFromWebsite = existing.filter(record => (
+  !(record.isbn && websiteIsbns.has(record.isbn))
+  && !websiteTitles.has(normalizeTitle(record.title))
+));
 const pending = imported.filter(book => (
   !(book.isbn && existingIsbns.has(book.isbn))
   && !existingTitles.has(normalizeTitle(book.title))
 ));
-const fieldsResponse = runLark([
-  "base", "+field-list",
-  "--base-token", baseToken,
-  "--table-id", tableId,
-  "--format", "json"
-]);
-const categoryField = fieldsResponse.fields.find(field => field.name === "分类");
-const tagField = fieldsResponse.fields.find(field => field.name === "细分标签");
-const categoryOptions = new Set(categoryField?.options?.map(option => option.name) || []);
-const tagOptions = new Set(tagField?.options?.map(option => option.name) || []);
+const categoryOptionList = readFieldOptions("fldcnEAAHC");
+const tagOptionList = readFieldOptions("fld7XOK96E");
+const categoryOptions = new Set(categoryOptionList.map(option => option.name));
+const tagOptions = new Set(tagOptionList.map(option => option.name));
 const pendingCategories = [...new Set(pending.map(book => book.cat))];
 const pendingTags = [...new Set(pending.flatMap(book => book.tags))];
 const missingCategoryOptions = pendingCategories.filter(value => !categoryOptions.has(value));
@@ -136,11 +188,35 @@ const pendingCoverUploads = coverCandidates
   }))
   .filter(item => item.record && !item.record.cover);
 
+const businessFields = [
+  "书名",
+  "读完",
+  "细分标签",
+  "简介",
+  "ISBN",
+  "分类",
+  "私密",
+  "出版社",
+  "译者",
+  "出版年份",
+  "来源照片",
+  "最近阅读",
+  "封面参考链接",
+  "微信读书ID",
+  "作者"
+];
+
 console.log(JSON.stringify({
   mode: dryRun ? "dry-run" : (shouldWrite ? "write" : "preview"),
   websiteBooks: books.length,
   importedBooks: imported.length,
   baseRecordsBefore: existing.length,
+  websiteMissingInBase: websiteMissingInBase.map(book => book.title),
+  baseMissingFromWebsite: baseMissingFromWebsite.map(record => ({
+    recordId: record.recordId,
+    title: record.title,
+    isbn: record.isbn
+  })),
   alreadyInBase: imported.length - pending.length,
   pending: pending.length,
   missingCategoryOptions,
@@ -151,6 +227,48 @@ console.log(JSON.stringify({
   expectedBaseRecordsAfter: existing.length + pending.length
 }, null, 2));
 
+if (verifyFields) {
+  const records = readBusinessRecords(businessFields);
+  const byIsbn = new Map();
+  const byTitle = new Map();
+  records.forEach(record => {
+    const [title, , , , isbn] = record.values;
+    if (isbn) byIsbn.set(isbn, record);
+    byTitle.set(normalizeTitle(title), record);
+  });
+  const normalizeValue = value => (value === "" || value === undefined ? null : value);
+  const mismatches = [];
+  imported.forEach(book => {
+    const record = byIsbn.get(book.isbn) || byTitle.get(normalizeTitle(book.title));
+    if (!record) {
+      mismatches.push({ title: book.title, field: "record", expected: "present", actual: "missing" });
+      return;
+    }
+    const expected = asRow(book);
+    expected.forEach((value, index) => {
+      const rawActual = record.values[index];
+      const actual = index === 5 && Array.isArray(rawActual) && rawActual.length === 1
+        ? rawActual[0]
+        : normalizeValue(rawActual);
+      const target = normalizeValue(value);
+      if (JSON.stringify(actual) !== JSON.stringify(target)) {
+        mismatches.push({
+          title: book.title,
+          field: businessFields[index],
+          expected: target,
+          actual
+        });
+      }
+    });
+  });
+  console.log(JSON.stringify({
+    verifiedImportedRecords: imported.length,
+    checkedFieldsPerRecord: businessFields.length,
+    mismatches
+  }, null, 2));
+  process.exit(mismatches.length ? 1 : 0);
+}
+
 if (!shouldWrite) process.exit(0);
 if (addTravelOption) {
   const current = runLark([
@@ -160,7 +278,7 @@ if (addTravelOption) {
     "--field-id", "fld7XOK96E",
     "--format", "json"
   ]).field;
-  if (current.options.some(option => option.name === "旅行与生活")) {
+  if (tagOptions.has("旅行与生活")) {
     console.log(JSON.stringify({ option: "旅行与生活", updated: false, reason: "already_exists" }));
     process.exit(0);
   }
@@ -169,7 +287,7 @@ if (addTravelOption) {
     type: current.type,
     multiple: current.multiple,
     options: [
-      ...current.options.map(({ name, hue, lightness }) => ({ name, hue, lightness })),
+      ...tagOptionList.map(({ name, hue, lightness }) => ({ name, hue, lightness })),
       { name: "旅行与生活", hue: "Wathet", lightness: "Lighter" }
     ]
   };
@@ -209,23 +327,7 @@ if (!writeCompatibleOnly && (missingCategoryOptions.length || missingTagOptions.
   throw new Error("Base 分类选项与待同步书目不兼容");
 }
 
-const fields = [
-  "书名",
-  "读完",
-  "细分标签",
-  "简介",
-  "ISBN",
-  "分类",
-  "私密",
-  "出版社",
-  "译者",
-  "出版年份",
-  "来源照片",
-  "最近阅读",
-  "封面参考链接",
-  "微信读书ID",
-  "作者"
-];
+const fields = businessFields;
 
 for (let start = 0; start < writable.length; start += 200) {
   const chunk = writable.slice(start, start + 200);

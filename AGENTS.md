@@ -86,8 +86,8 @@
 - 书名匹配必须用「原始字符串 + 副标题分隔符（（：:—-· ）」判断同书，防"岁月"误配"岁月忽已暮"
 
 ### 同步飞书 Base
-- Base：`PTV8bD3VqalscasqrdOc3BEin5c`，表 `tblBtcwA4cc0nK9U`「书籍清单」。`data.js` 当前 923 条，Base 当前 911 条；历史对话导入已同步 296 条并上传 9 张封面，另 12 条因“细分标签”缺少 `旅行与生活` 选项而待同步，禁止宣称双向对齐。
-- `node scripts/sync-feishu.mjs` 只读预检网站与 Base 差异；`--write-compatible` 仅写入已有分类选项可容纳的记录，`--write` 写入全部待同步记录，`--upload-covers` 只追加尚未上传的批次封面。写入前先运行预检。
+- Base：`PTV8bD3VqalscasqrdOc3BEin5c`，表 `tblBtcwA4cc0nK9U`「书籍清单」。`data.js` 与 Base 当前均为 923 条；历史对话导入的 308 条及 9 张已核验封面已同步完成。
+- `node scripts/sync-feishu.mjs` 只读预检网站与 Base 差异；`--write-compatible` 仅写入已有分类选项可容纳的记录，`--write` 写入全部待同步记录，`--upload-covers` 只追加尚未上传的批次封面，`--verify-fields` 逐字段核对本批 308 条记录。写入前先运行预检。
 - `lark-cli base +record-list --format json`：输出 `data.record_id_list` 与 `data.data`（值数组）**按索引一一对齐**——这是获取 record_id 的唯一通道，批量更新用 `+record-batch-update`
 - 字段顺序（值数组索引）：0书名 / 1读完 / 2细分标签 / 3简介 / 4ISBN / 5分类 / 6私密 / 7封面 / 8出版社 / 9译者 / 10出版年份 / 11来源照片 / 12最近阅读 / 13封面参考链接 / 14微信读书ID / 15作者
 - 微信读书书的分类选项：`+field-search-options --field-id 分类` 查看；data.js 的 cat 值必须存在于选项
