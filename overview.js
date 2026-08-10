@@ -47,11 +47,10 @@
       tag2Counts[t].cats.add(b.cat);
     });
   });
-  const catOrder = Object.keys(catCounts);  // 一级分类（按出现顺序）
+  const catOrder = CATEGORY_ORDER.filter(c => catCounts[c]);  // 一级分类（统一展示顺序）
   const l2Of = {};                          // 一级 -> [二级, ...]
   catOrder.forEach(c => {
-    l2Of[c] = [...new Set(BOOKS.filter(b => b.cat === c).flatMap(b => b.tags || []))]
-      .sort((a, b) => tag2Counts[b].n - tag2Counts[a].n);
+    l2Of[c] = (CATEGORY_GROUPS[c] || []).filter(tag => tag2Counts[tag]?.n);
   });
 
   /* ---------- 封面 HTML ---------- */
@@ -71,8 +70,11 @@
 
   /* ---------- 筛选 ---------- */
   function match(b) {
-    if (keyword && ![b.title, b.sub, b.author, b.translator, b.publisher, b.tag]
-        .some(f => f && f.toLowerCase().includes(keyword))) return false;
+    if (keyword && ![
+      b.title, b.sub, b.author, b.translator, b.publisher, b.year, b.isbn,
+      b.tag, b.cat, ...(b.tags || []), ...(b.tag3 || [])
+    ]
+        .some(f => f && String(f).toLowerCase().includes(keyword))) return false;
     if (selL1 && b.cat !== selL1) return false;
     if (selL2.size && !(b.tags || []).some(t => selL2.has(t))) return false;
     return true;
@@ -107,8 +109,9 @@
     drawerL1.innerHTML = l1Html;
 
     // 二级：仅在选中一级后展示其下的二级；未选一级时展示全部二级
-    const pool = selL1 ? (l2Of[selL1] || []) : Object.keys(tag2Counts)
-      .sort((a, b) => tag2Counts[b].n - tag2Counts[a].n);
+    const pool = selL1
+      ? (l2Of[selL1] || [])
+      : catOrder.flatMap(cat => l2Of[cat] || []);
     const l2Html = pool.length
       ? pool.map(t => {
           const n = tag2Counts[t] ? tag2Counts[t].n : BOOKS.filter(b => (b.tags || []).includes(t)).length;
@@ -233,7 +236,9 @@
     renderBatch();
 
     emptyHint.classList.toggle("show", visible.length === 0);
-    subCount.textContent = `${visible.length} Books · ${order.length} Categories`;
+    const bookUnit = visible.length === 1 ? "Book" : "Books";
+    const categoryUnit = order.length === 1 ? "Category" : "Categories";
+    subCount.textContent = `${visible.length} ${bookUnit} · ${order.length} ${categoryUnit}`;
     renderActiveFilters();
   }
 
@@ -293,7 +298,7 @@
     if (n >= 1 && n <= visible.length) openDetail(n - 1);
   }
   const catParam = qs.get("cat");
-  if (catParam) {
+  if (catParam && catCounts[catParam]) {
     selL1 = catParam;
     buildDrawer();
     render();
@@ -304,5 +309,5 @@
   }
 
   const metaDesc = document.querySelector('meta[name="description"]');
-  if (metaDesc) metaDesc.setAttribute("content", `${BOOKS.length} 本书店寻得的书，封面墙总览，一次尽收眼底。`);
+  if (metaDesc) metaDesc.setAttribute("content", `${BOOKS.length} 本实体藏书与微信读书收藏，封面墙总览，一次尽收眼底。`);
 })();

@@ -1,5 +1,5 @@
 /* ============================================================
-   Between the Spines · 交互逻辑
+   BOOK SPACE · 书架主页交互逻辑
    书脊生成 / 悬停翻开 / 背景随书切换 / 拖拽·滚轮平移书架
    ============================================================ */
 (function () {
@@ -22,6 +22,7 @@
 
   const DEFAULT_BG = "#ece9e2";
   const DEFAULT_INK = "#141414";
+  const bookCountText = (count) => `${count} ${count === 1 ? "Book" : "Books"}`;
 
   // 把色板墨色转为半透明副色（兼容性优于 CSS color-mix）
   function fadeInk(hex, a) {
@@ -66,14 +67,15 @@
     }
   }
 
-  bookCountEl.textContent = `${BOOKS.length} Books`;
+  bookCountEl.textContent = bookCountText(BOOKS.length);
   totalIdxEl.textContent = String(BOOKS.length).padStart(2, "0");
 
-  // 动态同步 meta description 的书籍数量，防止与 data.js 脱节（修复静态写死 52 的过期文案）
+  // 动态同步 meta description 的书籍数量，防止与 data.js 脱节
   const metaDesc = document.querySelector('meta[name="description"]');
-  if (metaDesc) metaDesc.setAttribute("content", `${BOOKS.length} 本书店寻得的书，以书脊之姿立于一排书架，悬停翻开即见封面。`);
+  if (metaDesc) metaDesc.setAttribute("content", `${BOOKS.length} 本实体藏书与微信读书收藏，以书脊之姿立于一排书架，悬停翻开即见封面。`);
 
   /* ---------- 生成书脊 ---------- */
+  const bookFragment = document.createDocumentFragment();
   BOOKS.forEach((b, i) => {
     const p = b.palette || {};
     const spineColor = p.coverA || "#46608a";
@@ -124,12 +126,12 @@
             </div>
             <span class="cover-band"></span>
           </div>
-          ${b.cover ? `<img src="${b.cover}" alt="${b.title}" decoding="async" onerror="this.remove()">` : ""}
+          ${b.cover ? `<img data-src="${b.cover}" alt="${b.title}" loading="lazy" decoding="async" fetchpriority="low">` : ""}
         </div>
         <div class="book-shadow"></div>
       </div>`;
 
-    track.appendChild(wrap);
+    bookFragment.appendChild(wrap);
 
     // 真实封面加载后：封面比例随原图（不裁切变形），书脊主色/墨色取自封面主色
     const coverImg = wrap.querySelector(".cover img");
@@ -146,15 +148,36 @@
         }
         wrap.classList.add("real-cover");
       };
-      if (coverImg.complete) applyReal();
-      else coverImg.addEventListener("load", applyReal);
+      coverImg.addEventListener("load", applyReal, { once: true });
+      coverImg.addEventListener("error", () => coverImg.remove(), { once: true });
     }
   });
 
+  track.appendChild(bookFragment);
   const bookEls = [...track.children];
 
+  function loadCover(wrap) {
+    const img = wrap.querySelector(".cover img[data-src]");
+    if (!img) return;
+    img.src = img.dataset.src;
+    delete img.dataset.src;
+  }
+
+  if ("IntersectionObserver" in window) {
+    const coverObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        loadCover(entry.target);
+        coverObserver.unobserve(entry.target);
+      });
+    }, { root: scene, rootMargin: "0px 320px" });
+    bookEls.forEach((wrap) => coverObserver.observe(wrap));
+  } else {
+    bookEls.forEach(loadCover);
+  }
+
   /* ---------- 种类分类筛选 + 搜索 ---------- */
-  const CAT_ORDER = ["全部", "社科历史", "文学小说", "商业经管", "随笔书信", "哲学宗教", "诗歌", "艺术设计", "漫画"];
+  const CAT_ORDER = ["全部", ...CATEGORY_ORDER];
   const catCount = {};
   BOOKS.forEach((b) => { catCount[b.cat] = (catCount[b.cat] || 0) + 1; });
 
@@ -185,8 +208,11 @@
     const pool = activeCat === "全部" ? BOOKS : BOOKS.filter((b) => b.cat === activeCat);
     const tagCount = {};
     pool.forEach((b) => (b.tags || []).forEach((t) => { tagCount[t] = (tagCount[t] || 0) + 1; }));
-    let entries = Object.entries(tagCount).sort((a, b) => b[1] - a[1]);
-    if (activeCat === "全部") entries = entries.slice(0, 12);
+    let entries = activeCat === "全部"
+      ? Object.entries(tagCount).sort((a, b) => b[1] - a[1]).slice(0, 12)
+      : (CATEGORY_GROUPS[activeCat] || [])
+        .filter((tag) => tagCount[tag])
+        .map((tag) => [tag, tagCount[tag]]);
     if (!entries.length) return;
     const mk = (label, count, tagVal) => {
       const btn = document.createElement("button");
@@ -208,7 +234,10 @@
     const okCat = activeCat === "全部" || b.cat === activeCat;
     const okTag = !activeTag || (b.tags || []).includes(activeTag);
     const q = query.trim().toLowerCase();
-    const okQ = !q || [b.title, b.sub, b.author, b.translator, b.publisher, b.tag, b.cat, ...(b.tags || [])]
+    const okQ = !q || [
+      b.title, b.sub, b.author, b.translator, b.publisher, b.year, b.isbn,
+      b.tag, b.cat, ...(b.tags || []), ...(b.tag3 || [])
+    ]
       .filter(Boolean)
       .some((s) => String(s).toLowerCase().includes(q));
     return okCat && okTag && okQ;
@@ -222,7 +251,7 @@
       wrap.classList.toggle("hidden", !show);
       if (show) visible++;
     });
-    bookCountEl.textContent = `${visible} Books`;
+    bookCountEl.textContent = bookCountText(visible);
     totalIdxEl.textContent = String(visible).padStart(2, "0");
     curIdxEl.textContent = visible ? "01" : "00";
     emptyHint.classList.toggle("show", visible === 0);
@@ -303,6 +332,7 @@
     if (openIdx >= 0) bookEls[openIdx].classList.remove("open");
     openIdx = i;
     const wrap = bookEls[i];
+    loadCover(wrap);
     wrap.classList.add("open");
     openBook(wrap, BOOKS[i], i);
     // 待书脊右侧腾位动画基本结束后再居中，读到的才是终态位置
@@ -355,13 +385,12 @@
   });
 
   /* ---------- 触屏：点按切换翻开 ---------- */
-  bookEls.forEach((wrap, i) => {
-    wrap.addEventListener("touchstart", (e) => {
-      if (wrap.classList.contains("open")) return; // 已打开则允许后续行为
-      e.preventDefault();
-      setOpen(i);
-    }, { passive: false });
-  });
+  track.addEventListener("touchstart", (e) => {
+    const wrap = e.target.closest(".book-wrap");
+    if (!wrap || wrap.classList.contains("open")) return;
+    e.preventDefault();
+    setOpen(+wrap.dataset.idx);
+  }, { passive: false });
 
   /* ---------- 书架平移：拖拽 / 滚轮 / 方向键 ---------- */
   let offset = 0;         // 当前位移
