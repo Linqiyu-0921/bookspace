@@ -12,7 +12,7 @@
 | 文件 | 职责 |
 |---|---|
 | `data.js` | 分类定义与全部书籍数据，导出全局 `CATEGORY_ORDER`、`CATEGORY_GROUPS` 和 `BOOKS`；共 **923 本**（579 实体 + 344 微信读书电子书）。一切页面的数据源 |
-| `index.html` + `styles.css` + `app.js` | 书架主页：书脊墙、悬停翻开封面、分类筛选 |
+| `index.html` + `styles.css` + `app.js` | 书架主页：书脊墙、悬停/点按翻开封面、一级分类筛选 |
 | `overview.html` + `overview.css` + `overview.js` | 总览页：分类分组、右侧标签抽屉筛选（一级/二级多选 OR）、搜索 |
 | `covers/` | 封面图片；历史文件沿用原格式，新检索封面统一压缩为 WebP |
 | `imports/` | 外部识别书目的审计暂存区；JSON 文件按 `YYYY-MM-DD-来源.json` 命名，完成合并后保留来源与导入状态，不存图片 |
@@ -64,7 +64,8 @@
 
 ## 4. 关键页面逻辑
 
-- `app.js`：`BOOKS.length` 动态注入 meta description 与角标数字；书架支持 `cat` 一级分类和 `tags` 二级分类筛选，悬停翻开显示封面详情（infoTag/infoMeta/infoDesc）
+- `app.js`：`BOOKS.length` 动态注入 meta description 与角标数字；书架只展示 `cat` 一级分类筛选，二级分类仅保留在搜索与图书详情中；桌面悬停、移动端点按翻开显示封面详情（infoTag/infoMeta/infoDesc）
+- 书架移动端的一级分类必须保持单行横向滚动，不得换行占据书架空间；触控目标不小于 40px，页面禁止横向溢出
 - `overview.js`：档案索引式右侧双栏抽屉筛选（`cat` 一级单选 + `tags` 二级多选 OR）；桌面端指针进入右侧热区自动打开、离开后延迟收起，触屏与键盘保留显式按钮；封面用 `data-src` + `IntersectionObserver` 懒加载并分批渲染；搜索跨全部书籍字段过滤；`?cat=一级分类` 深链
 - 两页分类顺序均读取 `data.js` 的 `CATEGORY_ORDER` / `CATEGORY_GROUPS`；数量均由 JS 从 `BOOKS.length` 计算，HTML 与注释中禁止静态写死总数
 

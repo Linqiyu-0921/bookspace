@@ -160,8 +160,7 @@ html, body {
   pointer-events: none;
 }
 .masthead .header { pointer-events: none; }
-.masthead .cats,
-.masthead .subcats { pointer-events: auto; }
+.masthead .cats { pointer-events: auto; }
 
 /* ---------- 种类分类筛选 ---------- */
 .cats {
@@ -204,24 +203,6 @@ html, body {
 .chip:hover { color: var(--ink); }
 .chip.active { color: var(--ink); }
 .chip.active::after { transform: scaleX(1); }
-
-/* ---------- 细分标签筛选 ---------- */
-.subcats {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 4px 16px;
-  padding: 0 12vw;
-  margin-top: 12px;
-}
-.chip.sub {
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  padding: 2px 1px 4px;
-  opacity: 0.85;
-}
-.chip.sub sup { font-size: 7px; }
 
 /* ---------- 图书说明（留白带内，紧随筛选行之下，纯文字无卡片，不遮挡书籍） ---------- */
 .book-info {
@@ -626,7 +607,7 @@ html, body {
 
 /* ---------- 响应式 ---------- */
 @media (max-width: 768px) {
-  :root { --shelf-scale: 0.72; }  /* 书籍尺寸由 JS 内联变量携带，统一经此系数缩放 */
+  :root { --shelf-scale: 0.68; }
   .corner { top: 16px; font-size: 8px; }
   .corner-left { left: 16px; }
   .corner-right { right: 16px; }
@@ -635,23 +616,38 @@ html, body {
   .search-box input:focus { width: 160px; }
   .bg-word { top: 10vh; bottom: 40vh; }
   .bg-word span { font-size: clamp(88px, 22vh, 210px); }
-  .masthead { top: max(9vh, 88px); }  /* 避开右上角搜索框，不与眉题重叠 */
+  .masthead { top: max(10vh, 92px); }
   .title { font-size: clamp(34px, 11vw, 72px); }
   .eyebrow { margin-bottom: 10px; letter-spacing: 0.26em; }
-  .header { margin-bottom: clamp(22px, 3.4vh, 40px); }
-  .subcats { margin-top: 9px; }
-  .cats { gap: 2px 14px; padding: 0 4vw; }
-  .subcats { gap: 2px 10px; padding: 0 4vw; }
-  .chip { font-size: 10px; letter-spacing: 0.08em; padding: 3px 1px 5px; }
-  .chip.sub { font-size: 9px; letter-spacing: 0.06em; }
-  .book-info { width: 92vw; margin-top: 4px; }
+  .header { margin-bottom: clamp(16px, 2.6vh, 28px); }
+  .cats {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 4px 18px;
+    padding: 0 18px 6px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+  .cats::-webkit-scrollbar { display: none; }
+  .chip {
+    flex: 0 0 auto;
+    min-height: 40px;
+    scroll-snap-align: start;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    padding: 8px 1px 7px;
+  }
+  .book-info { width: 92vw; margin-top: 3px; }
   .bi-title { font-size: 17px; }
   .bi-sub { font-size: 11px; margin: 2px 0 6px; }
   .bi-meta { font-size: 10px; margin-bottom: 6px; }
   .bi-desc { -webkit-line-clamp: 3; font-size: 11.5px; line-height: 1.65; }
   .side { display: none; }
-  .shelf-scene { height: 52vh; }
-  .shelf-track { gap: 7px; padding: 0 6vw 6vh; }
+  .shelf-scene { height: 54vh; }
+  .shelf-track { gap: 7px; padding: 0 7vw 7vh; }
   .spine-text {
     /* 随书高同比例缩字，长书名仍完整不裁切 */
     font-size: max(8px, calc(var(--spine-fs, 12px) * 0.82));
@@ -662,7 +658,23 @@ html, body {
   .cover-design { padding: 10px 10px 8px 14px; }
   .cover-design .cover-title { font-size: 13px; }
   .book-shadow { bottom: -18px; height: 12px; }
-  .footer-hint { bottom: 16px; font-size: 8px; letter-spacing: 0.18em; }
+  .footer-hint { bottom: 14px; width: max-content; max-width: 88vw; font-size: 8px; letter-spacing: 0.16em; }
+  .footer-hint .hint-desktop { display: none; }
+  .footer-hint .hint-mobile { display: inline; }
+}
+
+@media (max-width: 480px) {
+  .corner-left .line2 { display: none; }
+  .corner-right { max-width: 132px; }
+  .search-box { top: 54px; }
+  .masthead { top: 94px; }
+  .title { font-size: clamp(32px, 10.8vw, 46px); }
+  .header { margin-bottom: 12px; }
+  .book-info { margin-top: 0; }
+  .bi-tag { font-size: 8px; margin-bottom: 5px; }
+  .bi-title { font-size: 16px; }
+  .bi-desc { -webkit-line-clamp: 2; font-size: 11px; }
+  .shelf-scene { height: 51vh; }
 }
 
 /* ---------- 桌面端矮视口：压缩说明区节奏，避免文字遮挡下方书架 ---------- */
@@ -670,7 +682,6 @@ html, body {
   :root { --shelf-scale: 0.94; }
   .masthead { top: 9vh; }
   .header { margin-bottom: clamp(24px, 3.2vh, 42px); }
-  .subcats { margin-top: 9px; }
   .book-info { margin-top: 5px; }
   .bi-title { font-size: clamp(18px, 2vw, 22px); }
   .bi-sub { margin: 2px 0 7px; }
