@@ -108,11 +108,10 @@ html, body {
   text-align: right;
   outline: none;
   border-radius: 0;
-  transition: width 0.35s ease, border-color 0.3s ease, color 0.7s ease;
+  transition: border-color 0.3s ease, color 0.7s ease;
   -webkit-appearance: none;
 }
 .search-box input:focus {
-  width: 236px;
   border-color: var(--ink);
 }
 .search-box input::placeholder {
@@ -346,17 +345,15 @@ html, body {
   width: var(--spine-w, 44px);
   height: var(--book-h, 240px);
   transform: rotateZ(var(--tilt, 0deg));
-  transition:
-    transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    margin 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  contain: layout style;
+  transition: transform 0.46s cubic-bezier(0.2, 0.72, 0.25, 1);
   cursor: pointer;
 }
 
-/* 翻开时向右腾出封面展开空间（翻开态统一由 .open 驱动，居中平移后状态不漂移） */
+/* 翻开封面覆盖相邻书脊，避免 margin 动画重排整条书架 */
 .book-wrap.open {
   z-index: 60;
   transform: rotateZ(0deg);
-  margin-right: calc(var(--cover-w, 160px) - var(--spine-w, 44px) + 22px);
 }
 
 .book {
@@ -457,6 +454,12 @@ html, body {
 
 .book-wrap.open .cover { transform: rotateY(-6deg); }  /* 留 6° 微开，更有精装书立体感 */
 .book-wrap.open .pages { transform: rotateY(0deg) translateZ(-2px); }
+.book-wrap.preparing,
+.book-wrap.open,
+.book-wrap.preparing .cover,
+.book-wrap.open .cover,
+.book-wrap.preparing .pages,
+.book-wrap.open .pages { will-change: transform; }
 
 /* 封面质感：铰链折痕 + 四缘受光 + 斜向光泽 */
 .cover::before {
@@ -622,7 +625,6 @@ html, body {
   .corner-right { right: 16px; }
   .search-box { top: 62px; right: 16px; }
   .search-box input { width: 124px; font-size: 12px; }  /* ≥12px 防 iOS 聚焦自动缩放 */
-  .search-box input:focus { width: 160px; }
   .search-feedback { max-width: 180px; margin-left: auto; font-size: 8px; }
   .bg-word { top: 10vh; bottom: 40vh; }
   .bg-word span { font-size: clamp(88px, 22vh, 210px); }
@@ -664,7 +666,6 @@ html, body {
     padding: 10px 0 16px;
   }
   .spine-dot { bottom: 10px; }
-  .book-wrap.open { margin-right: calc(var(--cover-w, 118px) - var(--spine-w, 34px) + 12px); }
   .cover-design { padding: 10px 10px 8px 14px; }
   .cover-design .cover-title { font-size: 13px; }
   .book-shadow { bottom: -18px; height: 12px; }

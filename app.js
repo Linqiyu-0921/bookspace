@@ -68,6 +68,47 @@
     }
   }
 
+  const paletteQueue = [];
+  let paletteQueuePending = false;
+
+  function drainPaletteQueue(deadline) {
+    paletteQueuePending = false;
+    const canContinue = () => deadline ? deadline.timeRemaining() > 3 : true;
+    let processed = 0;
+    while (paletteQueue.length && processed < 2 && canContinue()) {
+      paletteQueue.shift()();
+      processed++;
+    }
+    if (paletteQueue.length) schedulePaletteDrain();
+  }
+
+  function schedulePaletteDrain() {
+    if (paletteQueuePending) return;
+    paletteQueuePending = true;
+    if (window.requestIdleCallback) requestIdleCallback(drainPaletteQueue);
+    else setTimeout(() => drainPaletteQueue(null), 48);
+  }
+
+  function scheduleIdle(task) {
+    paletteQueue.push(task);
+    schedulePaletteDrain();
+  }
+
+  function prepareRealCover(wrap, img) {
+    if (!img?.naturalWidth || wrap.dataset.coverPrepared) return;
+    const bookH = Number(wrap.dataset.bookH);
+    const ratio = Math.max(0.58, Math.min(0.8, img.naturalWidth / img.naturalHeight));
+    const w = Math.round(bookH * ratio);
+    wrap.style.setProperty("--cover-w", `calc(min(${w}px, ${Math.round((w / 314) * 40)}vh) * var(--shelf-scale, 1))`);
+    wrap.dataset.coverPrepared = "true";
+    scheduleIdle(() => {
+      const pal = coverPalette(img);
+      if (!pal) return;
+      wrap.style.setProperty("--book-color", pal.color);
+      wrap.style.setProperty("--spine-ink", pal.ink);
+    });
+  }
+
   bookCountEl.textContent = bookCountText(BOOKS.length);
   totalIdxEl.textContent = String(BOOKS.length).padStart(2, "0");
 
@@ -91,6 +132,7 @@
     const wrap = document.createElement("div");
     wrap.className = "book-wrap";
     wrap.dataset.idx = i;
+    wrap.dataset.bookH = bookH;
     // 尺寸统一乘 --shelf-scale：移动端媒体查询只需下调系数即可整体缩书
     const sc = " * var(--shelf-scale, 1))";
     wrap.style.setProperty("--spine-w", `calc(min(${spineW}px, ${(spineW / 10).toFixed(1)}vh)` + sc);
@@ -139,14 +181,6 @@
     if (coverImg) {
       const applyReal = () => {
         if (!coverImg.naturalWidth) return;
-        const ratio = Math.max(0.58, Math.min(0.8, coverImg.naturalWidth / coverImg.naturalHeight));
-        const w = Math.round(bookH * ratio);
-        wrap.style.setProperty("--cover-w", `calc(min(${w}px, ${Math.round((w / 314) * 40)}vh) * var(--shelf-scale, 1))`);
-        const pal = coverPalette(coverImg);
-        if (pal) {
-          wrap.style.setProperty("--book-color", pal.color);
-          wrap.style.setProperty("--spine-ink", pal.ink);
-        }
         wrap.classList.add("real-cover");
       };
       coverImg.addEventListener("load", applyReal, { once: true });
@@ -158,9 +192,11 @@
   const bookEls = [...track.children];
   const searchIndex = BookSearch.create(BOOKS);
 
-  function loadCover(wrap) {
+  function loadCover(wrap, priority = "auto", eager = false) {
     const img = wrap.querySelector(".cover img[data-src]");
     if (!img) return;
+    img.fetchPriority = priority;
+    if (eager) img.loading = "eager";
     img.src = img.dataset.src;
     delete img.dataset.src;
   }
@@ -169,10 +205,10 @@
     const coverObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        loadCover(entry.target);
+        loadCover(entry.target, "auto", true);
         coverObserver.unobserve(entry.target);
       });
-    }, { root: scene, rootMargin: "0px 320px" });
+    }, { root: scene, rootMargin: "0px 30%" });
     bookEls.forEach((wrap) => coverObserver.observe(wrap));
   } else {
     bookEls.forEach(loadCover);
@@ -185,6 +221,7 @@
 
   let activeCat = "全部";
   let query = "";
+  let visiblePosition = new Map(BOOKS.map((_, index) => [index, index]));
 
   CAT_ORDER.forEach((cat) => {
     if (cat !== "全部" && !catCount[cat]) return;
@@ -205,6 +242,7 @@
       .filter(({ index }) => activeCat === "全部" || BOOKS[index].cat === activeCat);
     const visibleIndexes = ranked.map(result => result.index);
     const visibleSet = new Set(visibleIndexes);
+    visiblePosition = new Map(visibleIndexes.map((index, position) => [index, position]));
     const fragment = document.createDocumentFragment();
 
     visibleIndexes.forEach(index => {
@@ -256,21 +294,25 @@
 
   /* ---------- 悬停：翻开 + 换背景 + 浮卡 ---------- */
   let hideTimer = null;
+  let themeTimer = null;
 
   function openBook(wrap, b, idx) {
     clearTimeout(hideTimer);
+    clearTimeout(themeTimer);
     const p = b.palette || {};
-    document.body.style.background = p.bg || DEFAULT_BG;
-    document.body.style.setProperty("--ink", p.ink || DEFAULT_INK); // 墨色随色板，深色底下保持可读
-    document.body.style.setProperty("--ink-muted", fadeInk(p.ink || DEFAULT_INK, 0.55));
+    themeTimer = setTimeout(() => {
+      if (openIdx !== idx) return;
+      document.body.style.background = p.bg || DEFAULT_BG;
+      document.body.style.setProperty("--ink", p.ink || DEFAULT_INK);
+      document.body.style.setProperty("--ink-muted", fadeInk(p.ink || DEFAULT_INK, 0.55));
+    }, 460);
 
     // 巨型背景书名字
     bgWordText.textContent = b.title;
     bgWord.classList.add("show");
 
     // 侧边计数：当前书在可见（筛选后）列表中的序号
-    const visibleEls = [...track.querySelectorAll(".book-wrap:not(.hidden)")];
-    curIdxEl.textContent = String(visibleEls.indexOf(wrap) + 1).padStart(2, "0");
+    curIdxEl.textContent = String((visiblePosition.get(idx) ?? -1) + 1).padStart(2, "0");
 
     infoTag.textContent = [...new Set([b.cat, ...(b.tags || []), ...(b.tag3 || []), b.tag, b.secret ? "私密" : ""].filter(Boolean))].join(" · ");
     infoTitle.textContent = b.title;
@@ -296,6 +338,7 @@
   }
 
   function closeBook() {
+    clearTimeout(themeTimer);
     hideTimer = setTimeout(() => {
       bookInfo.classList.remove("active");
       bgWord.classList.remove("show");
@@ -320,15 +363,29 @@
 
   function setOpen(i) {
     if (i === openIdx) return;
-    if (openIdx >= 0) bookEls[openIdx].classList.remove("open");
+    if (openIdx >= 0) bookEls[openIdx].classList.remove("open", "preparing");
     openIdx = i;
     const wrap = bookEls[i];
-    loadCover(wrap);
-    wrap.classList.add("open");
+    loadCover(wrap, "high", true);
+    const selectedCoverImg = wrap.querySelector(".cover img");
+    if (selectedCoverImg?.complete) prepareRealCover(wrap, selectedCoverImg);
+    else selectedCoverImg?.addEventListener("load", () => {
+      setTimeout(() => {
+        if (openIdx !== i) return;
+        prepareRealCover(wrap, selectedCoverImg);
+        centerOn(wrap);
+      }, 520);
+    }, { once: true });
+    wrap.classList.add("preparing");
     openBook(wrap, BOOKS[i], i);
-    // 待书脊右侧腾位动画基本结束后再居中，读到的才是终态位置
+    requestAnimationFrame(() => {
+      if (openIdx !== i) return;
+      wrap.classList.add("open");
+      wrap.classList.remove("preparing");
+    });
+    // 翻转动画结束后再居中，避免布局读取打断动画首帧
     clearTimeout(centerTimer);
-    centerTimer = setTimeout(() => { if (openIdx === i) centerOn(wrap); }, 480);
+    centerTimer = setTimeout(() => { if (openIdx === i) centerOn(wrap); }, 470);
   }
 
   function clearOpen() {
@@ -336,7 +393,7 @@
     pendingIdx = -1;
     if (openIdx < 0) return;
     clearTimeout(centerTimer);
-    bookEls[openIdx].classList.remove("open");
+    bookEls[openIdx].classList.remove("open", "preparing");
     openIdx = -1;
     closeBook();
   }
