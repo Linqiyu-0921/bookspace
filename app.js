@@ -16,6 +16,7 @@
   const bookCountEl = document.getElementById("bookCount");
   const catsEl = document.getElementById("cats");
   const searchInput = document.getElementById("searchInput");
+  const searchFeedback = document.getElementById("searchFeedback");
   const emptyHint = document.getElementById("emptyHint");
   const bgWord = document.getElementById("bgWord");
   const bgWordText = bgWord.querySelector("span");
@@ -155,6 +156,7 @@
 
   track.appendChild(bookFragment);
   const bookEls = [...track.children];
+  const searchIndex = BookSearch.create(BOOKS);
 
   function loadCover(wrap) {
     const img = wrap.querySelector(".cover img[data-src]");
@@ -197,36 +199,59 @@
     catsEl.appendChild(btn);
   });
 
-  function matches(b) {
-    const okCat = activeCat === "全部" || b.cat === activeCat;
-    const q = query.trim().toLowerCase();
-    const okQ = !q || [
-      b.title, b.sub, b.author, b.translator, b.publisher, b.year, b.isbn,
-      b.tag, b.cat, ...(b.tags || []), ...(b.tag3 || [])
-    ]
-      .filter(Boolean)
-      .some((s) => String(s).toLowerCase().includes(q));
-    return okCat && okQ;
-  }
-
   function applyFilter() {
     clearOpen();
-    let visible = 0;
-    bookEls.forEach((wrap, i) => {
-      const show = matches(BOOKS[i]);
-      wrap.classList.toggle("hidden", !show);
-      if (show) visible++;
+    const ranked = searchIndex.search(query)
+      .filter(({ index }) => activeCat === "全部" || BOOKS[index].cat === activeCat);
+    const visibleIndexes = ranked.map(result => result.index);
+    const visibleSet = new Set(visibleIndexes);
+    const fragment = document.createDocumentFragment();
+
+    visibleIndexes.forEach(index => {
+      bookEls[index].classList.remove("hidden");
+      fragment.appendChild(bookEls[index]);
     });
+    bookEls.forEach((wrap, index) => {
+      if (visibleSet.has(index)) return;
+      wrap.classList.add("hidden");
+      fragment.appendChild(wrap);
+    });
+    track.appendChild(fragment);
+
+    const visible = visibleIndexes.length;
     bookCountEl.textContent = bookCountText(visible);
     totalIdxEl.textContent = String(visible).padStart(2, "0");
     curIdxEl.textContent = visible ? "01" : "00";
     emptyHint.classList.toggle("show", visible === 0);
+    const tokens = searchIndex.tokensOf(query);
+    searchFeedback.textContent = tokens.length
+      ? `找到 ${visible} 本 · ${tokens.length > 1 ? "已组合全部关键词" : "按相关度排序"}`
+      : "";
     panTo(0);
   }
 
+  let searchFrame = null;
   searchInput.addEventListener("input", () => {
     query = searchInput.value;
-    applyFilter();
+    cancelAnimationFrame(searchFrame);
+    searchFrame = requestAnimationFrame(applyFilter);
+  });
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      e.preventDefault();
+      searchInput.value = "";
+      query = "";
+      applyFilter();
+      searchInput.blur();
+      return;
+    }
+    if (e.key === "Enter") {
+      const first = track.querySelector(".book-wrap:not(.hidden)");
+      if (!first) return;
+      e.preventDefault();
+      searchInput.blur();
+      setOpen(+first.dataset.idx);
+    }
   });
 
   /* ---------- 悬停：翻开 + 换背景 + 浮卡 ---------- */
@@ -244,7 +269,7 @@
     bgWord.classList.add("show");
 
     // 侧边计数：当前书在可见（筛选后）列表中的序号
-    const visibleEls = bookEls.filter((el) => !el.classList.contains("hidden"));
+    const visibleEls = [...track.querySelectorAll(".book-wrap:not(.hidden)")];
     curIdxEl.textContent = String(visibleEls.indexOf(wrap) + 1).padStart(2, "0");
 
     infoTag.textContent = [...new Set([b.cat, ...(b.tags || []), ...(b.tag3 || []), b.tag, b.secret ? "私密" : ""].filter(Boolean))].join(" · ");
@@ -388,7 +413,13 @@
   }, { passive: true });
 
   window.addEventListener("keydown", (e) => {
-    if (e.target === searchInput) return; // 输入搜索时不平移书架
+    if ((e.key === "/" && e.target !== searchInput) || ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k")) {
+      e.preventDefault();
+      searchInput.focus();
+      searchInput.select();
+      return;
+    }
+    if (e.target === searchInput) return;
     if (e.key === "Escape") clearOpen();
     if (e.key === "ArrowRight") { clearOpen(); panTo(target + 180); }
     if (e.key === "ArrowLeft") { clearOpen(); panTo(target - 180); }

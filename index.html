@@ -28,7 +28,8 @@
 
     <!-- 搜索 -->
     <div class="search-box">
-      <input id="searchInput" type="search" placeholder="Search · 书名 / 作者" autocomplete="off" spellcheck="false">
+      <input id="searchInput" type="search" placeholder="关键词 · 书名 / 作者 / ISBN / 标签" autocomplete="off" spellcheck="false" aria-describedby="searchFeedback">
+      <div class="search-feedback" id="searchFeedback" aria-live="polite"></div>
     </div>
 
     <!-- 版头：标题 + 筛选 + 图书说明，同一纵向流内统一节奏、段落间距协调 -->
@@ -75,6 +76,7 @@
   </div>
 
   <script src="data.js?v=10"></script>
-  <script src="app.js?v=11"></script>
+  <script src="search.js?v=1"></script>
+  <script src="app.js?v=12"></script>
 </body>
 </html>

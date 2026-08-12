@@ -122,6 +122,15 @@ html, body {
   text-transform: uppercase;
 }
 .search-box input::-webkit-search-cancel-button { -webkit-appearance: none; }
+.search-feedback {
+  min-height: 16px;
+  margin-top: 5px;
+  color: var(--ink-muted);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  text-align: right;
+  white-space: nowrap;
+}
 
 /* ---------- 标题 ---------- */
 .header {
@@ -614,6 +623,7 @@ html, body {
   .search-box { top: 62px; right: 16px; }
   .search-box input { width: 124px; font-size: 12px; }  /* ≥12px 防 iOS 聚焦自动缩放 */
   .search-box input:focus { width: 160px; }
+  .search-feedback { max-width: 180px; margin-left: auto; font-size: 8px; }
   .bg-word { top: 10vh; bottom: 40vh; }
   .bg-word span { font-size: clamp(88px, 22vh, 210px); }
   .masthead { top: max(10vh, 92px); }

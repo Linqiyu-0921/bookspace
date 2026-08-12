@@ -118,7 +118,7 @@ duplicateGroups(BOOKS, book => normalizeTitle(book.title)).forEach(([titleKey, e
   warnings.push(`同名版本 ${titleKey}：${entries.map(entry => entry.title).join(" / ")}`);
 });
 
-for (const script of ["app.js", "overview.js"]) {
+for (const script of ["search.js", "app.js", "overview.js"]) {
   new vm.Script(read(script), { filename: script });
 }
 
