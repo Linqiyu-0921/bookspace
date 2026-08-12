@@ -144,23 +144,52 @@ if (fs.existsSync(importsDir)) {
     .forEach(file => {
       const relativePath = path.join("imports", file);
       const batch = JSON.parse(read(relativePath));
+      if (batch.source === "local_cover_optimization" && Array.isArray(batch.results)) {
+        batch.results.forEach((result, index) => {
+          const label = `${relativePath}#${index + 1}`;
+          if (!result.originalCover || !Array.isArray(result.titles) || !result.titles.length) {
+            errors.push(`${label}：封面优化记录缺少原文件或书名`);
+          }
+          if (result.accepted && (!result.optimizedCover || !fs.existsSync(path.join(projectRoot, result.optimizedCover)))) {
+            errors.push(`${label}：优化文件不存在 ${result.optimizedCover || "<空>"}`);
+          }
+          if (result.accepted && result.bytesAfter >= result.bytesBefore) {
+            errors.push(`${label}：优化文件未减小体积`);
+          }
+        });
+        importStats.push({ file, candidates: batch.results.length });
+        return;
+      }
       if (batch.schemaVersion !== 1 || !Array.isArray(batch.candidates)) {
         errors.push(`${relativePath}：不符合导入批次 schemaVersion 1`);
         return;
       }
+      const isCoverRecovery = batch.source === "douban_isbn_page";
       const isbnKeys = new Set();
       const titleKeys = new Set();
       batch.candidates.forEach((candidate, index) => {
         const label = `${relativePath}#${index + 1}`;
         if (!candidate.title) errors.push(`${label}：缺少 title`);
-        if (!Array.isArray(candidate.sourceRefs) || !candidate.sourceRefs.length) {
-          errors.push(`${label}：缺少 sourceRefs`);
-        }
-        if (!['new_candidate', 'already_in_data'].includes(candidate.matchStatus)) {
-          errors.push(`${label}：未知 matchStatus ${candidate.matchStatus || '<空>'}`);
-        }
-        if (!['pending', 'imported', 'skipped_existing'].includes(candidate.importStatus)) {
-          errors.push(`${label}：未知 importStatus ${candidate.importStatus || '<空>'}`);
+        if (isCoverRecovery) {
+          if (!/^\d{13}$/.test(String(candidate.isbn || ""))) {
+            errors.push(`${label}：封面恢复记录必须有 13 位 ISBN`);
+          }
+          if (!['downloaded', 'no_real_cover', 'isbn_not_found', 'download_failed'].includes(candidate.downloadStatus)) {
+            errors.push(`${label}：未知 downloadStatus ${candidate.downloadStatus || '<空>'}`);
+          }
+          if (candidate.downloadStatus === 'downloaded' && !candidate.coverFile) {
+            errors.push(`${label}：已下载封面缺少 coverFile`);
+          }
+        } else {
+          if (!Array.isArray(candidate.sourceRefs) || !candidate.sourceRefs.length) {
+            errors.push(`${label}：缺少 sourceRefs`);
+          }
+          if (!['new_candidate', 'already_in_data'].includes(candidate.matchStatus)) {
+            errors.push(`${label}：未知 matchStatus ${candidate.matchStatus || '<空>'}`);
+          }
+          if (!['pending', 'imported', 'skipped_existing'].includes(candidate.importStatus)) {
+            errors.push(`${label}：未知 importStatus ${candidate.importStatus || '<空>'}`);
+          }
         }
         if (candidate.isbn && !hasValidIsbn13Checksum(String(candidate.isbn))) {
           errors.push(`${label}：ISBN-13 校验位错误 ${candidate.isbn}`);
@@ -171,7 +200,7 @@ if (fs.existsSync(importsDir)) {
         if (candidate.coverFile && !fs.existsSync(path.join(projectRoot, candidate.coverFile))) {
           errors.push(`${label}：封面文件不存在 ${candidate.coverFile}`);
         }
-        if (candidate.importStatus === 'imported') {
+        if (!isCoverRecovery && candidate.importStatus === 'imported') {
           const exists = dataTitleKeys.has(normalizeTitle(candidate.title)) || (candidate.isbn && dataIsbns.has(candidate.isbn));
           if (!exists) errors.push(`${label}：标记为 imported 但 data.js 中无对应书籍`);
         }

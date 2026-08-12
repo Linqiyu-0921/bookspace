@@ -46,7 +46,7 @@ const BOOKS = [
     tag3: ["社会阶层", "世界通史"],
     isbn: "9787108071392",
     desc: "基于三年田野调查与上百位本科生访谈，揭示美国精英大学中寒门学子的真实处境——录取之后，大学何以仍在背弃贫困学生。作者区分“有备而来的穷学生”与“双重贫困生”，指出仅有入场券远远不够：从社交礼仪到隐性规则，校园处处是看不见的门槛。",
-    cover: "covers/hanmen.jpg",
+    cover: "covers/opt_hanmen.webp",
     palette: { bg: "#dfe9f2", ink: "#1d3557", accent: "#e63946", coverA: "#aecbe8", coverB: "#f4f8fb", coverInk: "#274a78" }
   },
   {
@@ -80,7 +80,7 @@ const BOOKS = [
     tag3: ["悬疑小说", "长篇小说"],
     isbn: "9787532768721",
     desc: "一对英国情侣在加勒比度假时结识俄罗斯洗钱大亨，从此被卷入军情六处与俄国黑帮之间的漩涡。冷战落幕后的间谍世界更加暖昧凶险，勒卡雷以老辣笔法写透金钱、忠诚与背叛——所谓叛徒，往往只是想活下去的普通人。",
-    cover: "covers/pantu.jpg",
+    cover: "covers/opt_pantu.webp",
     palette: { bg: "#14181f", ink: "#e8e6df", accent: "#c8a24b", coverA: "#1e2733", coverB: "#39465a", coverInk: "#e8e6df" }
   },
   {
@@ -97,7 +97,7 @@ const BOOKS = [
     tag3: ["生活随笔"],
     isbn: "9787208196094",
     desc: "在街道、建筑与日常空间的细语中，重新打量我们栖居的城市——一部建筑学人的城市人文随笔。从城门旧影到玻璃幕墙，从菜市烟火到地铁人流，作者以建筑史的眼光与文学的笔触，唤回被匆忙脚步略过的城市记忆与空间诗意。",
-    cover: "covers/chengshi.jpg",
+    cover: "covers/opt_chengshi.webp",
     palette: { bg: "#e9e4da", ink: "#2b2b2b", accent: "#6d5f4b", coverA: "#3a3632", coverB: "#d9d2c5", coverInk: "#f0ece4" }
   },
   {
@@ -131,7 +131,7 @@ const BOOKS = [
     tag3: ["社会阶层"],
     isbn: "9787542690517",
     desc: "从六卿主晋到三家分晋——纵横铺叙春秋战国之交的历史分水岭，剖析贵族政治向官僚政治的千年转型。韩赵魏如何蚕食公室、智氏何以一夕覆亡，作者以扎实史料与晓畅叙事，重现礼崩乐坏时代的权谋与变局。",
-    cover: "covers/sanjia.jpg",
+    cover: "covers/opt_sanjia.webp",
     palette: { bg: "#12261e", ink: "#e5ddc8", accent: "#b08d3f", coverA: "#1c3a2d", coverB: "#0e1f18", coverInk: "#e5ddc8" }
   },
   {
@@ -182,7 +182,7 @@ const BOOKS = [
     tag3: ["社会阶层"],
     isbn: "9787214071033",
     desc: "两宋之际政治与文化的深刻转型：专制皇权膨胀、士人转向道德内省，中国文化自此“转向内在”。海外宋史名家刘子健的经典之作，以精炼笔墨回答了一个大问题——曾经开放外向的唐宋文明，为何在南宋以后渐趋内敛保守。",
-    cover: "covers/neizai.jpg",
+    cover: "covers/opt_neizai.webp",
     palette: { bg: "#1b2740", ink: "#dfe3ec", accent: "#8fa8d8", coverA: "#243c63", coverB: "#31446b", coverInk: "#dfe3ec" }
   },
   {
@@ -216,7 +216,7 @@ const BOOKS = [
     tag3: ["人物传记", "长篇小说"],
     isbn: "9787532785438",
     desc: "从1929年的柏林到1939年旅居美国，伊舍伍德坦诚回望战前欧洲十年岁月与自我身份。魏玛柏林的夜店与街垒、辗转欧洲的流亡与爱恋，这部自传体小说以罕见的诚实直面欲望与写作，也是《柏林故事集》背后的真实版本。",
-    cover: "covers/christopher.jpg",
+    cover: "covers/opt_christopher.webp",
     palette: { bg: "#d9cfc4", ink: "#33261f", accent: "#7d4a2a", coverA: "#4a352a", coverB: "#c7b9a5", coverInk: "#efe6d8" }
   },
   {
@@ -233,7 +233,7 @@ const BOOKS = [
     tag3: [],
     isbn: "9787513917698",
     desc: "世界上最伟大英雄的12个故事：从“神秘斯塔罗”现身到对抗达克赛德，正义联盟的黄金岁月合集。超人、蝙蝠侠、神奇女侠、闪电侠齐聚一堂，横跨半个世纪的经典刊目精选，见证美漫宇宙最耀眼组合的诞生与传奇。",
-    cover: "covers/justice.jpg",
+    cover: "covers/opt_justice.webp",
     palette: { bg: "#101018", ink: "#f0f2f5", accent: "#2c6fd1", coverA: "#15151f", coverB: "#2c6fd1", coverInk: "#f0f2f5" }
   },
   {
@@ -267,7 +267,7 @@ const BOOKS = [
     tag3: ["书信"],
     isbn: "9787213077289",
     desc: "现代文学批评界两大巨擘的六百余封私密书信，十七年间谈文论艺、殷勤存问的吉光片羽。从治学门径到文坛月旦，从异乡生计到手足深情，书信里的夏氏兄弟卸下学术盛名，露出最真切的性情与时代侧影。",
-    cover: "covers/xiazhiqing.jpg",
+    cover: "covers/opt_xiazhiqing.webp",
     palette: { bg: "#ece6db", ink: "#31404f", accent: "#5b7a99", coverA: "#f4f0e8", coverB: "#c6cfd8", coverInk: "#31404f" }
   },
   {
@@ -351,7 +351,7 @@ const BOOKS = [
     tag3: ["世界通史", "考古学入门"],
     isbn: "9787520367776",
     desc: "在希腊罗马的文字记载之外，用考古证据重建欧洲史前居民数千年的真实生活图景。巨石阵的建造者、阿尔卑斯冰人、维京航海者——那些被称作“蛮族”的人群，其实有着远比史书记载更复杂精彩的文明。",
-    cover: "covers/manzu.jpg",
+    cover: "covers/opt_manzu.webp",
     palette: { bg: "#4a4a42", ink: "#e9e5d8", accent: "#c2a25a", coverA: "#5c5a4c", coverB: "#3a3a34", coverInk: "#e9e5d8" }
   },
   {
@@ -436,7 +436,7 @@ const BOOKS = [
     tag3: ["社会生活史"],
     isbn: "9787515528205",
     desc: "告别冰冷的宏大叙事，走进古希腊人的烟火日常：从私人生活到大众文化，看见一个鲜活、怪诞而迷人的古希腊社会。他们如何恋爱、宴饮、看戏、掷骰子？那些不在历史书里的事儿，恰恰最能让两千年前的世界活起来。",
-    cover: "covers/guxila.jpg",
+    cover: "covers/opt_guxila.webp",
     palette: { bg: "#17181c", ink: "#ece7db", accent: "#c9a227", coverA: "#23252c", coverB: "#101114", coverInk: "#ece7db" }
   },
   {
@@ -623,7 +623,7 @@ const BOOKS = [
     tag3: ["社会阶层", "世界通史", "社会生活史"],
     isbn: "9787308268882",
     desc: "殖民历史与当代政治：追溯冷战结束以来帝国主义思维的复苏，剖析英法帝国遗产如何塑造当下。从苏伊士运河到脱欧公投，从法属非洲到移民政策，作者揭示帝国记忆如何持续左右两个老牌殖民国家的自我想象与世界角色。",
-    cover: "covers/jingshendiguo.jpg",
+    cover: "covers/opt_jingshendiguo.webp",
     palette: { bg: "#e9e4d4", ink: "#24211c", accent: "#d8b93c", coverA: "#efece1", coverB: "#d8cdb2", coverInk: "#24211c" }
   },
   {
@@ -640,7 +640,7 @@ const BOOKS = [
     tag3: ["文学批评"],
     isbn: "9787208202948",
     desc: "唐诗学大家陈尚君新作：在五代十国的兵戈乱世里，打捞诗人们未曾燄灭的诗心与斯文。韦庄、罗隐、冯道……乱世文人如何在朝不保夕中安顿文字与性命，五十年离乱亦是宋代文治的前夜，斯文不坠自有其人。",
-    cover: "covers/taiping.jpg",
+    cover: "covers/opt_taiping.webp",
     palette: { bg: "#2b2d7e", ink: "#ece4d2", accent: "#d9a441", coverA: "#34378f", coverB: "#1f2160", coverInk: "#ece4d2" }
   },
   {
@@ -674,7 +674,7 @@ const BOOKS = [
     tag3: ["长篇小说"],
     isbn: "9787807078173",
     desc: "以西南联大为背景的青春长歌：战火中的昆明校园，一群大学生的友情、爱情与理想主义岁月。小童、伍宝笙、余孟勤、蔺燕梅，四个名字承载了几代读者的青春记忆——纵然烽火连天，歌声未央，人间仍值得深情以待。",
-    cover: "covers/weiyangge.jpg",
+    cover: "covers/opt_weiyangge.webp",
     palette: { bg: "#33504e", ink: "#dfe6e2", accent: "#86a89f", coverA: "#3c5c58", coverB: "#253c3a", coverInk: "#dfe6e2" }
   },
   {
@@ -793,7 +793,7 @@ const BOOKS = [
     tag3: ["生活随笔"],
     isbn: "9787547739921",
     desc: "《书店日记》续篇：苏格兰最大二手书店又一年——毒舌店主与顾客、店猫和旧书相伴的四季流水账。收书、估价、应付奇葩客人与亚马逊的挤压，白塞尔以英式冷幽默记录实体书店的困顿与可爱，献给所有仍愿走进书店的人。",
-    cover: "covers/shudianriji.jpg",
+    cover: "covers/opt_shudianriji.webp",
     palette: { bg: "#1f6f5c", ink: "#f4efdd", accent: "#e0475c", coverA: "#268069", coverB: "#164f42", coverInk: "#f4efdd" }
   },
   {
@@ -826,7 +826,7 @@ const BOOKS = [
     tag3: ["社会阶层"],
     isbn: "9787108082923",
     desc: "三联·哈佛燕京学术丛书：以韦伯“国家社会学”为鑰，剖析现代国家这头难以驯化的利维坦。官僚制、正当性与暴力垄断如何相互缠绕，国家理性又如何在民主时代持续膨胀，作者在韦伯文本的细读中回应当代政治的根本追问。",
-    cover: "covers/liweitan.jpg",
+    cover: "covers/opt_liweitan.webp",
     palette: { bg: "#dfe5df", ink: "#2c433a", accent: "#52705f", coverA: "#b9c8bd", coverB: "#33544a", coverInk: "#eef2ee" }
   },
   {
@@ -860,7 +860,7 @@ const BOOKS = [
     tag3: ["中国哲学史", "古希腊哲学"],
     isbn: "9787108082145",
     desc: "“与伽达默尔同行”书系：考察诠释学大师与东方思想的对话可能，探寻中西哲学互鉴的路径。从“视域融合”到儒道经典的现代解读，作者梳理伽达默尔晚年对东方的关切，为跨文化诠释学开出一条中国进路。",
-    cover: "covers/gadamoer.jpg",
+    cover: "covers/opt_gadamoer.webp",
     palette: { bg: "#16457e", ink: "#eef2f7", accent: "#d4763a", coverA: "#1c528f", coverB: "#0f3560", coverInk: "#eef2f7" }
   },
   {
@@ -911,7 +911,7 @@ const BOOKS = [
     tag3: ["社会阶层"],
     isbn: "9787108081520",
     desc: "深度拆解十大热点案例：不止还原案件来龙去脉，更聚焦法律的底层逻辑，培养法律直觉。于欢案、电梯劝烟案、货拉拉案……桑本谦以法经济学的锋利刀法剖开舆论漩涡中的疑难案件，展示法理如何在情与法的褶皱处展开。",
-    cover: "covers/zhengyi.jpg",
+    cover: "covers/opt_zhengyi.webp",
     palette: { bg: "#232c40", ink: "#edeef2", accent: "#b03030", coverA: "#2c3852", coverB: "#171d2c", coverInk: "#edeef2" }
   },
   {
@@ -979,7 +979,7 @@ const BOOKS = [
     tag3: ["文学批评", "世界通史"],
     isbn: "9787507550986",
     desc: "从印度河文明到现代印度，纵览次大陆数千年的宗教、种姓、艺术与王朝更替。一部为入门者打造的印度文明通史，勾勒出这片土地多元并存、绵延不绝的文化图景。",
-    cover: "covers/yindu.jpg",
+    cover: "covers/opt_yindu.webp",
     palette: { bg: "#e9d4b0", ink: "#5a3210", accent: "#d2691e", coverA: "#e8a34d", coverB: "#f6e6c8", coverInk: "#5a3210" }
   },
   {
@@ -1013,7 +1013,7 @@ const BOOKS = [
     tag3: ["中国哲学史"],
     isbn: "9787100156080",
     desc: "董平以“生活世界”为线索重走阳明一生：从龙场悟道到平定宸濠，从讲学传道到临终“此心光明”。还原一个在事功与心性之间知行合一的圣人，勾画通往圣人之路的精神历程。",
-    cover: "covers/wangyangming.jpg",
+    cover: "covers/opt_wangyangming.webp",
     palette: { bg: "#eef1ec", ink: "#2f3b33", accent: "#6f8f6a", coverA: "#d6e0d2", coverB: "#f6f8f4", coverInk: "#2f3b33" }
   },
   {
@@ -1080,7 +1080,7 @@ const BOOKS = [
     tag3: ["社会阶层", "世界通史"],
     isbn: "9787542690883",
     desc: "843年《凡尔登条约》后，加洛林帝国西部裂变为诸多领地大公国。本书聚焦843—987年间西法兰克王权与地方大公之间的博弈，剖析中世纪早期欧洲封建秩序与政治格局的形成。",
-    cover: "covers/db61.jpg",
+    cover: "covers/opt_db61.webp",
     palette: { bg: "#dde3e8", ink: "#2c3644", accent: "#7a5c3a", coverA: "#b9c4ce", coverB: "#eef2f5", coverInk: "#2c3644" }
   },
   {
@@ -1114,7 +1114,7 @@ const BOOKS = [
     tag3: ["长篇小说"],
     isbn: "9787559633118",
     desc: "在最北之北，纯净与清澈既是生的底色，也可能通向毁灭。一部气质冷冽的小说，追问在极端环境与人性边界之间，是否还有比清澈更好的结局。",
-    cover: "covers/db63.jpg",
+    cover: "covers/opt_db63.webp",
     palette: { bg: "#dce6ec", ink: "#26333f", accent: "#4d7fa6", coverA: "#aec6d6", coverB: "#eef4f8", coverInk: "#26333f" }
   },
   {
@@ -1280,7 +1280,7 @@ const BOOKS = [
     tag3: ["电影理论"],
     isbn: "9787542686602",
     desc: "意大利作家为“现代出版之父”阿尔杜斯·马努提乌斯立传，讲述威尼斯印刷黄金时代如何锻造出我们今天所熟悉的书籍形态。",
-    cover: "covers/shujiliancheng.jpg",
+    cover: "covers/opt_shujiliancheng.webp",
     palette: { bg: "#e5dccb", ink: "#332a1c", accent: "#8c5a2b", coverA: "#c8b189", coverB: "#f1e9da", coverInk: "#332a1c" }
   },
   {
@@ -1297,7 +1297,7 @@ const BOOKS = [
     tag3: ["世界通史", "城市社会学"],
     isbn: "9787542689276",
     desc: "聚焦世纪之交柏林与维也纳的边缘人群与地下文化，在启蒙理性与世纪末颓废的张力中，重绘现代欧洲都市的暗面。",
-    cover: "covers/qimengtuifei.jpg",
+    cover: "covers/opt_qimengtuifei.webp",
     palette: { bg: "#dcdadf", ink: "#26242b", accent: "#6a4a6c", coverA: "#b3aec0", coverB: "#eeecf1", coverInk: "#26242b" }
   },
   {
@@ -1347,7 +1347,7 @@ const BOOKS = [
     tag3: ["古希腊哲学"],
     isbn: "9787542684097",
     desc: "复旦哲学教授徐英瑾以85条人生建议，串起从苏格拉底到萨特的西方哲学智慧，在命运与自由之间为现代人寻找勇气。",
-    cover: "covers/mingzhongzhuding.jpg",
+    cover: "covers/opt_mingzhongzhuding.webp",
     palette: { bg: "#e3e0ea", ink: "#2a2836", accent: "#5b4f8c", coverA: "#b6afce", coverB: "#efedf5", coverInk: "#2a2836" }
   },
   {
@@ -1381,7 +1381,7 @@ const BOOKS = [
     tag3: ["饮食文化"],
     isbn: "9787542688231",
     desc: "以一家茶企十五年的经营故事为经纬，记录茶事的甘苦与人情，在一杯茶的往来间见出生意、手艺与情义。",
-    cover: "covers/beishui.jpg",
+    cover: "covers/opt_beishui.webp",
     palette: { bg: "#e8ecdd", ink: "#2d3322", accent: "#6f8a45", coverA: "#c3d0a5", coverB: "#f3f6ea", coverInk: "#2d3322" }
   },
   {
@@ -1398,7 +1398,7 @@ const BOOKS = [
     tag3: [],
     isbn: "9787108082954",
     desc: "党史专家龚育之的文章结集，围绕邓小平与改革开放时代的重大抉择，回顾当代中国走过的历史道路。",
-    cover: "covers/lishixuanze.jpg",
+    cover: "covers/opt_lishixuanze.webp",
     palette: { bg: "#e7ddd8", ink: "#3a2a25", accent: "#a8402f", coverA: "#cdac9f", coverB: "#f3ebe6", coverInk: "#3a2a25" }
   },
   {
@@ -1432,7 +1432,7 @@ const BOOKS = [
     tag3: ["世界通史"],
     isbn: "9787108082527",
     desc: "史学大家吴于廑的世界史论著，倡导以“整体的世界史”眼光，把握人类从分散走向整体的历史进程。",
-    cover: "covers/zhengtishijie.jpg",
+    cover: "covers/opt_zhengtishijie.webp",
     palette: { bg: "#dde3e9", ink: "#242d36", accent: "#3f6690", coverA: "#a9bdd2", coverB: "#eef2f6", coverInk: "#242d36" }
   },
   {
@@ -1449,7 +1449,7 @@ const BOOKS = [
     tag3: [],
     isbn: "9787807685029",
     desc: "“建安”系列之一，以编年笔法细述公元201至207年曹操统一北方的征战历程，还原东汉末年的权力角逐。",
-    cover: "covers/jianan1.jpg",
+    cover: "covers/opt_jianan1.webp",
     palette: { bg: "#e6ddd4", ink: "#382c22", accent: "#8f4b2e", coverA: "#cab199", coverB: "#f2eae1", coverInk: "#382c22" }
   },
   {
@@ -1466,7 +1466,7 @@ const BOOKS = [
     tag3: [],
     isbn: "9787807685074",
     desc: "“建安”系列之一，聚焦208至213年间的赤壁之战与三分天下格局的形成，重现汉末群雄的博弈。",
-    cover: "covers/jianan2.jpg",
+    cover: "covers/opt_jianan2.webp",
     palette: { bg: "#e2dcd6", ink: "#332a24", accent: "#a03b2f", coverA: "#c7b3a4", coverB: "#f0e9e2", coverInk: "#332a24" }
   },
   {
@@ -1483,7 +1483,7 @@ const BOOKS = [
     tag3: [],
     isbn: "9787807685180",
     desc: "“建安”系列之一，讲述214至219年间关羽、曹操等人的落幕，为建安群雄的时代写下英雄绝响。",
-    cover: "covers/jianan3.jpg",
+    cover: "covers/opt_jianan3.webp",
     palette: { bg: "#ddd8d4", ink: "#2c2724", accent: "#7a4a3c", coverA: "#bdaea4", coverB: "#ede8e3", coverInk: "#2c2724" }
   },
   {
@@ -1500,7 +1500,7 @@ const BOOKS = [
     tag3: ["社会阶层", "世界通史"],
     isbn: "9787108082152",
     desc: "社会学家深入美国腹地，倾听保守派民众的失落与愤懑，剖析“尊严”如何成为理解当代美国政治撕裂的关键。",
-    cover: "covers/touzou.jpg",
+    cover: "covers/opt_touzou.webp",
     palette: { bg: "#e0e3e6", ink: "#262a2e", accent: "#8a5a3a", coverA: "#b3bcc4", coverB: "#eff1f3", coverInk: "#262a2e" }
   },
   {
@@ -1517,7 +1517,7 @@ const BOOKS = [
     tag3: ["社会阶层"],
     isbn: "9787108071569",
     desc: "社会学经典《The Second Shift》，揭示双职工家庭中女性下班后仍需承担的“第二轮班”，直指家务与育儿背后的性别不平等。",
-    cover: "covers/zhichangmama.jpg",
+    cover: "covers/opt_zhichangmama.webp",
     palette: { bg: "#f0e4e6", ink: "#3a2830", accent: "#b8506a", coverA: "#e2bcc6", coverB: "#f8edf0", coverInk: "#3a2830" }
   },
   {
@@ -1534,7 +1534,7 @@ const BOOKS = [
     tag3: ["长篇小说"],
     isbn: "9787532798544",
     desc: "法国作家克洛埃·德洛姆的小说，以细腻笔触探入现代人的情感与身份，在“合成”的时代追问何为真实的心。",
-    cover: "covers/hechengxin.jpg",
+    cover: "covers/opt_hechengxin.webp",
     palette: { bg: "#efdfe4", ink: "#3a2830", accent: "#c04f6a", coverA: "#e6b8c4", coverB: "#f8ecef", coverInk: "#3a2830" }
   },
   {
@@ -1551,7 +1551,7 @@ const BOOKS = [
     tag3: ["人物传记", "长篇小说"],
     isbn: "9787532794799",
     desc: "布拉德伯里的自传体小说，以1928年绿镇的一个夏天为舞台，透过少年道格拉斯的眼睛，把童年、时光与死亡酿成一坛金黄的蒲公英酒。",
-    cover: "covers/pugongying.jpg",
+    cover: "covers/opt_pugongying.webp",
     palette: { bg: "#f2e9cf", ink: "#3a3118", accent: "#d29a2a", coverA: "#e6d189", coverB: "#f8f2dd", coverInk: "#3a3118" }
   },
   {
@@ -1568,7 +1568,7 @@ const BOOKS = [
     tag3: ["长篇小说"],
     isbn: "9787547739907",
     desc: "阿根廷作家施维伯林的小说，围绕一种名为“侦图机”的神秘装置，编织出关于观看、隐私与人际连接的不安寓言。",
-    cover: "covers/zhentuji.jpg",
+    cover: "covers/opt_zhentuji.webp",
     palette: { bg: "#dde2e0", ink: "#232a28", accent: "#4a7a70", coverA: "#a8c4bd", coverB: "#eef3f1", coverInk: "#232a28" }
   },
   {
@@ -1585,7 +1585,7 @@ const BOOKS = [
     tag3: ["长篇小说"],
     isbn: "9787530672433",
     desc: "福尔斯的处女作长篇，一个孤僻的蝴蝶收藏者绑架了心仪的女孩，在囚禁与被囚的双重视角中，写透占有欲与人性的深渊。",
-    cover: "covers/shoucangjia.jpg",
+    cover: "covers/opt_shoucangjia.webp",
     palette: { bg: "#dcdedd", ink: "#26292b", accent: "#5a6a54", coverA: "#b0bab0", coverB: "#eceeed", coverInk: "#26292b" }
   },
   {
@@ -1602,7 +1602,7 @@ const BOOKS = [
     tag3: ["长篇小说"],
     isbn: "9787559663801",
     desc: "尼日利亚作家的小说，讲述一个渴望受教育的女孩在困境中努力发声、争取命运的故事，为无声者写下有力的呐喊。",
-    cover: "covers/dashengshuohua.jpg",
+    cover: "covers/opt_dashengshuohua.webp",
     palette: { bg: "#f0e7d6", ink: "#3a3120", accent: "#c98a2a", coverA: "#e4cf94", coverB: "#f8f1e0", coverInk: "#3a3120" }
   },
   {
@@ -1619,7 +1619,7 @@ const BOOKS = [
     tag3: ["文学理论", "科幻小说", "长篇小说"],
     isbn: "9787544269155",
     desc: "科塔萨尔在伯克利的文学讲稿结集，这位“拉美文学爆炸”巨匠亲授小说的技艺与游戏，畅谈幻想、幽默与写作之道。",
-    cover: "covers/wenxueke.jpg",
+    cover: "covers/opt_wenxueke.webp",
     palette: { bg: "#e4e0d6", ink: "#302c20", accent: "#7a6a34", coverA: "#c6bb95", coverB: "#f1eee2", coverInk: "#302c20" }
   },
   {
@@ -1653,7 +1653,7 @@ const BOOKS = [
     tag3: ["短篇小说", "长篇小说"],
     isbn: "9787521338980",
     desc: "阿根廷恐怖小说名家恩里克斯的短篇集，将都市传说、社会暴力与女性经验熔于诡谲惊悚的故事，令人不寒而栗。",
-    cover: "covers/chuangshang.jpg",
+    cover: "covers/opt_chuangshang.webp",
     palette: { bg: "#241f26", ink: "#e6dfe4", accent: "#c0506a", coverA: "#332b36", coverB: "#4e4352", coverInk: "#e6dfe4" }
   },
   {
@@ -1754,7 +1754,7 @@ const BOOKS = [
     tag3: ["思想史", "中国哲学史"],
     isbn: "9787542691040",
     desc: "日本学者并木正韶的宋学研究旧籍整理本（张京华编校），对宋代理学源流的传统叙述提出系统质疑，附五种相关文献，为宋明思想史提供域外视角。",
-    cover: "covers/songxueyuanliu.jpg",
+    cover: "covers/opt_songxueyuanliu.webp",
     palette: { bg: "#dee7df", ink: "#232d26", accent: "#4a7a58", coverA: "#a9c6b3", coverB: "#eef4ef", coverInk: "#232d26" }
   },
   {
@@ -1888,7 +1888,7 @@ const BOOKS = [
     tag3: ["古希腊哲学"],
     isbn: "9787542691330",
     desc: "两位哲学家的三轮交锋：丹尼特坚持道德责任与决定论相容，卡鲁索主张人的行为受不可控因素支配、报应性惩罚不义。一场关于自由意志与刑罚正当性的激辩。",
-    cover: "covers/zuiyouyingde.jpg",
+    cover: "covers/opt_zuiyouyingde.webp",
     palette: { bg: "#eae3d9", ink: "#2f281f", accent: "#96703a", coverA: "#d0ba96", coverB: "#f3ede3", coverInk: "#2f281f" }
   },
   {
@@ -1905,7 +1905,7 @@ const BOOKS = [
     tag3: ["社会生活史"],
     isbn: "9787521779530",
     desc: "焚香、点茶、插花、挂画——名物研究者孟晖以十五个专题复原宋人的风雅日常，在器物与诗词的互证中，重现一个精致而有温度的宋朝。",
-    cover: "covers/songshifeihua.jpg",
+    cover: "covers/opt_songshifeihua.webp",
     palette: { bg: "#dee6e2", ink: "#222b28", accent: "#487a6c", coverA: "#a7c8bd", coverB: "#eef4f1", coverInk: "#222b28" }
   },
   {
@@ -2075,7 +2075,7 @@ const BOOKS = [
     tag3: ["社会阶层"],
     isbn: "9787308272032",
     desc: "“妻子”是身份，还是枷锁？本书以访谈与社会学分析呈现当代女性对婚姻制度的重新想象：当亲密关系脱离既定脚本，家庭的边界正在被重写。",
-    cover: "covers/qizideshenfen.jpg",
+    cover: "covers/opt_qizideshenfen.webp",
     palette: { bg: "#dae4e6", ink: "#212b2d", accent: "#3a7a76", coverA: "#a3c8c4", coverB: "#ebf3f2", coverInk: "#212b2d" }
   },
   {
@@ -2092,7 +2092,7 @@ const BOOKS = [
     tag3: ["自我认知"],
     isbn: "9787545497649",
     desc: "从茅台到奢侈品，价值投资者董宝珍提出“精神经济学”框架：商品的精神属性如何创造溢价，情绪价值为何成为新消费时代最坚硬的护城河。",
-    cover: "covers/jingshenjingjixue.jpg",
+    cover: "covers/opt_jingshenjingjixue.webp",
     palette: { bg: "#e7e2df", ink: "#28241f", accent: "#726047", coverA: "#bfb09a", coverB: "#efeae4", coverInk: "#28241f" }
   },
   {
@@ -2109,7 +2109,7 @@ const BOOKS = [
     tag3: ["经济史"],
     isbn: "9786267099247",
     desc: "两位记者深挖通用电气帝国的崩塌：从爱迪生创立的百年巨头到市值蒸发数千亿美元，金融化的诱惑、继任的失败与账面游戏如何合力摧毁一家伟大公司。",
-    cover: "covers/qiyishuaibaixue.jpg",
+    cover: "covers/opt_qiyishuaibaixue.webp",
     palette: { bg: "#e3dfe8", ink: "#26242e", accent: "#5b5288", coverA: "#b3adcf", coverB: "#ece9f1", coverInk: "#26242e" }
   },
   {
@@ -2160,7 +2160,7 @@ const BOOKS = [
     tag3: ["社会阶层"],
     isbn: "9787212119973",
     desc: "社会学家奥克利的经典家务劳动研究：通过对家庭主妇的深度访谈，揭示家务如何成为一份没有工资、没有下班、也没有名字的工作。",
-    cover: "covers/kanbujiandenvren.jpg",
+    cover: "covers/opt_kanbujiandenvren.webp",
     palette: { bg: "#e8ded9", ink: "#2c2521", accent: "#a3603f", coverA: "#d3af98", coverB: "#f2eae5", coverInk: "#2c2521" }
   },
   {
@@ -2194,7 +2194,7 @@ const BOOKS = [
     tag3: ["自我认知"],
     isbn: "9787508637679",
     desc: "幸存者偏误、沉没成本、从众效应——多贝里用52篇短文盘点最常见的思维陷阱，每篇三页，帮你在决策关头躲开大脑为你挖好的坑。",
-    cover: "covers/qingxingsikao.jpg",
+    cover: "covers/opt_qingxingsikao.webp",
     palette: { bg: "#dfe7ea", ink: "#232d31", accent: "#3d7a94", coverA: "#a9c6d2", coverB: "#eef4f6", coverInk: "#232d31" }
   },
   {
@@ -2312,7 +2312,7 @@ const BOOKS = [
     tag3: ["长篇小说"],
     isbn: "9787533938611",
     desc: "诺奖作家大江健三郎的转折之作：残疾婴儿降生，青年“鸟”在逃避与承担之间挣扎。以私人的绝望经验，抵达普遍的人的救赎。",
-    cover: "covers/db134.jpg",
+    cover: "covers/opt_db134.webp",
     palette: { bg: "#dae4e6", ink: "#212b2d", accent: "#3a7a76", coverA: "#a3c8c4", coverB: "#ebf3f2", coverInk: "#212b2d" }
   },
   {
@@ -2329,7 +2329,7 @@ const BOOKS = [
     tag3: ["科幻小说", "长篇小说"],
     isbn: "9787549565115",
     desc: "心智障碍者查理接受实验手术变成天才，又眼睁睁看着智力如潮水退去。以进步报告体写就的科幻经典：理解，有时是最大的残酷。",
-    cover: "covers/aerjinong.jpg",
+    cover: "covers/opt_aerjinong.webp",
     palette: { bg: "#e7e2df", ink: "#28241f", accent: "#726047", coverA: "#bfb09a", coverB: "#efeae4", coverInk: "#28241f" }
   },
   {
@@ -2448,7 +2448,7 @@ const BOOKS = [
     tag3: ["短篇小说", "长篇小说"],
     isbn: "9787530217948",
     desc: "王小波早期代表作：少年妖妖与陈辉的地下水世界，荒诞外壳里包着最纯真的爱情。李银河说，正是这篇小说让她认定了这个人。",
-    cover: "covers/db142.jpg",
+    cover: "covers/opt_db142.webp",
     palette: { bg: "#e6dfe4", ink: "#2c2530", accent: "#7a5a78", coverA: "#c1a9bd", coverB: "#efe9ee", coverInk: "#2c2530" }
   },
   {
@@ -2567,7 +2567,7 @@ const BOOKS = [
     tag3: ["现代诗"],
     isbn: "9787541154157",
     desc: "与《飞鸟集》并称的短诗集：灵感来自旅途中即兴题写的断句，如流萤明灭，微小而发光的哲思。",
-    cover: "covers/db149.jpg",
+    cover: "covers/opt_db149.webp",
     palette: { bg: "#e7e2df", ink: "#28241f", accent: "#726047", coverA: "#bfb09a", coverB: "#efeae4", coverInk: "#28241f" }
   },
   {
@@ -2618,7 +2618,7 @@ const BOOKS = [
     tag3: ["长篇小说"],
     isbn: "9787530216606",
     desc: "王二与陈清扬在云南插队的“伟大友谊”：以狂欢的性与笑对抗荒诞年代。王小波说，这是他的宠儿。",
-    cover: "covers/db152.jpg",
+    cover: "covers/opt_db152.webp",
     palette: { bg: "#dee6e2", ink: "#222b28", accent: "#487a6c", coverA: "#a7c8bd", coverB: "#eef4f1", coverInk: "#222b28" }
   },
   {
@@ -2923,7 +2923,7 @@ const BOOKS = [
     tag3: ["长篇小说"],
     isbn: "9787580701183",
     desc: "为埋葬兄长，安提戈涅公然违抗国王禁令赴死。神法与人法、良知与强权的永恒冲突，西方政治哲学绕不开的原点。",
-    cover: "covers/db170.jpg",
+    cover: "covers/opt_db170.webp",
     palette: { bg: "#e6dfe4", ink: "#2c2530", accent: "#7a5a78", coverA: "#c1a9bd", coverB: "#efe9ee", coverInk: "#2c2530" }
   },
   {
@@ -3073,7 +3073,7 @@ const BOOKS = [
     tag3: ["日本文学", "长篇小说"],
     isbn: "9787538764703",
     desc: "作家音子与旧情人重逢，年轻弟子庆子以爱为名展开复仇。川端康成晚年之作，美与恶、记忆与嫉妒交织的挽歌。",
-    cover: "covers/db179.jpg",
+    cover: "covers/opt_db179.webp",
     palette: { bg: "#eae3d9", ink: "#2f281f", accent: "#96703a", coverA: "#d0ba96", coverB: "#f3ede3", coverInk: "#2f281f" }
   },
   {
@@ -3173,7 +3173,7 @@ const BOOKS = [
     tag3: ["回忆录"],
     isbn: "9787542690708",
     desc: "罗斯金最负盛名的演讲集：论读书（国王的宝库）与论女性教育（王后的花园）。维多利亚时代最优美的教育文章。",
-    cover: "covers/db185.jpg",
+    cover: "covers/opt_db185.webp",
     palette: { bg: "#dee7df", ink: "#232d26", accent: "#4a7a58", coverA: "#a9c6b3", coverB: "#eef4ef", coverInk: "#232d26" }
   },
   {
@@ -3321,7 +3321,7 @@ const BOOKS = [
     tag3: ["社会生活史", "城市史", "城市社会学"],
     isbn: "9787545825275",
     desc: "霓虹灯照不到的地方才是大多数人的上海：石库门里弄、人力车夫与小市民的日常。20世纪初上海日常生活史的经典题目，具体版本待核。",
-    cover: "covers/db194.jpg",
+    cover: "covers/opt_db194.webp",
     palette: { bg: "#dee6e2", ink: "#222b28", accent: "#487a6c", coverA: "#a7c8bd", coverB: "#eef4f1", coverInk: "#222b28" }
   },
   {
@@ -3420,7 +3420,7 @@ const BOOKS = [
     tag3: ["城市史", "社会生活史"],
     isbn: "9787558628436",
     desc: "以口述史的方式重访上海著名的枕流公寓，钩沉百年公寓里名流住客与市井生活的记忆。",
-    cover: "covers/zhenliuzhisheng.jpg",
+    cover: "covers/opt_zhenliuzhisheng.webp",
     palette: { bg: "#eae3d9", ink: "#3a2e21", accent: "#b5623a", coverA: "#d8c4a8", coverB: "#f6efe4", coverInk: "#3a2e21" }
   },
   {
@@ -3454,7 +3454,7 @@ const BOOKS = [
     tag3: ["社会生活史", "城市史", "城市社会学"],
     isbn: "9787214295002",
     desc: "从饮食切入近代上海的城市体验，考察地域食物、怀旧情绪与都市认同之间的纠缠。",
-    cover: "covers/yinshidehuaijiu.jpg",
+    cover: "covers/opt_yinshidehuaijiu.webp",
     palette: { bg: "#e0e6e3", ink: "#20302b", accent: "#4f7a68", coverA: "#a9c6bb", coverB: "#eef3f0", coverInk: "#20302b" }
   },
   {
@@ -3505,7 +3505,7 @@ const BOOKS = [
     tag3: ["社会阶层", "城市史", "城市社会学"],
     isbn: "9787553815114",
     desc: "汉学家魏斐德上海三部曲之一，聚焦1937—1941年沦为孤岛的上海，重现战时都市的政治暗流与恐怖角力。",
-    cover: "covers/gudaosuiyue.jpg",
+    cover: "covers/opt_gudaosuiyue.webp",
     palette: { bg: "#eae3d9", ink: "#3a2e21", accent: "#b5623a", coverA: "#d8c4a8", coverB: "#f6efe4", coverInk: "#3a2e21" }
   },
   {
@@ -3556,7 +3556,7 @@ const BOOKS = [
     tag3: ["手工"],
     isbn: "9787553510071",
     desc: "走访上海的独立手作人，记录皮具、陶艺、首饰等小众工坊里的匠心与生活方式。",
-    cover: "covers/shanghaidulishouzuo.jpg",
+    cover: "covers/opt_shanghaidulishouzuo.webp",
     palette: { bg: "#f4f1ee", ink: "#3a2c1f", accent: "#a15a2c", coverA: "#a15a2c", coverB: "#faf7f3", coverInk: "#ffffff" }
   },
   {
@@ -3590,7 +3590,7 @@ const BOOKS = [
     tag3: ["社会生活史", "城市社会学"],
     isbn: "9787545220308",
     desc: "沿苏州河左岸行走，阅读沿岸的建筑、工厂与街区，在水岸更新中打捞城市记忆。",
-    cover: "covers/yuedusuhezuoan.jpg",
+    cover: "covers/opt_yuedusuhezuoan.webp",
     palette: { bg: "#eae3d9", ink: "#3a2e21", accent: "#b5623a", coverA: "#d8c4a8", coverB: "#f6efe4", coverInk: "#3a2e21" }
   },
   {
@@ -3692,7 +3692,7 @@ const BOOKS = [
     tag3: ["社会生活史", "城市史", "城市社会学"],
     isbn: "9787552043778",
     desc: "以口述历史的方式记录上海体育人的亲历往事，在时间的赛场上打捞城市体育的集体记忆。",
-    cover: "covers/shijiandesachang.jpg",
+    cover: "covers/opt_shijiandesachang.webp",
     palette: { bg: "#dfe9f2", ink: "#1d3557", accent: "#e63946", coverA: "#aecbe8", coverB: "#f4f8fb", coverInk: "#274a78" }
   },
   {
@@ -3709,7 +3709,7 @@ const BOOKS = [
     tag3: ["饮食文化", "城市记忆"],
     isbn: "9780062854728",
     desc: "华裔作者Betty Liu的上海食谱与故事集，用一道道家常菜讲述水上之城的家族记忆与乡愁。",
-    cover: "covers/db217.jpg",
+    cover: "covers/opt_db217.webp",
     palette: { bg: "#e9e4da", ink: "#2b2b2b", accent: "#6d5f4b", coverA: "#3a3632", coverB: "#d9d2c5", coverInk: "#f0ece4" }
   },
   {
@@ -3759,7 +3759,7 @@ const BOOKS = [
     tag3: ["摄影基础"],
     isbn: "9787558630200",
     desc: "摄影师朱浩2001—2010年的上海黑白影像，银盐颗粒里凝固了世纪之初这座城市的街景与光影。",
-    cover: "covers/yinyanluoding.jpg",
+    cover: "covers/opt_yinyanluoding.webp",
     palette: { bg: "#eef1f5", ink: "#1f3550", accent: "#37619e", coverA: "#37619e", coverB: "#f6f8fb", coverInk: "#ffffff" }
   },
   {
@@ -3826,7 +3826,7 @@ const BOOKS = [
     tag3: ["建筑史"],
     isbn: "9787558630576",
     desc: "用A到Z二十六个字母为索引，图文并茂地解读上海建筑的风格、故事与城市肌理。",
-    cover: "covers/db224.jpg",
+    cover: "covers/opt_db224.webp",
     palette: { bg: "#f4f1ee", ink: "#3a2c1f", accent: "#a15a2c", coverA: "#a15a2c", coverB: "#faf7f3", coverInk: "#ffffff" }
   },
   {
@@ -3860,7 +3860,7 @@ const BOOKS = [
     tag3: ["长篇小说"],
     isbn: "9782809715088",
     desc: "金宇澄《洗牌年代》的法文版，法语世界透过这位沪上作家的文字，遇见一座细密流转的上海。",
-    cover: "covers/battrelescartes.jpg",
+    cover: "covers/opt_battrelescartes.webp",
     palette: { bg: "#2b1d3a", ink: "#f0eaf5", accent: "#d98a5b", coverA: "#3a2850", coverB: "#d98a5b", coverInk: "#f0eaf5" }
   },
   {
@@ -3893,7 +3893,7 @@ const BOOKS = [
     tag3: ["建筑史"],
     isbn: "9783754400180",
     desc: "TASCHEN经典再版，图文记录美国波普建筑的奇观——把甜甜圈、帽子与动物造型盖成房子的疯狂想象。",
-    cover: "covers/californiacrazy.jpg",
+    cover: "covers/opt_californiacrazy.webp",
     palette: { bg: "#f2f4f1", ink: "#1c4e2d", accent: "#2b6f43", coverA: "#2b6f43", coverB: "#f8faf7", coverInk: "#ffffff" }
   },
   {
@@ -3910,7 +3910,7 @@ const BOOKS = [
     tag3: ["建筑史"],
     isbn: "9787513506144",
     desc: "梁思成的中英文建筑文集，收录其研究中国古建筑的重要文章，见证一代学人为何执着于此。",
-    cover: "covers/weishenmeyanjiu.jpg",
+    cover: "covers/opt_weishenmeyanjiu.webp",
     palette: { bg: "#f4f1ee", ink: "#3a2c1f", accent: "#a15a2c", coverA: "#a15a2c", coverB: "#faf7f3", coverInk: "#ffffff" }
   },
   {
@@ -3927,7 +3927,7 @@ const BOOKS = [
     tag3: ["平面设计"],
     isbn: "9783754400500",
     desc: "复刻传奇设计杂志《Arts & Architecture》1950—1954年合辑，重温中世纪现代主义设计的黄金年代。",
-    cover: "covers/artsarchitecture.jpg",
+    cover: "covers/opt_artsarchitecture.webp",
     palette: { bg: "#eef1f5", ink: "#1f3550", accent: "#37619e", coverA: "#37619e", coverB: "#f6f8fb", coverInk: "#ffffff" }
   },
   {
@@ -3944,7 +3944,7 @@ const BOOKS = [
     tag3: ["摄影基础", "建筑史"],
     isbn: "9783836593816",
     desc: "摄影师Massimo Listri走访全球最美的图书馆，用宏大而精致的影像献给书籍与建筑的一曲赞歌。",
-    cover: "covers/db231.jpg",
+    cover: "covers/opt_db231.webp",
     palette: { bg: "#f2f4f1", ink: "#1c4e2d", accent: "#2b6f43", coverA: "#2b6f43", coverB: "#f8faf7", coverInk: "#ffffff" }
   },
   {
@@ -3977,7 +3977,7 @@ const BOOKS = [
     tag3: ["建筑史"],
     isbn: "9783836593397",
     desc: "建筑作家Philip Jodidio遍览世界各地的树屋，从童趣小筑到先锋建筑，重拾人与树、与自然共居的梦想。",
-    cover: "covers/treehouses.jpg",
+    cover: "covers/opt_treehouses.webp",
     palette: { bg: "#eef1f5", ink: "#1f3550", accent: "#37619e", coverA: "#37619e", coverB: "#f6f8fb", coverInk: "#ffffff" }
   },
   {
@@ -3994,7 +3994,7 @@ const BOOKS = [
     tag3: ["摄影基础", "建筑史"],
     isbn: "9783836593755",
     desc: "精选全球小木屋建筑，配以插画与影像，讲述极简、离网、亲近自然的当代隐居之所。",
-    cover: "covers/cabins.jpg",
+    cover: "covers/opt_cabins.webp",
     palette: { bg: "#f2f4f1", ink: "#1c4e2d", accent: "#2b6f43", coverA: "#2b6f43", coverB: "#f8faf7", coverInk: "#ffffff" }
   },
   {
@@ -4078,7 +4078,7 @@ const BOOKS = [
     tag3: ["书信"],
     isbn: "9787559882202",
     desc: "传奇编辑珀金斯与海明威、菲茨杰拉德、沃尔夫之间的书信集，透过往来信件，见证名作诞生背后的编辑之功。",
-    cover: "covers/db239.jpg",
+    cover: "covers/opt_db239.webp",
     palette: { bg: "#e6e1e6", ink: "#33293a", accent: "#7a5f82", coverA: "#4a3a52", coverB: "#ddd3e0", coverInk: "#f2edf4" }
   },
   {
@@ -4112,7 +4112,7 @@ const BOOKS = [
     tag3: ["长篇小说"],
     isbn: "9787532790227",
     desc: "萨莉·鲁尼的长篇：四个年轻人在爱情、友谊与信仰之间往复，追问在这个不完美的世界里如何去爱与生活。",
-    cover: "covers/db241.jpg",
+    cover: "covers/opt_db241.webp",
     palette: { bg: "#0f3d3e", ink: "#f2efe9", accent: "#e94f37", coverA: "#144d4a", coverB: "#e94f37", coverInk: "#f2efe9" }
   },
   {
@@ -4197,7 +4197,7 @@ const BOOKS = [
     tag3: ["短篇小说", "科幻小说", "长篇小说"],
     isbn: "9787555913740",
     desc: "科幻大师勒古恩的中篇小说集，在遥远的星球与文明之间，探讨性别、权力与人性的边界。",
-    cover: "covers/db246.jpg",
+    cover: "covers/opt_db246.webp",
     palette: { bg: "#3a1f26", ink: "#f5ece4", accent: "#e0a84e", coverA: "#4d2a33", coverB: "#e0a84e", coverInk: "#f5ece4" }
   },
   {
@@ -4231,7 +4231,7 @@ const BOOKS = [
     tag3: ["日本文学", "长篇小说"],
     isbn: "9787532770342",
     desc: "太宰治的代表作，透过没落贵族家庭的黄昏，写尽战后日本的颓败、挣扎与最后的贵族之殇。版本待核。",
-    cover: "covers/db248.jpg",
+    cover: "covers/opt_db248.webp",
     palette: { bg: "#0f3d3e", ink: "#f2efe9", accent: "#e94f37", coverA: "#144d4a", coverB: "#e94f37", coverInk: "#f2efe9" }
   },
   {
@@ -4265,7 +4265,7 @@ const BOOKS = [
     tag3: ["日本文学", "人物传记", "长篇小说"],
     isbn: "9787530220139",
     desc: "三岛由纪夫的半自传体长篇，一个戴着正常假面的青年，剖白自己隐秘的性向与内心的挣扎。版本待核。",
-    cover: "covers/db250.jpg",
+    cover: "covers/opt_db250.webp",
     palette: { bg: "#3a1f26", ink: "#f5ece4", accent: "#e0a84e", coverA: "#4d2a33", coverB: "#e0a84e", coverInk: "#f5ece4" }
   },
   {
@@ -4299,7 +4299,7 @@ const BOOKS = [
     tag3: ["长篇小说"],
     isbn: "9787559868657",
     desc: "韩国作家金惠珍的小说，在失去与疗愈之间，像猫舔舐伤口般，温柔地抚触现代人内心的孤独。",
-    cover: "covers/db252.jpg",
+    cover: "covers/opt_db252.webp",
     palette: { bg: "#2b1d3a", ink: "#f0eaf5", accent: "#d98a5b", coverA: "#3a2850", coverB: "#d98a5b", coverInk: "#f0eaf5" }
   },
   {
@@ -4316,7 +4316,7 @@ const BOOKS = [
     tag3: ["短篇小说", "科幻小说", "长篇小说"],
     isbn: "9787208167162",
     desc: "艾拉天马行空的中篇，一位女裁缝追赶被风卷走的婚纱，一路奔向巴塔哥尼亚荒原的奇幻旅程。",
-    cover: "covers/nvcaifengyufeng.jpg",
+    cover: "covers/opt_nvcaifengyufeng.webp",
     palette: { bg: "#3a1f26", ink: "#f5ece4", accent: "#e0a84e", coverA: "#4d2a33", coverB: "#e0a84e", coverInk: "#f5ece4" }
   },
   {
@@ -4350,7 +4350,7 @@ const BOOKS = [
     tag3: ["长篇小说"],
     isbn: "9787559874511",
     desc: "诺奖作家莫里亚克的小说，深入一个被罪与欲纠缠的灵魂，在天主教背景下拷问人性的幽暗与救赎。",
-    cover: "covers/heitianshi.jpg",
+    cover: "covers/opt_heitianshi.webp",
     palette: { bg: "#2b1d3a", ink: "#f0eaf5", accent: "#d98a5b", coverA: "#3a2850", coverB: "#d98a5b", coverInk: "#f0eaf5" }
   },
   {
@@ -4452,7 +4452,7 @@ const BOOKS = [
     tag3: ["社会生活史", "考古学入门"],
     isbn: "9787305244391",
     desc: "从民间信仰与神明崇拜切入，考古华人社会的宗教心态与文化记忆，勾勒信仰如何塑造日常生活。",
-    cover: "covers/shenmingkaoguxue.jpg",
+    cover: "covers/opt_shenmingkaoguxue.webp",
     palette: { bg: "#dfe9f2", ink: "#1d3557", accent: "#e63946", coverA: "#aecbe8", coverB: "#f4f8fb", coverInk: "#274a78" }
   },
   {
@@ -4503,7 +4503,7 @@ const BOOKS = [
     tag3: ["电影史"],
     isbn: "9787559668615",
     desc: "电影大师布列松历年访谈的结集，透过他的自述，走进电影书写的简约美学与创作信念。",
-    cover: "covers/dianyingdejiezou.jpg",
+    cover: "covers/opt_dianyingdejiezou.webp",
     palette: { bg: "#f2f4f1", ink: "#1c4e2d", accent: "#2b6f43", coverA: "#2b6f43", coverB: "#f8faf7", coverInk: "#ffffff" }
   },
   {
@@ -4520,7 +4520,7 @@ const BOOKS = [
     tag3: ["电影史"],
     isbn: "9787521759976",
     desc: "伍迪·艾伦与影评人的长篇对谈，逐部回顾自己的作品，坦率而幽默地剖白其电影观与创作幕后。",
-    cover: "covers/woxinshenchu.jpg",
+    cover: "covers/opt_woxinshenchu.webp",
     palette: { bg: "#f4f1ee", ink: "#3a2c1f", accent: "#a15a2c", coverA: "#a15a2c", coverB: "#faf7f3", coverInk: "#ffffff" }
   },
   {
@@ -4537,7 +4537,7 @@ const BOOKS = [
     tag3: ["电影史"],
     isbn: "9787521735024",
     desc: "导演卡梅伦·克罗与好莱坞大师比利·怀尔德的深度对谈，重温这位喜剧与黑色电影巨匠的传奇生涯。",
-    cover: "covers/db266.jpg",
+    cover: "covers/opt_db266.webp",
     palette: { bg: "#eef1f5", ink: "#1f3550", accent: "#37619e", coverA: "#37619e", coverB: "#f6f8fb", coverInk: "#ffffff" }
   },
   {
@@ -4554,7 +4554,7 @@ const BOOKS = [
     tag3: ["回忆录"],
     isbn: "9787549645664",
     desc: "传奇导演赫尔佐格的回忆录，从巴伐利亚山村到丛林与冰原，回望他狂野而执拗的一生与创作。",
-    cover: "covers/linghundefengjing.jpg",
+    cover: "covers/opt_linghundefengjing.webp",
     palette: { bg: "#e9e4da", ink: "#2b2b2b", accent: "#6d5f4b", coverA: "#3a3632", coverB: "#d9d2c5", coverInk: "#f0ece4" }
   },
   {
@@ -4571,7 +4571,7 @@ const BOOKS = [
     tag3: ["戏剧"],
     isbn: "9787305284946",
     desc: "黎巴嫩裔剧作家穆瓦德的剧作集，在战争、流亡与身世之谜中，追问记忆、血缘与和解的可能。",
-    cover: "covers/db268.jpg",
+    cover: "covers/opt_db268.webp",
     palette: { bg: "#2b1d3a", ink: "#f0eaf5", accent: "#d98a5b", coverA: "#3a2850", coverB: "#d98a5b", coverInk: "#f0eaf5" }
   },
   {
@@ -4604,6 +4604,7 @@ const BOOKS = [
     cat: "艺术与设计",
     tag3: ["电影史"],
     isbn: "9780816646838",
+    cover: "covers/isbn_9780816646838.webp",
     desc: "一部关于意大利导演赛尔乔·莱昂内的权威传记，全面梳理意面西部片大师的人生与银幕世界。",
     palette: { bg: "#f2f4f1", ink: "#1c4e2d", accent: "#2b6f43", coverA: "#2b6f43", coverB: "#f8faf7", coverInk: "#ffffff" }
   }
@@ -5337,7 +5338,7 @@ const BOOKS = [
     tag3: ["历史地理"],
     isbn: "",
     desc: "星球研究所携中国青藏高原研究会打造的典藏级国民地理书：以中国地势三级阶梯为骨架，18 个话题、365 张高清摄影，从可可西里的荒野到江南的水乡，重新发现中国的地理之美与人间烟火。",
-    cover: "covers/wr_CB_5SC8uu8rpD4A6wI6xR2q69fo.jpg",
+    cover: "covers/opt_wr_CB_5SC8uu8rpD4A6wI6xR2q69fo.webp",
     source: "weread",
     wrId: "CB_5SC8uu8rpD4A6wI6xR2q69fo",
     secret: true,
@@ -6618,7 +6619,7 @@ const BOOKS = [
     tag3: ["普通心理学"],
     isbn: "",
     desc: "英国精神分析师达里安·利德以精神分析视角重读抑郁：将“哀悼”与“忧郁”视为理解抑郁的关键概念，结合文学、艺术与咨询室案例，指出抑郁多源于未完成的哀悼，而非单纯依赖药物所能解决。",
-    cover: "covers/wr_CB_Bap25P1JLGWA7Yx6x2EwaGCX.png",
+    cover: "covers/opt_wr_CB_Bap25P1JLGWA7Yx6x2EwaGCX.webp",
     source: "weread",
     wrId: "CB_Bap25P1JLGWA7Yx6x2EwaGCX",
     secret: true,
@@ -9768,7 +9769,7 @@ const BOOKS = [
     tag3: ["能源"],
     isbn: "",
     desc: "中国科幻名家作品合集：收录刘慈欣、郑文光、叶永烈、王晋康、童恩正、赵华等人的经典名作，从《小灵通漫游未来》《飞向人马座》到《流浪地球》《珊瑚岛上的死光》，一览中国科幻的星辰大海。",
-    cover: "covers/wr_CB_2VI3u03tuBPV6wr6xR0Fh6LM.jpg",
+    cover: "covers/opt_wr_CB_2VI3u03tuBPV6wr6xR0Fh6LM.webp",
     source: "weread",
     wrId: "CB_2VI3u03tuBPV6wr6xR0Fh6LM",
     secret: true,
@@ -11851,6 +11852,7 @@ const BOOKS = [
     ],
     "tag": "建筑·城市",
     "isbn": "9787807682998",
+    "cover": "covers/isbn_9787807682998.webp",
     "desc": ""
   },
   {
@@ -11870,6 +11872,7 @@ const BOOKS = [
     ],
     "tag": "建筑·城市",
     "isbn": "9787302197744",
+    "cover": "covers/isbn_9787302197744.webp",
     "desc": ""
   },
   {
@@ -11909,6 +11912,7 @@ const BOOKS = [
     ],
     "tag": "散文·随笔",
     "isbn": "9787540475024",
+    "cover": "covers/isbn_9787540475024.webp",
     "desc": ""
   },
   {
@@ -11928,6 +11932,7 @@ const BOOKS = [
     ],
     "tag": "建筑·城市",
     "isbn": "9787559871619",
+    "cover": "covers/isbn_9787559871619.webp",
     "desc": ""
   },
   {
@@ -11947,6 +11952,7 @@ const BOOKS = [
     ],
     "tag": "建筑·城市",
     "isbn": "9787112307135",
+    "cover": "covers/isbn_9787112307135.webp",
     "desc": ""
   },
   {
@@ -11966,6 +11972,7 @@ const BOOKS = [
     ],
     "tag": "城市研究",
     "isbn": "9787112277346",
+    "cover": "covers/isbn_9787112277346.webp",
     "desc": ""
   },
   {
@@ -11985,6 +11992,7 @@ const BOOKS = [
     ],
     "tag": "社会·文化",
     "isbn": "9787108066183",
+    "cover": "covers/isbn_9787108066183.webp",
     "desc": ""
   },
   {
@@ -12004,6 +12012,7 @@ const BOOKS = [
     ],
     "tag": "散文·随笔",
     "isbn": "9787540488611",
+    "cover": "covers/isbn_9787540488611.webp",
     "desc": ""
   },
   {
@@ -12023,6 +12032,7 @@ const BOOKS = [
     ],
     "tag": "历史·城市",
     "isbn": "9787552038347",
+    "cover": "covers/isbn_9787552038347.webp",
     "desc": ""
   },
   {
@@ -12042,6 +12052,7 @@ const BOOKS = [
     ],
     "tag": "散文·随笔",
     "isbn": "9787108051929",
+    "cover": "covers/isbn_9787108051929.webp",
     "desc": ""
   },
   {
@@ -12061,6 +12072,7 @@ const BOOKS = [
     ],
     "tag": "散文·随笔",
     "isbn": "9787108052810",
+    "cover": "covers/isbn_9787108052810.webp",
     "desc": ""
   },
   {
@@ -12080,6 +12092,7 @@ const BOOKS = [
     ],
     "tag": "教育",
     "isbn": "9787108045409",
+    "cover": "covers/isbn_9787108045409.webp",
     "desc": ""
   },
   {
@@ -12118,6 +12131,7 @@ const BOOKS = [
     ],
     "tag": "建筑·城市",
     "isbn": "9787559877055",
+    "cover": "covers/isbn_9787559877055.webp",
     "desc": ""
   },
   {
@@ -12156,6 +12170,7 @@ const BOOKS = [
     ],
     "tag": "散文·随笔",
     "isbn": "9787108078452",
+    "cover": "covers/isbn_9787108078452.webp",
     "desc": ""
   },
   {
@@ -12175,6 +12190,7 @@ const BOOKS = [
     ],
     "tag": "人物传记",
     "isbn": "9787807684732",
+    "cover": "covers/isbn_9787807684732.webp",
     "desc": ""
   },
   {
@@ -12194,6 +12210,7 @@ const BOOKS = [
     ],
     "tag": "心理成长",
     "isbn": "9787559446619",
+    "cover": "covers/isbn_9787559446619.webp",
     "desc": ""
   },
   {
@@ -12213,6 +12230,7 @@ const BOOKS = [
     ],
     "tag": "散文·随笔",
     "isbn": "9787576510485",
+    "cover": "covers/isbn_9787576510485.webp",
     "desc": ""
   },
   {
@@ -12232,6 +12250,7 @@ const BOOKS = [
     ],
     "tag": "散文·随笔",
     "isbn": "9787112275663",
+    "cover": "covers/isbn_9787112275663.webp",
     "desc": ""
   },
   {
@@ -12290,6 +12309,7 @@ const BOOKS = [
     ],
     "tag": "建筑·城市",
     "isbn": "9787213112867",
+    "cover": "covers/isbn_9787213112867.webp",
     "desc": ""
   },
   {
@@ -12309,6 +12329,7 @@ const BOOKS = [
     ],
     "tag": "历史·城市",
     "isbn": "9787214281937",
+    "cover": "covers/isbn_9787214281937.webp",
     "desc": ""
   },
   {
@@ -12328,6 +12349,7 @@ const BOOKS = [
     ],
     "tag": "历史·城市",
     "isbn": "9787214282316",
+    "cover": "covers/isbn_9787214282316.webp",
     "desc": ""
   },
   {
@@ -12366,6 +12388,7 @@ const BOOKS = [
     ],
     "tag": "科学科普",
     "isbn": "9787521768367",
+    "cover": "covers/isbn_9787521768367.webp",
     "desc": ""
   },
   {
@@ -12404,6 +12427,7 @@ const BOOKS = [
     ],
     "tag": "建筑·城市",
     "isbn": "9787201190969",
+    "cover": "covers/isbn_9787201190969.webp",
     "desc": ""
   },
   {
@@ -12423,6 +12447,7 @@ const BOOKS = [
     ],
     "tag": "建筑·城市",
     "isbn": "9787201190938",
+    "cover": "covers/isbn_9787201190938.webp",
     "desc": ""
   },
   {
@@ -12442,6 +12467,7 @@ const BOOKS = [
     ],
     "tag": "历史·城市",
     "isbn": "9787201190921",
+    "cover": "covers/isbn_9787201190921.webp",
     "desc": ""
   },
   {
@@ -12461,6 +12487,7 @@ const BOOKS = [
     ],
     "tag": "建筑·城市",
     "isbn": "9787201186177",
+    "cover": "covers/isbn_9787201186177.webp",
     "desc": ""
   },
   {
@@ -12480,6 +12507,7 @@ const BOOKS = [
     ],
     "tag": "生活·旅行",
     "isbn": "9787020184286",
+    "cover": "covers/isbn_9787020184286.webp",
     "desc": ""
   },
   {
@@ -12499,6 +12527,7 @@ const BOOKS = [
     ],
     "tag": "散文·随笔",
     "isbn": "9787555911043",
+    "cover": "covers/isbn_9787555911043.webp",
     "desc": ""
   },
   {
@@ -12537,6 +12566,7 @@ const BOOKS = [
     ],
     "tag": "历史·城市",
     "isbn": "9787559460004",
+    "cover": "covers/isbn_9787559460004.webp",
     "desc": ""
   },
   {
@@ -12556,6 +12586,7 @@ const BOOKS = [
     ],
     "tag": "历史·城市",
     "isbn": "9787553811178",
+    "cover": "covers/isbn_9787553811178.webp",
     "desc": ""
   },
   {
@@ -12575,6 +12606,7 @@ const BOOKS = [
     ],
     "tag": "历史·城市",
     "isbn": "9787507557589",
+    "cover": "covers/isbn_9787507557589.webp",
     "desc": ""
   },
   {
@@ -12594,6 +12626,7 @@ const BOOKS = [
     ],
     "tag": "教育",
     "isbn": "9787108064790",
+    "cover": "covers/isbn_9787108064790.webp",
     "desc": ""
   },
   {
@@ -12613,6 +12646,7 @@ const BOOKS = [
     ],
     "tag": "散文·随笔",
     "isbn": "9787559446602",
+    "cover": "covers/isbn_9787559446602.webp",
     "desc": ""
   },
   {
@@ -12632,6 +12666,7 @@ const BOOKS = [
     ],
     "tag": "散文·随笔",
     "isbn": "9787540497323",
+    "cover": "covers/isbn_9787540497323.webp",
     "desc": ""
   },
   {
@@ -12651,6 +12686,7 @@ const BOOKS = [
     ],
     "tag": "散文·随笔",
     "isbn": "9787547746950",
+    "cover": "covers/isbn_9787547746950.webp",
     "desc": ""
   },
   {
@@ -12689,6 +12725,7 @@ const BOOKS = [
     ],
     "tag": "散文·随笔",
     "isbn": "9787108047960",
+    "cover": "covers/isbn_9787108047960.webp",
     "desc": ""
   },
   {
@@ -12708,6 +12745,7 @@ const BOOKS = [
     ],
     "tag": "历史·城市",
     "isbn": "9787547327364",
+    "cover": "covers/isbn_9787547327364.webp",
     "desc": ""
   },
   {
@@ -12727,6 +12765,7 @@ const BOOKS = [
     ],
     "tag": "散文·随笔",
     "isbn": "9787559446596",
+    "cover": "covers/isbn_9787559446596.webp",
     "desc": ""
   },
   {
@@ -12765,6 +12804,7 @@ const BOOKS = [
     ],
     "tag": "经济社会",
     "isbn": "9787559827999",
+    "cover": "covers/isbn_9787559827999.webp",
     "desc": ""
   },
   {
@@ -12803,6 +12843,7 @@ const BOOKS = [
     ],
     "tag": "散文·随笔",
     "isbn": "9787572613050",
+    "cover": "covers/isbn_9787572613050.webp",
     "desc": ""
   },
   {
@@ -12822,6 +12863,7 @@ const BOOKS = [
     ],
     "tag": "历史·城市",
     "isbn": "9787576515589",
+    "cover": "covers/isbn_9787576515589.webp",
     "desc": ""
   },
   {
@@ -12841,6 +12883,7 @@ const BOOKS = [
     ],
     "tag": "散文·随笔",
     "isbn": "9787572616402",
+    "cover": "covers/isbn_9787572616402.webp",
     "desc": ""
   },
   {
@@ -12860,6 +12903,7 @@ const BOOKS = [
     ],
     "tag": "散文·随笔",
     "isbn": "9787521202007",
+    "cover": "covers/isbn_9787521202007.webp",
     "desc": ""
   },
   {
@@ -12879,6 +12923,7 @@ const BOOKS = [
     ],
     "tag": "散文·随笔",
     "isbn": "9787544777919",
+    "cover": "covers/isbn_9787544777919.webp",
     "desc": ""
   },
   {
@@ -12898,6 +12943,7 @@ const BOOKS = [
     ],
     "tag": "散文·随笔",
     "isbn": "9787540489397",
+    "cover": "covers/isbn_9787540489397.webp",
     "desc": ""
   },
   {
@@ -12917,6 +12963,7 @@ const BOOKS = [
     ],
     "tag": "建筑·城市",
     "isbn": "9787108075451",
+    "cover": "covers/isbn_9787108075451.webp",
     "desc": ""
   },
   {
@@ -12936,6 +12983,7 @@ const BOOKS = [
     ],
     "tag": "建筑工具书",
     "isbn": "9787111634119",
+    "cover": "covers/isbn_9787111634119.webp",
     "desc": ""
   },
   {
@@ -12974,6 +13022,7 @@ const BOOKS = [
     ],
     "tag": "建筑·城市",
     "isbn": "9787574018136",
+    "cover": "covers/isbn_9787574018136.webp",
     "desc": ""
   },
   {
@@ -12993,6 +13042,7 @@ const BOOKS = [
     ],
     "tag": "建筑·城市",
     "isbn": "9787558628474",
+    "cover": "covers/isbn_9787558628474.webp",
     "desc": ""
   },
   {
@@ -13012,6 +13062,7 @@ const BOOKS = [
     ],
     "tag": "散文·随笔",
     "isbn": "9787510875311",
+    "cover": "covers/isbn_9787510875311.webp",
     "desc": ""
   },
   {
@@ -13031,6 +13082,7 @@ const BOOKS = [
     ],
     "tag": "建筑·城市",
     "isbn": "9787559485519",
+    "cover": "covers/isbn_9787559485519.webp",
     "desc": ""
   },
   {
@@ -13050,6 +13102,7 @@ const BOOKS = [
     ],
     "tag": "建筑·城市",
     "isbn": "9787558632198",
+    "cover": "covers/isbn_9787558632198.webp",
     "desc": ""
   },
   {
@@ -13069,6 +13122,7 @@ const BOOKS = [
     ],
     "tag": "建筑·城市",
     "isbn": "9787576518559",
+    "cover": "covers/isbn_9787576518559.webp",
     "desc": ""
   },
   {
@@ -13126,6 +13180,7 @@ const BOOKS = [
     ],
     "tag": "建筑·城市",
     "isbn": "9787112280155",
+    "cover": "covers/isbn_9787112280155.webp",
     "desc": ""
   },
   {
@@ -13145,6 +13200,7 @@ const BOOKS = [
     ],
     "tag": "建筑·城市",
     "isbn": "9787112117093",
+    "cover": "covers/isbn_9787112117093.webp",
     "desc": ""
   },
   {
@@ -13164,6 +13220,7 @@ const BOOKS = [
     ],
     "tag": "建筑·城市",
     "isbn": "9787020179114",
+    "cover": "covers/isbn_9787020179114.webp",
     "desc": ""
   },
   {
@@ -13183,6 +13240,7 @@ const BOOKS = [
     ],
     "tag": "建筑·城市",
     "isbn": "9787571343002",
+    "cover": "covers/isbn_9787571343002.webp",
     "desc": ""
   },
   {
@@ -13202,6 +13260,7 @@ const BOOKS = [
     ],
     "tag": "建筑·城市",
     "isbn": "9787568089753",
+    "cover": "covers/isbn_9787568089753.webp",
     "desc": ""
   },
   {
@@ -14647,6 +14706,7 @@ const BOOKS = [
     ],
     "tag": "历史·城市",
     "isbn": "9787521779073",
+    "cover": "covers/isbn_9787521779073.webp",
     "desc": ""
   },
   {
@@ -14666,6 +14726,7 @@ const BOOKS = [
     ],
     "tag": "哲学思想",
     "isbn": "9787549559091",
+    "cover": "covers/isbn_9787549559091.webp",
     "desc": "公认的重要王尔德传记之一。艾尔曼从档案、书信与文学文本出发，详细还原王尔德的唯美主义思想、文学创作、同性关系、公众声誉、审判及晚年流亡，同时也分析“王尔德传奇”是如何形成的。"
   },
   {
@@ -14705,6 +14766,7 @@ const BOOKS = [
     ],
     "tag": "人物传记",
     "isbn": "9787559867322",
+    "cover": "covers/isbn_9787559867322.webp",
     "desc": ""
   },
   {
@@ -14724,6 +14786,7 @@ const BOOKS = [
     ],
     "tag": "小说",
     "isbn": "9787522518114",
+    "cover": "covers/isbn_9787522518114.webp",
     "desc": "小说重新想象了塞勒姆女巫审判中真实存在的黑人女性蒂图芭。孔戴借她的生命书写奴隶制、种族、宗教迫害、性别与身体，同时加入神话和魔幻性的表达，使一个在传统历史中只留下寥寥几笔的人重新获得自己的声音。"
   },
   {
@@ -14743,6 +14806,7 @@ const BOOKS = [
     ],
     "tag": "建筑·城市",
     "isbn": "9787559683939",
+    "cover": "covers/isbn_9787559683939.webp",
     "desc": "裴丽珠长期生活在近代北京，她从城门、街巷、寺庙、园林、宫殿乃至民间习俗入手，描绘一个现代化剧烈到来之前的北京。它介于城市史、旅行文学与亲历记录之间，对今天想研究“城市空间如何承载历史记忆”的读者尤其有价值。"
   },
   {
@@ -14762,6 +14826,7 @@ const BOOKS = [
     ],
     "tag": "生活·旅行",
     "isbn": "9787559827401",
+    "cover": "covers/isbn_9787559827401.webp",
     "desc": ""
   },
   {
@@ -14781,6 +14846,7 @@ const BOOKS = [
     ],
     "tag": "小说",
     "isbn": "9787522532561",
+    "cover": "covers/isbn_9787522532561.webp",
     "desc": "故事发生于20世纪60年代的罗得西亚。女孩坦布希望通过教育改变自己的命运，但殖民制度、父权家庭、阶级与语言不断进入她的成长过程；学校既意味着自由，也意味着另一种规训，因此它是一部很复杂的女性成长小说。"
   },
   {
@@ -14800,6 +14866,7 @@ const BOOKS = [
     ],
     "tag": "历史·城市",
     "isbn": "9787559648280",
+    "cover": "covers/isbn_9787559648280.webp",
     "desc": "这是一部将女性命运、战争记忆与裁缝技艺联系起来的历史小说。针线、衣服、制作与修补不只是故事中的职业行为，也成为创伤之后保存记忆、重新连接家庭与生活的隐喻。"
   },
   {
@@ -14819,6 +14886,7 @@ const BOOKS = [
     ],
     "tag": "社会·文化",
     "isbn": "9787521780161",
+    "cover": "covers/isbn_9787521780161.webp",
     "desc": ""
   },
   {
@@ -14838,6 +14906,7 @@ const BOOKS = [
     ],
     "tag": "散文·随笔",
     "isbn": "9787559845870",
+    "cover": "covers/isbn_9787559845870.webp",
     "desc": ""
   },
   {
@@ -14857,6 +14926,7 @@ const BOOKS = [
     ],
     "tag": "社会·文化",
     "isbn": "9787508658346",
+    "cover": "covers/isbn_9787508658346.webp",
     "desc": "作者通过长期访谈记录苏联解体前后普通人的生命经验。共产主义者、反对者、知识分子、家庭主妇以及经历战争和市场化的人共同说话，宏大的“苏联解体”由此变成无数私人生活中关于信仰、自由、怀旧、创伤和金钱的故事。"
   },
   {
@@ -15048,6 +15118,7 @@ const BOOKS = [
     ],
     "tag": "教育",
     "isbn": "9787574308701",
+    "cover": "covers/isbn_9787574308701.webp",
     "desc": ""
   },
   {
@@ -15067,6 +15138,7 @@ const BOOKS = [
     ],
     "tag": "社会·文化",
     "isbn": "9787521775259",
+    "cover": "covers/isbn_9787521775259.webp",
     "desc": "多位作者跨越城市、县城、乡村、家庭、学校与各种社会机构展开观察和对话，试图理解人与人今天如何建立关系。它讨论的是非常日常却很难定义的东西——关怀、爱、陌生人之间的善意以及我们的语言和行为习惯。"
   },
   {
@@ -15086,6 +15158,7 @@ const BOOKS = [
     ],
     "tag": "心理成长",
     "isbn": "9787522523002",
+    "cover": "covers/isbn_9787522523002.webp",
     "desc": "针对那些“别人一句话，我回家想了一晚上”的生活情境，作者给出具体的认知调整与沟通方法。重点不是要求读者压抑不爽，而是帮助区分他人的评价与自己的价值，并训练边界和回应方式。"
   },
   {
@@ -15259,6 +15332,7 @@ const BOOKS = [
     ],
     "tag": "科学科普",
     "isbn": "9787552815641",
+    "cover": "covers/isbn_9787552815641.webp",
     "desc": "这本书把传统以帝王、战争、国家和制度为中心的人类历史重新放进自然环境之中：气候、地貌、植物、动物、疾病与资源如何共同塑造文明。它尤其适合喜欢历史和地理的人，因为它不断提醒读者——文明从来没有脱离自然独立运行。"
   },
   {
@@ -15278,6 +15352,7 @@ const BOOKS = [
     ],
     "tag": "诗歌·诗词",
     "isbn": "9787201197340",
+    "cover": "covers/isbn_9787201197340.webp",
     "desc": ""
   },
   {
@@ -15297,6 +15372,7 @@ const BOOKS = [
     ],
     "tag": "散文·随笔",
     "isbn": "9787535693457",
+    "cover": "covers/isbn_9787535693457.webp",
     "desc": ""
   },
   {
@@ -15469,6 +15545,7 @@ const BOOKS = [
     ],
     "tag": "艺术·影像",
     "isbn": "9787559828309",
+    "cover": "covers/isbn_9787559828309.webp",
     "desc": "塞巴尔德以一次英国东安格利亚徒步旅行作为主轴，却不断从眼前景物岔开到殖民史、战争、艺术、自然毁灭和个人记忆。照片、历史档案、游记、小说与散文彼此混合，是最典型的“塞巴尔德式写作”。"
   },
   {
@@ -15488,6 +15565,7 @@ const BOOKS = [
     ],
     "tag": "心理成长",
     "isbn": "9787574012936",
+    "cover": "covers/isbn_9787574012936.webp",
     "desc": "来自幸福研究领域的通俗读物。作者从光线、家具、空间布局、私人仪式、共同用餐以及人与人的连接出发，讨论为什么某些房间会让我们产生“这里是家”的心理感受，也可以看作一本以幸福感为线索的居住空间研究。"
   },
   {
@@ -15507,6 +15585,7 @@ const BOOKS = [
     ],
     "tag": "人物传记",
     "isbn": "9787220135156",
+    "cover": "covers/isbn_9787220135156.webp",
     "desc": "原作是 Stet: An Editor's Life，也是阿西尔作为编辑最重要的职业回忆录。她在书里记录与众多作家的合作、编辑判断、作者与编辑之间微妙的权力关系，也让读者看到文学作品从手稿真正走向出版的后台世界。"
   },
   {

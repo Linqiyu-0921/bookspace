@@ -14,7 +14,7 @@
 | `data.js` | 分类定义与全部书籍数据，导出全局 `CATEGORY_ORDER`、`CATEGORY_GROUPS` 和 `BOOKS`；共 **923 本**（579 实体 + 344 微信读书电子书）。一切页面的数据源 |
 | `index.html` + `styles.css` + `app.js` | 书架主页：书脊墙、悬停翻开封面、分类筛选 |
 | `overview.html` + `overview.css` + `overview.js` | 总览页：分类分组、右侧标签抽屉筛选（一级/二级多选 OR）、搜索 |
-| `covers/` | 封面图片（约 590 张 jpg） |
+| `covers/` | 封面图片；历史文件沿用原格式，新检索封面统一压缩为 WebP |
 | `imports/` | 外部识别书目的审计暂存区；JSON 文件按 `YYYY-MM-DD-来源.json` 命名，完成合并后保留来源与导入状态，不存图片 |
 | `scripts/` | 无第三方依赖的 Node.js 维护脚本；负责数据校验、导入检查等，不参与网页运行 |
 
@@ -53,15 +53,19 @@
 
 - 文件名规则：中文书名→拼音全拼（`鸢尾花`→`yuanweihua.jpg`）；英文→小写原名（`Julius Caesar...`→`juliuscaesarthecolossusofrome.jpg`）；微信读书→`wr_<bookId>.jpg`；早期历史数据为 `dbNNN.jpg`
 - 冲突处理：重名加 `_N` 后缀
-- 无封面书（当前 331 本）：data.js **不写 cover 字段**，前端走程序化设计款兜底（书脊配色来自 `palette`）
+- ISBN 精确检索恢复的封面统一命名为 `isbn_<13位ISBN>.webp`；检索来源、原图链接、ISBN 核验和下载状态必须写入 `imports/YYYY-MM-DD-cover-recovery.json`
+- 新增或重新处理的封面最长边不超过 900px，WebP quality 80，清除元数据；禁止直接纳入数 MB 的原图
+- 历史封面超过 150KB 时保留原文件、不覆盖媒体素材，生成 `opt_<原文件名去扩展名>.webp` 并只更新 `data.js` 引用；优化批次写入 `imports/YYYY-MM-DD-cover-optimization.json`
+- 无封面书（当前 252 本）：data.js **不写 cover 字段**，前端走程序化设计款兜底（书脊配色来自 `palette`）
 - 书脊主色：前端对真实封面图 canvas 主色采样（`app.js coverPalette`），`palette` 字段是兜底色
 - 书架主页封面必须通过 `IntersectionObserver` 延迟加载，只对临近视口的封面采样主色；禁止恢复为全量 `src` 同步加载
+- 总览页分批渲染必须使用唯一 sentinel；每批完成后不得继续观察旧 tile，避免一次滚动连锁渲染全部书目
 - 微信读书高清封面获取：`/book/info` 接口的 cover 字段（约 250×400），搜索接口只给 70×100 小图
 
 ## 4. 关键页面逻辑
 
 - `app.js`：`BOOKS.length` 动态注入 meta description 与角标数字；书架支持 `cat` 一级分类和 `tags` 二级分类筛选，悬停翻开显示封面详情（infoTag/infoMeta/infoDesc）
-- `overview.js`：右侧抽屉筛选（`cat` 一级单选 + `tags` 二级多选 OR），封面 `loading="lazy"` + 分批渲染；搜索跨全部书籍字段过滤；`?cat=一级分类` 深链
+- `overview.js`：档案索引式右侧双栏抽屉筛选（`cat` 一级单选 + `tags` 二级多选 OR）；桌面端指针进入右侧热区自动打开、离开后延迟收起，触屏与键盘保留显式按钮；封面用 `data-src` + `IntersectionObserver` 懒加载并分批渲染；搜索跨全部书籍字段过滤；`?cat=一级分类` 深链
 - 两页分类顺序均读取 `data.js` 的 `CATEGORY_ORDER` / `CATEGORY_GROUPS`；数量均由 JS 从 `BOOKS.length` 计算，HTML 与注释中禁止静态写死总数
 
 ## 5. 外部书目导入
@@ -83,6 +87,7 @@
 
 ### 加封面（补缺封面书）
 - 首选微信读书：`WEREAD_API_KEY`（环境变量，用户提供，勿落盘）→ `/store/search` 按书名找 bookId → `/book/info` 取高清封面 URL → 下载到 `covers/`
+- 无微信读书凭据时，先按 ISBN 在可核验书目页精确匹配；只有页面明确回显同一 ISBN 才能自动写入，默认占位图视为未命中
 - 书名匹配必须用「原始字符串 + 副标题分隔符（（：:—-· ）」判断同书，防"岁月"误配"岁月忽已暮"
 
 ### 同步飞书 Base

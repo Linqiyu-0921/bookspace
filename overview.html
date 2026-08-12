@@ -8,7 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+SC:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="overview.css?v=2">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,300,0,0" rel="stylesheet">
+  <link rel="stylesheet" href="overview.css?v=3">
 </head>
 <body>
 
@@ -43,32 +44,40 @@
   <!-- 底部提示 -->
   <div class="footer-hint">Click a cover for details &nbsp;·&nbsp; ← → to browse</div>
 
-  <!-- 标签抽屉触发按钮 -->
-  <button class="drawer-toggle" id="drawerToggle" aria-label="打开标签筛选">
-    <span class="dt-icon"></span>
-    <span class="dt-label">标签</span>
+  <!-- 档案索引式标签抽屉 -->
+  <div class="drawer-hot-zone" id="drawerHotZone" aria-hidden="true"></div>
+  <nav class="drawer-index" id="drawerIndex" aria-label="分类索引" aria-hidden="true" inert></nav>
+  <button class="drawer-toggle" id="drawerToggle" aria-label="打开标签筛选" aria-controls="drawer" aria-expanded="false">
+    <span class="material-symbols-outlined" aria-hidden="true">filter_alt</span>
+    <span class="dt-label">筛选</span>
     <span class="dt-count" id="drawerCount">0</span>
   </button>
 
-  <!-- 标签抽屉 -->
-  <aside class="drawer" id="drawer" aria-hidden="true" aria-label="标签筛选">
+  <aside class="drawer" id="drawer" aria-hidden="true" aria-label="标签筛选" tabindex="-1" inert>
     <header class="drawer-head">
-      <h3>标签筛选</h3>
+      <div>
+        <div class="drawer-kicker">Archive Index</div>
+        <h3>标签筛选</h3>
+      </div>
       <div class="drawer-head-actions">
         <button class="drawer-clear" id="drawerClear">清空</button>
-        <button class="drawer-close" id="drawerClose" aria-label="关闭">×</button>
+        <button class="drawer-close material-symbols-outlined" id="drawerClose" aria-label="关闭">close</button>
       </div>
     </header>
     <div class="drawer-body">
-      <div class="drawer-section">
-        <div class="drawer-section-title">一级分类 · L1</div>
+      <section class="drawer-column drawer-column-l1" aria-labelledby="drawerL1Title">
+        <div class="drawer-section-title" id="drawerL1Title">一级分类</div>
         <div class="drawer-tags" id="drawerL1"></div>
-      </div>
-      <div class="drawer-section">
-        <div class="drawer-section-title">二级标签 · L2<span class="drawer-section-hint" id="drawerL2Hint">选一级后可选</span></div>
+      </section>
+      <section class="drawer-column drawer-column-l2" aria-labelledby="drawerL2Title">
+        <div class="drawer-section-title" id="drawerL2Title">二级标签 <span class="drawer-section-hint" id="drawerL2Hint"></span></div>
         <div class="drawer-tags" id="drawerL2"></div>
-      </div>
+      </section>
     </div>
+    <footer class="drawer-footer">
+      <div class="drawer-summary" id="drawerSummary"></div>
+      <button class="drawer-apply" id="drawerApply">查看结果 <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></button>
+    </footer>
   </aside>
   <div class="drawer-backdrop" id="drawerBackdrop"></div>
 
@@ -90,7 +99,7 @@
     </div>
   </div>
 
-  <script src="data.js?v=10"></script>
-  <script src="overview.js?v=5"></script>
+  <script src="data.js?v=11"></script>
+  <script src="overview.js?v=6"></script>
 </body>
 </html>

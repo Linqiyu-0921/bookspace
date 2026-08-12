@@ -1,0 +1,920 @@
+{
+  "source": "local_cover_optimization",
+  "generatedAt": "2026-08-12T08:31:30.246Z",
+  "thresholdBytes": 153600,
+  "maxDimension": 900,
+  "format": "webp",
+  "quality": 78,
+  "results": [
+    {
+      "originalCover": "covers/hanmen.jpg",
+      "optimizedCover": "covers/opt_hanmen.webp",
+      "titles": [
+        "寒门子弟上大学"
+      ],
+      "bytesBefore": 401370,
+      "bytesAfter": 105186,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/pantu.jpg",
+      "optimizedCover": "covers/opt_pantu.webp",
+      "titles": [
+        "我们这种叛徒"
+      ],
+      "bytesBefore": 255568,
+      "bytesAfter": 83560,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/chengshi.jpg",
+      "optimizedCover": "covers/opt_chengshi.webp",
+      "titles": [
+        "城市絮语"
+      ],
+      "bytesBefore": 212436,
+      "bytesAfter": 36696,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/sanjia.jpg",
+      "optimizedCover": "covers/opt_sanjia.webp",
+      "titles": [
+        "三家分晋"
+      ],
+      "bytesBefore": 170714,
+      "bytesAfter": 51224,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/neizai.jpg",
+      "optimizedCover": "covers/opt_neizai.webp",
+      "titles": [
+        "中国转向内在"
+      ],
+      "bytesBefore": 254042,
+      "bytesAfter": 74402,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/christopher.jpg",
+      "optimizedCover": "covers/opt_christopher.webp",
+      "titles": [
+        "克里斯托弗和他的同类"
+      ],
+      "bytesBefore": 280490,
+      "bytesAfter": 93472,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/justice.jpg",
+      "optimizedCover": "covers/opt_justice.webp",
+      "titles": [
+        "正义联盟"
+      ],
+      "bytesBefore": 201614,
+      "bytesAfter": 60888,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/xiazhiqing.jpg",
+      "optimizedCover": "covers/opt_xiazhiqing.webp",
+      "titles": [
+        "夏志清夏济安书信集"
+      ],
+      "bytesBefore": 172158,
+      "bytesAfter": 91316,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/manzu.jpg",
+      "optimizedCover": "covers/opt_manzu.webp",
+      "titles": [
+        "蛮族世界的拼图"
+      ],
+      "bytesBefore": 207161,
+      "bytesAfter": 62680,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/guxila.jpg",
+      "optimizedCover": "covers/opt_guxila.webp",
+      "titles": [
+        "古希腊社会生活史"
+      ],
+      "bytesBefore": 246212,
+      "bytesAfter": 74284,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/jingshendiguo.jpg",
+      "optimizedCover": "covers/opt_jingshendiguo.webp",
+      "titles": [
+        "精神帝国"
+      ],
+      "bytesBefore": 210308,
+      "bytesAfter": 74784,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/taiping.jpg",
+      "optimizedCover": "covers/opt_taiping.webp",
+      "titles": [
+        "太平前夜"
+      ],
+      "bytesBefore": 434987,
+      "bytesAfter": 151950,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/weiyangge.jpg",
+      "optimizedCover": "covers/opt_weiyangge.webp",
+      "titles": [
+        "未央歌"
+      ],
+      "bytesBefore": 173355,
+      "bytesAfter": 123674,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/shudianriji.jpg",
+      "optimizedCover": "covers/opt_shudianriji.webp",
+      "titles": [
+        "书店四季"
+      ],
+      "bytesBefore": 396916,
+      "bytesAfter": 106948,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/liweitan.jpg",
+      "optimizedCover": "covers/opt_liweitan.webp",
+      "titles": [
+        "难以驯化的利维坦"
+      ],
+      "bytesBefore": 229466,
+      "bytesAfter": 47822,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/gadamoer.jpg",
+      "optimizedCover": "covers/opt_gadamoer.webp",
+      "titles": [
+        "伽达默尔与东方思想"
+      ],
+      "bytesBefore": 211888,
+      "bytesAfter": 53980,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/zhengyi.jpg",
+      "optimizedCover": "covers/opt_zhengyi.webp",
+      "titles": [
+        "正义的褶皱"
+      ],
+      "bytesBefore": 370244,
+      "bytesAfter": 142972,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/yindu.jpg",
+      "optimizedCover": "covers/opt_yindu.webp",
+      "titles": [
+        "印度文明史"
+      ],
+      "bytesBefore": 337083,
+      "bytesAfter": 101260,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/wangyangming.jpg",
+      "optimizedCover": "covers/opt_wangyangming.webp",
+      "titles": [
+        "王阳明的生活世界"
+      ],
+      "bytesBefore": 167973,
+      "bytesAfter": 29042,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/db61.jpg",
+      "optimizedCover": "covers/opt_db61.webp",
+      "titles": [
+        "西法兰克王国（843—987年）领地大公国研究"
+      ],
+      "bytesBefore": 339658,
+      "bytesAfter": 71090,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/db63.jpg",
+      "optimizedCover": "covers/opt_db63.webp",
+      "titles": [
+        "北方以北"
+      ],
+      "bytesBefore": 493016,
+      "bytesAfter": 144602,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/shujiliancheng.jpg",
+      "optimizedCover": "covers/opt_shujiliancheng.webp",
+      "titles": [
+        "书籍是怎样炼成的"
+      ],
+      "bytesBefore": 162009,
+      "bytesAfter": 87528,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/qimengtuifei.jpg",
+      "optimizedCover": "covers/opt_qimengtuifei.webp",
+      "titles": [
+        "启蒙与颓废"
+      ],
+      "bytesBefore": 223827,
+      "bytesAfter": 63450,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/mingzhongzhuding.jpg",
+      "optimizedCover": "covers/opt_mingzhongzhuding.webp",
+      "titles": [
+        "当一切命中注定，我们还要勇敢吗？"
+      ],
+      "bytesBefore": 270533,
+      "bytesAfter": 63928,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/beishui.jpg",
+      "optimizedCover": "covers/opt_beishui.webp",
+      "titles": [
+        "杯水之情"
+      ],
+      "bytesBefore": 215355,
+      "bytesAfter": 45470,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/lishixuanze.jpg",
+      "optimizedCover": "covers/opt_lishixuanze.webp",
+      "titles": [
+        "历史的选择"
+      ],
+      "bytesBefore": 230234,
+      "bytesAfter": 66780,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/zhengtishijie.jpg",
+      "optimizedCover": "covers/opt_zhengtishijie.webp",
+      "titles": [
+        "整体世界史论"
+      ],
+      "bytesBefore": 468077,
+      "bytesAfter": 139592,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/jianan1.jpg",
+      "optimizedCover": "covers/opt_jianan1.webp",
+      "titles": [
+        "建安·统一北方之战"
+      ],
+      "bytesBefore": 163744,
+      "bytesAfter": 45666,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/jianan2.jpg",
+      "optimizedCover": "covers/opt_jianan2.webp",
+      "titles": [
+        "建安·决战赤壁"
+      ],
+      "bytesBefore": 162085,
+      "bytesAfter": 41778,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/jianan3.jpg",
+      "optimizedCover": "covers/opt_jianan3.webp",
+      "titles": [
+        "建安·英雄的绝响"
+      ],
+      "bytesBefore": 156204,
+      "bytesAfter": 41604,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/touzou.jpg",
+      "optimizedCover": "covers/opt_touzou.webp",
+      "titles": [
+        "被偷走的尊严"
+      ],
+      "bytesBefore": 267078,
+      "bytesAfter": 77622,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/zhichangmama.jpg",
+      "optimizedCover": "covers/opt_zhichangmama.webp",
+      "titles": [
+        "职场妈妈不下班"
+      ],
+      "bytesBefore": 168966,
+      "bytesAfter": 48788,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/hechengxin.jpg",
+      "optimizedCover": "covers/opt_hechengxin.webp",
+      "titles": [
+        "合成的心"
+      ],
+      "bytesBefore": 360842,
+      "bytesAfter": 114520,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/pugongying.jpg",
+      "optimizedCover": "covers/opt_pugongying.webp",
+      "titles": [
+        "蒲公英酒"
+      ],
+      "bytesBefore": 189299,
+      "bytesAfter": 52220,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/zhentuji.jpg",
+      "optimizedCover": "covers/opt_zhentuji.webp",
+      "titles": [
+        "侦图机"
+      ],
+      "bytesBefore": 344459,
+      "bytesAfter": 76470,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/shoucangjia.jpg",
+      "optimizedCover": "covers/opt_shoucangjia.webp",
+      "titles": [
+        "收藏家"
+      ],
+      "bytesBefore": 250984,
+      "bytesAfter": 68406,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/dashengshuohua.jpg",
+      "optimizedCover": "covers/opt_dashengshuohua.webp",
+      "titles": [
+        "大声说话的女孩"
+      ],
+      "bytesBefore": 295814,
+      "bytesAfter": 89732,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/wenxueke.jpg",
+      "optimizedCover": "covers/opt_wenxueke.webp",
+      "titles": [
+        "文学课"
+      ],
+      "bytesBefore": 191000,
+      "bytesAfter": 48012,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/chuangshang.jpg",
+      "optimizedCover": "covers/opt_chuangshang.webp",
+      "titles": [
+        "床上抽烟危险"
+      ],
+      "bytesBefore": 386900,
+      "bytesAfter": 124796,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/songxueyuanliu.jpg",
+      "optimizedCover": "covers/opt_songxueyuanliu.webp",
+      "titles": [
+        "宋学源流质疑（外五种）"
+      ],
+      "bytesBefore": 154431,
+      "bytesAfter": 35658,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/zuiyouyingde.jpg",
+      "optimizedCover": "covers/opt_zuiyouyingde.webp",
+      "titles": [
+        "罪有应得？"
+      ],
+      "bytesBefore": 191895,
+      "bytesAfter": 47936,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/songshifeihua.jpg",
+      "optimizedCover": "covers/opt_songshifeihua.webp",
+      "titles": [
+        "宋时飞花"
+      ],
+      "bytesBefore": 173863,
+      "bytesAfter": 99110,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/qizideshenfen.jpg",
+      "optimizedCover": "covers/opt_qizideshenfen.webp",
+      "titles": [
+        "妻子的身份"
+      ],
+      "bytesBefore": 262667,
+      "bytesAfter": 59454,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/jingshenjingjixue.jpg",
+      "optimizedCover": "covers/opt_jingshenjingjixue.webp",
+      "titles": [
+        "精神经济学"
+      ],
+      "bytesBefore": 157310,
+      "bytesAfter": 45534,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/qiyishuaibaixue.jpg",
+      "optimizedCover": "covers/opt_qiyishuaibaixue.webp",
+      "titles": [
+        "奇异衰败学"
+      ],
+      "bytesBefore": 183034,
+      "bytesAfter": 45536,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/kanbujiandenvren.jpg",
+      "optimizedCover": "covers/opt_kanbujiandenvren.webp",
+      "titles": [
+        "看不见的女人"
+      ],
+      "bytesBefore": 207761,
+      "bytesAfter": 46460,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/qingxingsikao.jpg",
+      "optimizedCover": "covers/opt_qingxingsikao.webp",
+      "titles": [
+        "清醒思考的艺术"
+      ],
+      "bytesBefore": 238426,
+      "bytesAfter": 61158,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/db134.jpg",
+      "optimizedCover": "covers/opt_db134.webp",
+      "titles": [
+        "个人的体验"
+      ],
+      "bytesBefore": 183977,
+      "bytesAfter": 47586,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/aerjinong.jpg",
+      "optimizedCover": "covers/opt_aerjinong.webp",
+      "titles": [
+        "献给阿尔吉侬的花束"
+      ],
+      "bytesBefore": 483244,
+      "bytesAfter": 109646,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/db142.jpg",
+      "optimizedCover": "covers/opt_db142.webp",
+      "titles": [
+        "绿毛水怪"
+      ],
+      "bytesBefore": 166857,
+      "bytesAfter": 49798,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/db149.jpg",
+      "optimizedCover": "covers/opt_db149.webp",
+      "titles": [
+        "流萤集"
+      ],
+      "bytesBefore": 179023,
+      "bytesAfter": 121600,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/db152.jpg",
+      "optimizedCover": "covers/opt_db152.webp",
+      "titles": [
+        "黄金时代"
+      ],
+      "bytesBefore": 551851,
+      "bytesAfter": 133240,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/db170.jpg",
+      "optimizedCover": "covers/opt_db170.webp",
+      "titles": [
+        "安提戈涅"
+      ],
+      "bytesBefore": 293244,
+      "bytesAfter": 102214,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/db179.jpg",
+      "optimizedCover": "covers/opt_db179.webp",
+      "titles": [
+        "美丽与哀愁"
+      ],
+      "bytesBefore": 185534,
+      "bytesAfter": 53048,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/db185.jpg",
+      "optimizedCover": "covers/opt_db185.webp",
+      "titles": [
+        "芝麻与百合"
+      ],
+      "bytesBefore": 157576,
+      "bytesAfter": 69588,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/db194.jpg",
+      "optimizedCover": "covers/opt_db194.webp",
+      "titles": [
+        "霓虹灯外"
+      ],
+      "bytesBefore": 211844,
+      "bytesAfter": 61244,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/zhenliuzhisheng.jpg",
+      "optimizedCover": "covers/opt_zhenliuzhisheng.webp",
+      "titles": [
+        "枕流之声"
+      ],
+      "bytesBefore": 176859,
+      "bytesAfter": 64522,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/yinshidehuaijiu.jpg",
+      "optimizedCover": "covers/opt_yinshidehuaijiu.webp",
+      "titles": [
+        "饮食的怀旧"
+      ],
+      "bytesBefore": 238023,
+      "bytesAfter": 76388,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/gudaosuiyue.jpg",
+      "optimizedCover": "covers/opt_gudaosuiyue.webp",
+      "titles": [
+        "孤岛岁月"
+      ],
+      "bytesBefore": 215204,
+      "bytesAfter": 60012,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/shanghaidulishouzuo.jpg",
+      "optimizedCover": "covers/opt_shanghaidulishouzuo.webp",
+      "titles": [
+        "上海独立手作"
+      ],
+      "bytesBefore": 173776,
+      "bytesAfter": 46170,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/yuedusuhezuoan.jpg",
+      "optimizedCover": "covers/opt_yuedusuhezuoan.webp",
+      "titles": [
+        "阅读苏河左岸"
+      ],
+      "bytesBefore": 288579,
+      "bytesAfter": 200056,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/shijiandesachang.jpg",
+      "optimizedCover": "covers/opt_shijiandesachang.webp",
+      "titles": [
+        "时间的赛场"
+      ],
+      "bytesBefore": 166879,
+      "bytesAfter": 49414,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/db217.jpg",
+      "optimizedCover": "covers/opt_db217.webp",
+      "titles": [
+        "My Shanghai"
+      ],
+      "bytesBefore": 207147,
+      "bytesAfter": 64268,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/yinyanluoding.jpg",
+      "optimizedCover": "covers/opt_yinyanluoding.webp",
+      "titles": [
+        "银盐落定"
+      ],
+      "bytesBefore": 341787,
+      "bytesAfter": 124632,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/db224.jpg",
+      "optimizedCover": "covers/opt_db224.webp",
+      "titles": [
+        "上海建筑"
+      ],
+      "bytesBefore": 347690,
+      "bytesAfter": 122628,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/battrelescartes.jpg",
+      "optimizedCover": "covers/opt_battrelescartes.webp",
+      "titles": [
+        "Battre les cartes"
+      ],
+      "bytesBefore": 1518631,
+      "bytesAfter": 81140,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/californiacrazy.jpg",
+      "optimizedCover": "covers/opt_californiacrazy.webp",
+      "titles": [
+        "California Crazy"
+      ],
+      "bytesBefore": 5276631,
+      "bytesAfter": 65018,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/weishenmeyanjiu.jpg",
+      "optimizedCover": "covers/opt_weishenmeyanjiu.webp",
+      "titles": [
+        "为什么研究中国建筑"
+      ],
+      "bytesBefore": 551781,
+      "bytesAfter": 153204,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/artsarchitecture.jpg",
+      "optimizedCover": "covers/opt_artsarchitecture.webp",
+      "titles": [
+        "Arts & Architecture 1950–1954"
+      ],
+      "bytesBefore": 1273877,
+      "bytesAfter": 26350,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/db231.jpg",
+      "optimizedCover": "covers/opt_db231.webp",
+      "titles": [
+        "The World's Most Beautiful Libraries"
+      ],
+      "bytesBefore": 261443,
+      "bytesAfter": 155606,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/treehouses.jpg",
+      "optimizedCover": "covers/opt_treehouses.webp",
+      "titles": [
+        "Tree Houses"
+      ],
+      "bytesBefore": 2261261,
+      "bytesAfter": 43962,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/cabins.jpg",
+      "optimizedCover": "covers/opt_cabins.webp",
+      "titles": [
+        "Cabins"
+      ],
+      "bytesBefore": 5894771,
+      "bytesAfter": 61312,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/db239.jpg",
+      "optimizedCover": "covers/opt_db239.webp",
+      "titles": [
+        "作家们毫无进展"
+      ],
+      "bytesBefore": 352081,
+      "bytesAfter": 103724,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/db241.jpg",
+      "optimizedCover": "covers/opt_db241.webp",
+      "titles": [
+        "美丽的世界，你在哪里"
+      ],
+      "bytesBefore": 234250,
+      "bytesAfter": 44864,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/db246.jpg",
+      "optimizedCover": "covers/opt_db246.webp",
+      "titles": [
+        "寻获与失落"
+      ],
+      "bytesBefore": 176064,
+      "bytesAfter": 42010,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/db248.jpg",
+      "optimizedCover": "covers/opt_db248.webp",
+      "titles": [
+        "斜阳"
+      ],
+      "bytesBefore": 313454,
+      "bytesAfter": 72756,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/db250.jpg",
+      "optimizedCover": "covers/opt_db250.webp",
+      "titles": [
+        "假面的告白"
+      ],
+      "bytesBefore": 410606,
+      "bytesAfter": 79944,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/db252.jpg",
+      "optimizedCover": "covers/opt_db252.webp",
+      "titles": [
+        "猫舔过伤口"
+      ],
+      "bytesBefore": 187794,
+      "bytesAfter": 37800,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/nvcaifengyufeng.jpg",
+      "optimizedCover": "covers/opt_nvcaifengyufeng.webp",
+      "titles": [
+        "女裁缝与风"
+      ],
+      "bytesBefore": 265459,
+      "bytesAfter": 62760,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/heitianshi.jpg",
+      "optimizedCover": "covers/opt_heitianshi.webp",
+      "titles": [
+        "黑天使"
+      ],
+      "bytesBefore": 235642,
+      "bytesAfter": 61922,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/shenmingkaoguxue.jpg",
+      "optimizedCover": "covers/opt_shenmingkaoguxue.webp",
+      "titles": [
+        "神明考古学"
+      ],
+      "bytesBefore": 180621,
+      "bytesAfter": 79596,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/dianyingdejiezou.jpg",
+      "optimizedCover": "covers/opt_dianyingdejiezou.webp",
+      "titles": [
+        "电影的节奏是心跳"
+      ],
+      "bytesBefore": 184755,
+      "bytesAfter": 46850,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/woxinshenchu.jpg",
+      "optimizedCover": "covers/opt_woxinshenchu.webp",
+      "titles": [
+        "我心深处"
+      ],
+      "bytesBefore": 484963,
+      "bytesAfter": 113310,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/db266.jpg",
+      "optimizedCover": "covers/opt_db266.webp",
+      "titles": [
+        "日落大道"
+      ],
+      "bytesBefore": 156590,
+      "bytesAfter": 115088,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/linghundefengjing.jpg",
+      "optimizedCover": "covers/opt_linghundefengjing.webp",
+      "titles": [
+        "灵魂的风景"
+      ],
+      "bytesBefore": 473264,
+      "bytesAfter": 113480,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/db268.jpg",
+      "optimizedCover": "covers/opt_db268.webp",
+      "titles": [
+        "海边"
+      ],
+      "bytesBefore": 233707,
+      "bytesAfter": 75216,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/wr_CB_5SC8uu8rpD4A6wI6xR2q69fo.jpg",
+      "optimizedCover": "covers/opt_wr_CB_5SC8uu8rpD4A6wI6xR2q69fo.webp",
+      "titles": [
+        "这里是中国"
+      ],
+      "bytesBefore": 368808,
+      "bytesAfter": 186328,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/wr_CB_Bap25P1JLGWA7Yx6x2EwaGCX.png",
+      "optimizedCover": "covers/opt_wr_CB_Bap25P1JLGWA7Yx6x2EwaGCX.webp",
+      "titles": [
+        "我们为什么会抑郁"
+      ],
+      "bytesBefore": 168934,
+      "bytesAfter": 3056,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/wr_CB_2VI3u03tuBPV6wr6xR0Fh6LM.jpg",
+      "optimizedCover": "covers/opt_wr_CB_2VI3u03tuBPV6wr6xR0Fh6LM.webp",
+      "titles": [
+        "中国科幻丛书（套装共7册）"
+      ],
+      "bytesBefore": 226112,
+      "bytesAfter": 20258,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/import_9787521757965.jpg",
+      "optimizedCover": "covers/opt_import_9787521757965.webp",
+      "titles": [
+        "巴别塔"
+      ],
+      "bytesBefore": 468808,
+      "bytesAfter": 126040,
+      "accepted": true
+    },
+    {
+      "originalCover": "covers/import_9787542680525.jpg",
+      "optimizedCover": "covers/opt_import_9787542680525.webp",
+      "titles": [
+        "凯列班与女巫：妇女、身体与原始积累"
+      ],
+      "bytesBefore": 233259,
+      "bytesAfter": 160270,
+      "accepted": true
+    }
+  ]
+}
