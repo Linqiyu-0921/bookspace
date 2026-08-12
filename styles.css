@@ -350,10 +350,11 @@ html, body {
   cursor: pointer;
 }
 
-/* 翻开封面覆盖相邻书脊，避免 margin 动画重排整条书架 */
+/* 一次性腾出封面宽度；margin 不参与 transition，避免覆盖相邻书脊与逐帧重排 */
 .book-wrap.open {
   z-index: 60;
   transform: rotateZ(0deg);
+  margin-right: calc(var(--cover-w, 160px) - var(--spine-w, 44px) + 22px);
 }
 
 .book {
@@ -666,6 +667,7 @@ html, body {
     padding: 10px 0 16px;
   }
   .spine-dot { bottom: 10px; }
+  .book-wrap.open { margin-right: calc(var(--cover-w, 118px) - var(--spine-w, 34px) + 12px); }
   .cover-design { padding: 10px 10px 8px 14px; }
   .cover-design .cover-title { font-size: 13px; }
   .book-shadow { bottom: -18px; height: 12px; }
