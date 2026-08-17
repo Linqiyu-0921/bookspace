@@ -11,12 +11,13 @@
 
 | 文件 | 职责 |
 |---|---|
-| `data.js` | 分类定义与全部书籍数据，导出全局 `CATEGORY_ORDER`、`CATEGORY_GROUPS` 和 `BOOKS`；共 **923 本**（579 实体 + 344 微信读书电子书）。一切页面的数据源 |
+| `data.js` | 分类定义、专题定义与全部书籍数据，导出全局 `CATEGORY_ORDER`、`CATEGORY_GROUPS`、`SPECIAL_COLLECTIONS` 和 `BOOKS`；共 **1028 本**（684 实体 + 344 微信读书电子书）。一切页面的数据源 |
 | `index.html` + `styles.css` + `app.js` | 书架主页：书脊墙、悬停/点按翻开封面、一级分类筛选 |
 | `overview.html` + `overview.css` + `overview.js` | 总览页：分类分组、右侧标签抽屉筛选（一级/二级多选 OR）、搜索 |
 | `search.js` | 书籍本地全文检索：字段归一化、多关键词 AND 匹配、相关度评分与结果排序；不依赖网络 |
 | `covers/` | 封面图片；历史文件沿用原格式，新检索封面统一压缩为 WebP |
 | `imports/` | 外部识别书目的审计暂存区；JSON 文件按 `YYYY-MM-DD-来源.json` 命名，完成合并后保留来源与导入状态，不存图片 |
+| `imports/reports/` | 导入与外部同步的只读预检报告；不作为书目批次参与 `validate-data.mjs` 校验 |
 | `scripts/` | 无第三方依赖的 Node.js 维护脚本；负责数据校验、导入检查等，不参与网页运行 |
 
 ## 2. 数据模型（data.js，重点）
@@ -26,7 +27,7 @@
 ```
 实体书：
 { title, sub, author, origin, translator, publisher, year, tag,
-  tags:[...], cat, tag3:[...], isbn, desc, cover, palette }
+  tags:[...], cat, tag3:[...], isbn, desc, cover, palette, collections:[...] }
 
 电子书（source === "weread"）：
 { title, sub, author, origin, translator, publisher, year, tag,
@@ -40,6 +41,8 @@
 - `生活与旅行` 下的二级分类为 `健康与运动` / `旅行与生活`；旅行、饮食、生活方式不得再归入文学散文作兜底。
 - `tag3`：**三级标签数组**，111 个值，可为 0-8 个，如 `["人工智能入门","机器学习"]`；893 本已有
 - `tag`：自由展示标签，不参与三级分类筛选；约 200 个值，如 `"计算机"`、`"长篇小说"`
+- `collections`：可选专题 slug 数组；不改变藏书分类，用于书展、主题策展等跨分类专区
+- `SPECIAL_COLLECTIONS`：专题 slug、标题、时间、地点与说明的唯一来源；页面不得自行维护专题常量
 - `CATEGORY_ORDER`：13 个一级分类的唯一展示顺序；首页和总览页必须共同引用，禁止各自维护分类常量
 - `CATEGORY_GROUPS`：一级到二级的唯一映射与展示顺序；新二级分类必须先在这里登记，校验脚本严格拒绝未登记值或跨一级归属
 
@@ -66,11 +69,11 @@
 ## 4. 关键页面逻辑
 
 - `app.js`：`BOOKS.length` 动态注入 meta description 与角标数字；书架只展示 `cat` 一级分类筛选，二级分类仅保留在搜索与图书详情中；桌面悬停、移动端点按翻开显示封面详情（infoTag/infoMeta/infoDesc）
-- 书架检索必须调用 `search.js` 的预构建索引，覆盖书名、副标题、作者、译者、出版社、出版年份、ISBN、来源、一级/二级/三级分类、自由标签和简介；空格分隔的多关键词采用 AND 匹配，结果按字段权重和命中位置排序，禁止每次输入重新拼接 923 本书的全文字符串
+- 书架检索必须调用 `search.js` 的预构建索引，覆盖书名、副标题、作者、译者、出版社、出版年份、ISBN、来源、一级/二级/三级分类、自由标签和简介；空格分隔的多关键词采用 AND 匹配，结果按字段权重和命中位置排序，禁止每次输入重新拼接 1028 本书的全文字符串
 - 书架检索快捷键：`/` 或 `Command/Ctrl + K` 聚焦，Enter 打开相关度最高的结果，Escape 清空；搜索结果的 DOM 顺序必须与相关度顺序一致
 - 书架搜索框聚焦时不得横向扩张并压入 `BOOK SPACE` 主标题区域；桌面与移动端都保持右侧固定宽度，长关键词由输入框内部滚动承载
 - 书籍翻转动画只使用合成友好的 `transform`；展开态用不参与动画的 `margin-right` 一次性腾出封面宽度，禁止 `margin`/`width` 逐帧过渡，避免封面覆盖相邻书脊或重排动画卡顿；封面主色采样必须安排在空闲时段，避免与翻转抢占主线程
-- 书架首屏及其相邻区域的真实封面使用 `IntersectionObserver` 预取，普通封面为自动优先级、用户选中的封面提升为高优先级；不得对 923 本封面同时发起请求
+- 书架首屏及其相邻区域的真实封面使用 `IntersectionObserver` 预取，普通封面为自动优先级、用户选中的封面提升为高优先级；不得对 1028 本封面同时发起请求
 - 书架移动端的一级分类必须保持单行横向滚动，不得换行占据书架空间；触控目标不小于 40px，页面禁止横向溢出
 - `overview.js`：档案索引式右侧双栏抽屉筛选（`cat` 一级单选 + `tags` 二级多选 OR）；桌面端指针进入右侧热区自动打开、离开后延迟收起，触屏与键盘保留显式按钮；封面用 `data-src` + `IntersectionObserver` 懒加载并分批渲染；搜索跨全部书籍字段过滤；`?cat=一级分类` 深链
 - 两页分类顺序均读取 `data.js` 的 `CATEGORY_ORDER` / `CATEGORY_GROUPS`；数量均由 JS 从 `BOOKS.length` 计算，HTML 与注释中禁止静态写死总数
@@ -82,6 +85,7 @@
 3. 只有版本信息可核验的记录才能写入 `data.js`；待核记录继续留在 `imports/`，不得为凑数量补写作者、ISBN 或封面。
 4. 新书先更新网站并通过 `node scripts/validate-data.mjs`，再按同一批次写入飞书 Base；两边数量和业务字段必须一致。
 5. 封面检索优先出版社、图书馆、微信读书等可确认版本的来源；文件名遵守第 3 节约定，无法确认时使用程序化封面。
+6. 专题只引用已经进入 `BOOKS` 的书；版本未核验条目保留在 `imports/`，不得为了凑齐专题数量绕过主书库校验。
 
 ## 6. 维护操作
 
@@ -98,8 +102,8 @@
 - 书名匹配必须用「原始字符串 + 副标题分隔符（（：:—-· ）」判断同书，防"岁月"误配"岁月忽已暮"
 
 ### 同步飞书 Base
-- Base：`PTV8bD3VqalscasqrdOc3BEin5c`，表 `tblBtcwA4cc0nK9U`「书籍清单」。`data.js` 与 Base 当前均为 923 条；历史对话导入的 308 条及 9 张已核验封面已同步完成。
-- `node scripts/sync-feishu.mjs` 只读预检网站与 Base 差异；`--write-compatible` 仅写入已有分类选项可容纳的记录，`--write` 写入全部待同步记录，`--upload-covers` 只追加尚未上传的批次封面，`--verify-fields` 逐字段核对本批 308 条记录。写入前先运行预检。
+- Base：`PTV8bD3VqalscasqrdOc3BEin5c`，表 `tblBtcwA4cc0nK9U`「书籍清单」。`data.js` 与 Base 当前均为 1028 条；2026 上海书展批次 105 条已同步并通过 15 个业务字段核验，筛选视图为 `2026 上海书展`（`vewFJxV5WO`）。历史对话导入的 308 条及 9 张已核验封面已同步完成。
+- `node scripts/sync-feishu.mjs` 只读预检网站与 Base 差异；`--write-compatible` 仅写入已有分类选项可容纳的记录，`--write` 写入全部待同步记录，`--upload-covers` 只追加尚未上传的批次封面，`--verify-fields` 逐字段核对指定导入批次。写入前先运行预检。
 - `lark-cli base +record-list --format json`：输出 `data.record_id_list` 与 `data.data`（值数组）**按索引一一对齐**——这是获取 record_id 的唯一通道，批量更新用 `+record-batch-update`
 - 字段顺序（值数组索引）：0书名 / 1读完 / 2细分标签 / 3简介 / 4ISBN / 5分类 / 6私密 / 7封面 / 8出版社 / 9译者 / 10出版年份 / 11来源照片 / 12最近阅读 / 13封面参考链接 / 14微信读书ID / 15作者
 - 微信读书书的分类选项：`+field-search-options --field-id 分类` 查看；data.js 的 cat 值必须存在于选项
@@ -125,4 +129,4 @@ env -u HTTPS_PROXY -u HTTP_PROXY git push origin main
 
 ---
 
-_维护约定随项目演化更新；数字（923 本、13 一级分类等）如有变动同步修改本文件。_
+_维护约定随项目演化更新；数字（1028 本、13 一级分类等）如有变动同步修改本文件。_

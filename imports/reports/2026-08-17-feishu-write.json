@@ -1,0 +1,16 @@
+{
+  "mode": "write",
+  "websiteBooks": 1028,
+  "importedBooks": 105,
+  "baseRecordsBefore": 1028,
+  "websiteMissingInBase": [],
+  "baseMissingFromWebsite": [],
+  "alreadyInBase": 105,
+  "pending": 0,
+  "missingCategoryOptions": [],
+  "missingTagOptions": [],
+  "booksWithMissingTagOptions": [],
+  "writable": 0,
+  "pendingCoverUploads": 0,
+  "expectedBaseRecordsAfter": 1028
+}

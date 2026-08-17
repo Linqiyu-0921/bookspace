@@ -5,8 +5,12 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dataPath = path.join(root, "data.js");
-const importPath = path.join(root, "imports", "2026-08-10-chatgpt-conversations.json");
+const sourceArg = process.argv[process.argv.indexOf("--source") + 1];
+const importPath = sourceArg && !sourceArg.startsWith("--")
+  ? path.resolve(sourceArg)
+  : path.join(root, "imports", "2026-08-10-chatgpt-conversations.json");
 const shouldWrite = process.argv.includes("--write");
+const shouldRepair = process.argv.includes("--repair-batch");
 
 const normalizeTitle = value => String(value || "")
   .toLowerCase()
@@ -26,6 +30,42 @@ function classification(candidate) {
   const text = [candidate.title, candidate.description]
     .filter(Boolean)
     .join(" ");
+
+  const bySourceNo = {
+    "历史与地理|中国历史|历史研究": [1,2,3,4,5,7,8,34,35,36,52,54,97,98,99,100,101,104,105,106,111,112,116,117,118,129,131,132],
+    "历史与地理|世界历史|世界史": [102,103,107],
+    "社会与文化|文化研究|文化研究": [10,28,30,31,38,44,45,46,113,114,115,130,133],
+    "经济与商业|管理|经济社会": [11],
+    "哲学与思想|哲学分支|哲学思想": [9,13,66,67,68],
+    "文学与小说|戏剧与文学理论|文学研究": [6,12,14,20,21,37,50,119,120],
+    "文学与小说|诗歌|诗歌": [15,16,18,19,33],
+    "文学与小说|小说|小说": [22,23,24,25,26,29,32,55,58,59,60,61,62,64,122,134,135],
+    "文学与小说|散文与随笔|散文·随笔": [27,48,121,123],
+    "心理与成长|基础心理学|心理学": [40,41,43,108],
+    "心理与成长|人际与关系|亲密关系": [39,109],
+    "心理与成长|情绪与自我成长|心理成长": [65],
+    "科学与科普|科学文化|科学科普": [42,63],
+    "教育与语言|教育|教育": [17],
+    "人物与传记|人物领域|人物传记": [53,56,57],
+    "艺术与设计|电影音乐与表演|艺术·影像": [47,49,51],
+    "计算机与技术|数据与信息技术|计算机科学": [110],
+    "漫画与流行文化|漫画|漫画": [124,125,126,127,128]
+  };
+  if (candidate.sourceNo) {
+    for (const [key, numbers] of Object.entries(bySourceNo)) {
+      if (!numbers.includes(candidate.sourceNo)) continue;
+      const [cat, tag2, tag] = key.split("|");
+      const tag3 = cat === "历史与地理" ? [tag2 === "中国历史" ? "中国通史" : "世界通史"]
+        : cat === "文学与小说" ? [tag2 === "小说" ? "长篇小说" : "文学批评"]
+        : cat === "漫画与流行文化" ? ["大众文化"]
+        : cat === "计算机与技术" ? ["计算机科学"]
+        : cat === "科学与科普" ? ["趣味科普"]
+        : cat === "人物与传记" ? ["人物传记"]
+        : cat === "心理与成长" ? ["心理学入门"]
+        : ["思想史"];
+      return { cat, tags: [tag2], tag3, tag };
+    }
+  }
 
   if (/漫画|认知症照护/.test(text)) {
     return { cat: "漫画与流行文化", tags: ["漫画"], tag3: ["大众文化"], tag: "漫画" };
@@ -109,17 +149,31 @@ function asBook(candidate) {
     year,
     ...taxonomy,
     isbn: /^\d{13}$/.test(candidate.isbn || "") ? candidate.isbn : "",
-    desc: candidate.description || ""
+    desc: candidate.description || "",
+    ...(candidate.collections?.length ? { collections: candidate.collections } : {})
   };
 }
 
-const pending = batch.candidates.filter(candidate => candidate.matchStatus === "new_candidate" && candidate.importStatus === "pending");
+batch.candidates.forEach(candidate => {
+  if (candidate.matchStatus !== "unchecked") return;
+  const exists = candidate.isbn
+    ? existingIsbns.has(candidate.isbn)
+    : existingTitles.has(normalizeTitle(candidate.title));
+  candidate.matchStatus = exists ? "already_in_data" : "new_candidate";
+});
+
+const acceptedStatuses = new Set(["source_verified", "web_verified"]);
+const pending = batch.candidates.filter(candidate => (
+  candidate.matchStatus === "new_candidate"
+  && candidate.importStatus === "pending"
+  && acceptedStatuses.has(candidate.verificationStatus)
+));
 const additions = [];
 const skipped = [];
 
 for (const candidate of pending) {
   const titleKey = normalizeTitle(candidate.title);
-  if (existingTitles.has(titleKey) || (candidate.isbn && existingIsbns.has(candidate.isbn))) {
+  if ((candidate.isbn && existingIsbns.has(candidate.isbn)) || (!candidate.isbn && existingTitles.has(titleKey))) {
     candidate.importStatus = "skipped_existing";
     skipped.push(candidate.title);
     continue;
@@ -140,9 +194,35 @@ const counts = additions.reduce((result, book) => {
   return result;
 }, {});
 
-console.log(JSON.stringify({ mode: shouldWrite ? "write" : "preview", additions: additions.length, skipped, counts }, null, 2));
+console.log(JSON.stringify({ mode: shouldRepair ? "repair" : (shouldWrite ? "write" : "preview"), additions: additions.length, skipped, counts }, null, 2));
 if (process.argv.includes("--details")) {
   additions.forEach(book => console.log(`${book.cat}\t${book.tags[0]}\t${book.title}`));
+}
+
+if (shouldRepair) {
+  const collection = batch.collection;
+  const firstIndex = context.__BOOKS__.findIndex(book => (book.collections || []).includes(collection));
+  if (firstIndex < 0) throw new Error(`data.js 中没有专题 ${collection}，无法修复`);
+  if (context.__BOOKS__.slice(firstIndex).some(book => !(book.collections || []).includes(collection))) {
+    throw new Error("专题导入记录不是 data.js 的连续尾部，停止自动修复");
+  }
+  const repaired = batch.candidates
+    .filter(candidate => acceptedStatuses.has(candidate.verificationStatus))
+    .filter(candidate => !(candidate.isbn && new Set(context.__BOOKS__.slice(0, firstIndex).map(book => book.isbn).filter(Boolean)).has(candidate.isbn)))
+    .map(candidate => {
+      candidate.matchStatus = "new_candidate";
+      candidate.importStatus = "imported";
+      return asBook(candidate);
+    });
+  const firstTitle = context.__BOOKS__[firstIndex].title;
+  const marker = `,\n  {\n    \"title\": ${JSON.stringify(firstTitle)}`;
+  const start = source.lastIndexOf(marker);
+  if (start < 0) throw new Error("无法定位专题导入尾部起点");
+  const serialized = repaired.map(book => `  ${JSON.stringify(book, null, 2).replace(/\n/g, "\n  ")}`).join(",\n");
+  fs.writeFileSync(dataPath, `${source.slice(0, start)},\n${serialized}\n];\n`);
+  fs.writeFileSync(importPath, `${JSON.stringify(batch, null, 2)}\n`);
+  console.log(JSON.stringify({ repaired: repaired.length, collection }, null, 2));
+  process.exit(0);
 }
 
 if (!shouldWrite) process.exit(0);

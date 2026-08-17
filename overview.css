@@ -104,6 +104,14 @@ body { padding-bottom: 90px; }
   text-transform: uppercase;
   color: var(--ink-muted);
 }
+.collection-intro {
+  max-width: 560px;
+  margin: 18px auto 0;
+  font-family: "Noto Serif SC", serif;
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--ink-muted);
+}
 
 /* ---------- 筛选状态条 ---------- */
 .active-filters {

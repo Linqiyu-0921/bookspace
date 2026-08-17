@@ -38,12 +38,13 @@ function hasValidIsbn13Checksum(isbn) {
 
 const context = {};
 vm.createContext(context);
-vm.runInContext(`${read("data.js")}\nthis.__BOOKSPACE__ = { BOOKS, CATEGORY_ORDER, CATEGORY_GROUPS };`, context, {
+vm.runInContext(`${read("data.js")}\nthis.__BOOKSPACE__ = { BOOKS, CATEGORY_ORDER, CATEGORY_GROUPS, SPECIAL_COLLECTIONS };`, context, {
   filename: "data.js"
 });
 
-const { BOOKS, CATEGORY_ORDER, CATEGORY_GROUPS } = context.__BOOKSPACE__;
+const { BOOKS, CATEGORY_ORDER, CATEGORY_GROUPS, SPECIAL_COLLECTIONS } = context.__BOOKSPACE__;
 const categorySet = new Set(CATEGORY_ORDER);
+const collectionSet = new Set(Object.keys(SPECIAL_COLLECTIONS));
 const declaredLevel2 = new Map();
 
 if (CATEGORY_ORDER.length !== 13 || categorySet.size !== 13) {
@@ -76,6 +77,13 @@ BOOKS.forEach((book, index) => {
     errors.push(`${label}：二级分类 ${book.tags[0]} 不属于 ${book.cat}`);
   }
   if (!Array.isArray(book.tag3)) errors.push(`${label}：tag3 必须是数组`);
+  if (book.collections && !Array.isArray(book.collections)) {
+    errors.push(`${label}：collections 必须是数组`);
+  } else {
+    (book.collections || []).forEach(collection => {
+      if (!collectionSet.has(collection)) errors.push(`${label}：未知专题 ${collection}`);
+    });
+  }
   if (book.isbn && !/^\d{13}$/.test(String(book.isbn))) {
     errors.push(`${label}：ISBN 必须是 13 位数字`);
   }

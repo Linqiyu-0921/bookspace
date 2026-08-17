@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+SC:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,300,0,0" rel="stylesheet">
-  <link rel="stylesheet" href="overview.css?v=3">
+  <link rel="stylesheet" href="overview.css?v=4">
 </head>
 <body>
 
@@ -29,8 +29,9 @@
 
   <!-- 标题 -->
   <header class="header">
-    <div class="eyebrow">Personal Collection · At a Glance</div>
-    <h1 class="title">OVERVIEW</h1>
+    <div class="eyebrow" id="pageEyebrow">Personal Collection · At a Glance</div>
+    <h1 class="title" id="pageTitle">OVERVIEW</h1>
+    <p class="collection-intro" id="collectionIntro" hidden></p>
     <div class="subcount" id="subCount"></div>
   </header>
 
@@ -99,7 +100,7 @@
     </div>
   </div>
 
-  <script src="data.js?v=11"></script>
-  <script src="overview.js?v=6"></script>
+  <script src="data.js?v=12"></script>
+  <script src="overview.js?v=7"></script>
 </body>
 </html>

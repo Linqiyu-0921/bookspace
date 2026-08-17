@@ -8,6 +8,12 @@
   const emptyHint = document.getElementById("emptyHint");
   const subCount = document.getElementById("subCount");
   const activeFilters = document.getElementById("activeFilters");
+  const pageEyebrow = document.getElementById("pageEyebrow");
+  const pageTitle = document.getElementById("pageTitle");
+  const collectionIntro = document.getElementById("collectionIntro");
+  const query = new URLSearchParams(location.search);
+  const collectionSlug = query.get("collection");
+  const collection = collectionSlug ? SPECIAL_COLLECTIONS[collectionSlug] : null;
 
   const drawer = document.getElementById("drawer");
   const drawerToggle = document.getElementById("drawerToggle");
@@ -93,6 +99,7 @@
 
   /* ---------- 筛选 ---------- */
   function match(b) {
+    if (collectionSlug && !(b.collections || []).includes(collectionSlug)) return false;
     if (keyword && ![
       b.title, b.sub, b.author, b.translator, b.publisher, b.year, b.isbn,
       b.tag, b.cat, ...(b.tags || []), ...(b.tag3 || [])
@@ -395,7 +402,14 @@
   });
 
   /* ---------- 初始化 ---------- */
-  const qs = new URLSearchParams(location.search);
+  const qs = query;
+  if (collection) {
+    document.title = `BOOK SPACE · ${collection.title}`;
+    pageEyebrow.textContent = `${collection.location} · ${collection.date} · Special Collection`;
+    pageTitle.textContent = collection.titleEn.toUpperCase();
+    collectionIntro.textContent = collection.description;
+    collectionIntro.hidden = false;
+  }
   buildDrawer();
   render();
 
